@@ -1,0 +1,20 @@
+{
+  "sports": [
+    {
+      "file": "hindernissbahn.json",
+      "version": "2"
+    },
+    {
+      "file": "konfit.json",
+      "version": "2"
+    },
+    {
+      "file": "waffenlauf.json",
+      "version": "2"
+    },
+    {
+      "file": "bft.json",
+      "version": "2"
+    }
+  ]
+}

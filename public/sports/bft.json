@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 2,
+  "exportedAt": "2026-06-07T20:14:42.157Z",
+  "sport": {
+    "id": "9d932828-fdf3-4a4e-a306-67695bec15aa",
+    "slug": "bft",
+    "name": "Basis Fitness Test",
+    "description": "",
+    "totalMaxPoints": 449,
+    "comparisonMaxPoints": 50,
+    "agePolicy": "attemptDate",
+    "aggregation": "percentageAverage",
+    "roundingMode": "round",
+    "decimalPlaces": 2,
+    "ageBands": [
+      {
+        "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+        "minAge": 0,
+        "maxAge": 100,
+        "label": "0-100"
+      }
+    ],
+    "disciplines": [
+      {
+        "id": "45c07a1f-1b02-4a9c-9f2c-d579ae6ac17f",
+        "name": "11x10m",
+        "unit": "time",
+        "maxPoints": 449,
+        "formulas": [
+          {
+            "gender": "male",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "formulaValueUnit": "display",
+            "segments": [
+              {
+                "id": "a1d3f782-d52e-441d-be19-a96701a1142f",
+                "from": null,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": -15,
+                "c": 1000
+              }
+            ]
+          },
+          {
+            "gender": "female",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "formulaValueUnit": "display",
+            "segments": [
+              {
+                "id": "06412ebe-848a-4950-9831-b9e5587dbea8",
+                "from": null,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": -15,
+                "c": 1000
+              }
+            ]
+          }
+        ],
+        "automaticPointModifiers": [
+          {
+            "id": "c26374a4-9758-4a03-88d3-4ba035c9b12d",
+            "label": "Altersbonus",
+            "kind": "agePercentagePerYear",
+            "factor": 0.005,
+            "gender": "all",
+            "referenceAge": 35
+          },
+          {
+            "id": "2c905c3f-c5f0-4058-a3d9-83c04928d730",
+            "label": "Geschlechtsbonus",
+            "kind": "fixedPercentage",
+            "factor": 0.15,
+            "gender": "female"
+          }
+        ],
+        "ageBands": [
+          {
+            "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "minAge": 0,
+            "maxAge": 100,
+            "label": "0-100"
+          }
+        ],
+        "minimumPoints": 100,
+        "scoringMode": "formula",
+        "tables": [
+          {
+            "gender": "male",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "rows": []
+          },
+          {
+            "gender": "female",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "rows": []
+          }
+        ]
+      },
+      {
+        "id": "b4ebf8f7-c3bf-4798-9648-0fce0116993e",
+        "name": "Klimmhang",
+        "unit": "time",
+        "maxPoints": 449,
+        "formulas": [
+          {
+            "gender": "male",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "formulaValueUnit": "display",
+            "segments": [
+              {
+                "id": "13aa0afa-04d5-4b3c-81c6-91ccf4cff564",
+                "from": null,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": 5,
+                "c": 75
+              }
+            ]
+          },
+          {
+            "gender": "female",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "formulaValueUnit": "display",
+            "segments": [
+              {
+                "id": "08163ad2-e5f4-45d4-8128-619006cedbf0",
+                "from": null,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": 5,
+                "c": 75
+              }
+            ]
+          }
+        ],
+        "automaticPointModifiers": [
+          {
+            "id": "d76bd6c5-66f0-43df-8c5b-2f0c21f29f1a",
+            "label": "Altersbonus",
+            "kind": "agePercentagePerYear",
+            "factor": 0.005,
+            "gender": "all",
+            "referenceAge": 35,
+            "minAge": 35
+          },
+          {
+            "id": "1607cab6-eb53-4b28-a4bf-40956a4c33ec",
+            "label": "Geschlechterbonus",
+            "kind": "fixedPercentage",
+            "factor": 0.4,
+            "gender": "female"
+          }
+        ],
+        "ageBands": [
+          {
+            "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "minAge": 0,
+            "maxAge": 100,
+            "label": "0-100"
+          }
+        ],
+        "minimumPoints": 100
+      },
+      {
+        "id": "f3934179-0eb0-4adf-9a9b-50b30de2cf4a",
+        "name": "1000m Lauf",
+        "unit": "time",
+        "maxPoints": 449,
+        "formulas": [
+          {
+            "gender": "male",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "formulaValueUnit": "display",
+            "segments": [
+              {
+                "id": "356840d7-8fad-4a60-ba99-9d332f0c103b",
+                "from": null,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": -1.818181818,
+                "c": 809.090909
+              }
+            ]
+          },
+          {
+            "gender": "female",
+            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "formulaValueUnit": "display",
+            "segments": [
+              {
+                "id": "a09e9116-7d0a-442c-a002-0eedc4e9966e",
+                "from": null,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": -1.818181818,
+                "c": 809.090909
+              }
+            ]
+          }
+        ],
+        "automaticPointModifiers": [
+          {
+            "id": "ead345ed-4c84-43e9-a3ac-7e51c8ae0176",
+            "label": "Altersbonus",
+            "kind": "agePercentagePerYear",
+            "factor": 0.005,
+            "gender": "all",
+            "referenceAge": 35,
+            "minAge": 35
+          },
+          {
+            "id": "6b5206e4-4a8e-4cb9-9831-f2fddb35eb68",
+            "label": "Geschlechterbonus",
+            "kind": "fixedPercentage",
+            "factor": 0.15,
+            "gender": "female"
+          }
+        ],
+        "ageBands": [
+          {
+            "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "minAge": 0,
+            "maxAge": 100,
+            "label": "0-100"
+          }
+        ],
+        "minimumPoints": 100
+      }
+    ],
+    "minimumTotalPoints": 100
+  }
+}
