@@ -132,7 +132,7 @@ export function DisciplineAgeBandsEditor({
         ))}
       </div>
       <button className="button-secondary mt-2" onClick={add}>
-        Altersbereich hinzufÃ¼gen
+        Altersbereich hinzufügen
       </button>
     </>
   );

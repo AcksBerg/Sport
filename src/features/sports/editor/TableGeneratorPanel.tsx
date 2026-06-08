@@ -131,7 +131,7 @@ export function TableGeneratorPanel({
               })
             }
           >
-            <option value="higherIsBetter">GrÃ¶ÃŸer ist besser</option>
+            <option value="higherIsBetter">Größer ist besser</option>
             <option value="lowerIsBetter">Kleiner ist besser</option>
           </select>
         </label>

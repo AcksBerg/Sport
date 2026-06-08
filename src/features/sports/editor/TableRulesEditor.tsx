@@ -47,7 +47,7 @@ export function TableRulesEditor({
             )
           }
         >
-          Leere Tabellen fÃ¼r alle Gruppen anlegen
+          Leere Tabellen für alle Gruppen anlegen
         </button>
       )}
       {tables.map((rule) => (
@@ -56,12 +56,12 @@ export function TableRulesEditor({
           key={`${rule.gender}-${rule.ageBandId}`}
         >
           <summary className="cursor-pointer font-bold">
-            {genderLabel(rule.gender)} Â·{" "}
+            {genderLabel(rule.gender)} ·{" "}
             {
               discipline.ageBands.find((band) => band.id === rule.ageBandId)
                 ?.label
             }{" "}
-            Â· {rule.rows.length} Zeilen
+            · {rule.rows.length} Zeilen
           </summary>
           <div className="mt-3 space-y-2">
             <TableGeneratorPanel
@@ -72,7 +72,7 @@ export function TableRulesEditor({
                 if (
                   rule.rows.length > 0 &&
                   !confirm(
-                    "Die bestehende Tabelle dieser Bewertungsgruppe wird vollstÃ¤ndig ersetzt. Fortfahren?",
+                    "Die bestehende Tabelle dieser Bewertungsgruppe wird vollständig ersetzt. Fortfahren?",
                   )
                 )
                   return;
@@ -102,8 +102,8 @@ export function TableRulesEditor({
               ),
             ) && (
               <p className="text-sm font-bold text-error">
-                Warnung: Tabellenbereiche Ã¼berschneiden sich. Bei der Bewertung
-                gewinnt der hÃ¶here Punktwert.
+                Warnung: Tabellenbereiche überschneiden sich. Bei der Bewertung
+                gewinnt der höhere Punktwert.
               </p>
             )}
             <div className="max-h-[32rem] overflow-auto rounded-lg border border-outline-variant">
@@ -241,7 +241,7 @@ export function TableRulesEditor({
                 )
               }
             >
-              Tabellenzeile hinzufÃ¼gen
+              Tabellenzeile hinzufügen
             </button>
           </div>
         </details>

@@ -1226,19 +1226,19 @@
                                           "adjustmentGroups":  [
                                                                    {
                                                                        "id":  "4f4379fd-fba2-4441-a510-db637f3b47a3",
-                                                                       "label":  "Alle Hindernisse Ã¼berwunden",
+                                                                       "label":  "Alle Hindernisse überwunden",
                                                                        "required":  true,
                                                                        "target":  "performance",
                                                                        "options":  [
                                                                                        {
                                                                                            "id":  "2b1bc1b2-1020-4681-a7b6-68d771cc78d6",
-                                                                                           "label":  "Alle Ã¼berwunden",
+                                                                                           "label":  "Alle überwunden",
                                                                                            "valueAdjustment":  10.79,
                                                                                            "effect":  "minimumPoints"
                                                                                        },
                                                                                        {
                                                                                            "id":  "1b520d2a-e167-4a1a-980e-7bcbdf7e095d",
-                                                                                           "label":  "NICHT alle Ã¼berwunden",
+                                                                                           "label":  "NICHT alle überwunden",
                                                                                            "valueAdjustment":  0,
                                                                                            "effect":  "maximumPoints"
                                                                                        }

@@ -41,7 +41,7 @@ export function TableImportPanel({
   }
   function apply() {
     if (!data || pointsColumn < 0 || (maleColumn < 0 && femaleColumn < 0)) {
-      setError("Bitte Punkte und mindestens eine Leistungsspalte auswÃ¤hlen.");
+      setError("Bitte Punkte und mindestens eine Leistungsspalte auswählen.");
       return;
     }
     try {
@@ -76,7 +76,7 @@ export function TableImportPanel({
         });
       if (
         !confirm(
-          "Die ausgewÃ¤hlten Tabellen dieses Altersbands werden vollstÃ¤ndig ersetzt. Fortfahren?",
+          "Die ausgewählten Tabellen dieses Altersbands werden vollständig ersetzt. Fortfahren?",
         )
       )
         return;
@@ -101,7 +101,7 @@ export function TableImportPanel({
       onChange={(event) => onSelect(Number(event.target.value))}
     >
       <option value={-1}>
-        {optional ? "Nicht importieren" : "Bitte auswÃ¤hlen"}
+        {optional ? "Nicht importieren" : "Bitte auswählen"}
       </option>
       {data?.headers.map((header, index) => (
         <option key={`${header}-${index}`} value={index}>
@@ -117,7 +117,7 @@ export function TableImportPanel({
       const counts = [
         ...(maleColumn >= 0
           ? [
-              `MÃ¤nner: ${createImportedTableRows(data, { pointsColumn, performanceColumn: maleColumn, direction: maleDirection }, discipline.unit).length} Zeilen`,
+              `Männer: ${createImportedTableRows(data, { pointsColumn, performanceColumn: maleColumn, direction: maleDirection }, discipline.unit).length} Zeilen`,
             ]
           : []),
         ...(femaleColumn >= 0
@@ -154,7 +154,7 @@ export function TableImportPanel({
           </select>
         </label>
         <label className="button-secondary cursor-pointer self-end">
-          Datei auswÃ¤hlen
+          Datei auswählen
           <input
             className="hidden"
             type="file"
@@ -178,14 +178,14 @@ export function TableImportPanel({
             Punktespalte{columnSelect(pointsColumn, setPointsColumn)}
           </label>
           <label>
-            MÃ¤nner-Leistung{columnSelect(maleColumn, setMaleColumn, true)}
+            Männer-Leistung{columnSelect(maleColumn, setMaleColumn, true)}
           </label>
           <label>
             Frauen-Leistung{columnSelect(femaleColumn, setFemaleColumn, true)}
           </label>
           {maleColumn >= 0 && (
             <label>
-              Richtung MÃ¤nner
+              Richtung Männer
               <select
                 value={maleDirection}
                 onChange={(event) =>
@@ -193,7 +193,7 @@ export function TableImportPanel({
                 }
               >
                 <option value="lowerIsBetter">Kleiner ist besser</option>
-                <option value="higherIsBetter">GrÃ¶ÃŸer ist besser</option>
+                <option value="higherIsBetter">Größer ist besser</option>
               </select>
             </label>
           )}
@@ -209,7 +209,7 @@ export function TableImportPanel({
                 }
               >
                 <option value="lowerIsBetter">Kleiner ist besser</option>
-                <option value="higherIsBetter">GrÃ¶ÃŸer ist besser</option>
+                <option value="higherIsBetter">Größer ist besser</option>
               </select>
             </label>
           )}
@@ -228,7 +228,7 @@ export function TableImportPanel({
           className="button-secondary mt-3"
           onClick={apply}
         >
-          AusgewÃ¤hlte Tabellen importieren
+          Ausgewählte Tabellen importieren
         </button>
       )}
     </details>

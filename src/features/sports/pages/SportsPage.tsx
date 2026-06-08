@@ -50,7 +50,7 @@ export function SportsPage() {
     if (await deleteSport(sport.id)) return;
     if (
       confirm(
-        "FÃ¼r diese Sportart existiert ein Verlauf. Sportart und gesamten Verlauf endgÃ¼ltig lÃ¶schen?",
+        "Für diese Sportart existiert ein Verlauf. Sportart und gesamten Verlauf endgültig löschen?",
       )
     )
       await deleteSport(sport.id, true);
@@ -100,7 +100,7 @@ export function SportsPage() {
   }
   return (
     <>
-      <PageTitle intro="Sportarten bÃ¼ndeln Disziplinen, Formeln und zusammengehÃ¶rige DurchgÃ¤nge.">
+      <PageTitle intro="Sportarten bündeln Disziplinen, Formeln und zusammengehörige Durchgänge.">
         Sportarten
       </PageTitle>
       <div className="grid gap-4 md:grid-cols-2">
@@ -113,7 +113,7 @@ export function SportsPage() {
                 </p>
                 <h2 className="text-xl font-bold">{sport.name}</h2>
                 <p className="mt-2 text-sm text-secondary">
-                  {sport.disciplines.length} Disziplinen Â· maximal{" "}
+                  {sport.disciplines.length} Disziplinen · maximal{" "}
                   {sport.totalMaxPoints.toFixed(sport.decimalPlaces)} Punkte
                 </p>
               </div>
@@ -121,12 +121,12 @@ export function SportsPage() {
                 className="button-danger self-start"
                 onClick={() => remove(sport)}
               >
-                LÃ¶schen
+                Löschen
               </button>
             </div>
             <div className="mt-5 flex gap-2">
               <Link className="button-primary" to={`/sportart/${sport.slug}`}>
-                Ã–ffnen
+                Öffnen
               </Link>
               <Link
                 className="button-secondary"

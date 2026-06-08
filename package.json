@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:sports && npm run validate:structure && npm run typecheck:tests && tsc -b && vite build",
+    "build": "npm run validate:encoding && npm run validate:sports && npm run validate:structure && npm run typecheck:tests && tsc -b && vite build",
+    "validate:encoding": "node scripts/validate-encoding.mjs",
     "validate:sports": "node scripts/validate-sports.mjs",
     "validate:structure": "node scripts/validate-structure.mjs",
     "typecheck:tests": "tsc -p tsconfig.tests.json",

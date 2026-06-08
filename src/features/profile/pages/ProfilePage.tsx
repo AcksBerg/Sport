@@ -65,7 +65,7 @@ export function ProfilePage() {
               setGender(event.target.value as Gender);
             }}
           >
-            <option value="male">MÃ¤nnlich</option>
+            <option value="male">Männlich</option>
             <option value="female">Weiblich</option>
           </select>
         </label>
@@ -111,7 +111,7 @@ export function ProfilePage() {
             </div>
             {progress.excessPoints > 0 && (
               <div>
-                <p className="text-sm text-secondary">Ãœberschuss</p>
+                <p className="text-sm text-secondary">Überschuss</p>
                 <strong className="text-2xl">
                   {progress.excessPoints.toFixed(2)}
                 </strong>
@@ -131,11 +131,11 @@ export function ProfilePage() {
           </div>
         </section>
       )}
-      <h2 className="section-title">Beste vollstÃ¤ndige DurchgÃ¤nge</h2>
+      <h2 className="section-title">Beste vollständige Durchgänge</h2>
       {!profile && (
         <p className="notice">
           Speichere zuerst dein Profil, damit Leistungen ausgewertet werden
-          kÃ¶nnen.
+          können.
         </p>
       )}
       <div className="grid gap-4 md:grid-cols-2">
@@ -151,13 +151,13 @@ export function ProfilePage() {
                   <p className="text-sm text-secondary">
                     {best
                       ? new Date(best.attempt.date).toLocaleDateString("de-DE")
-                      : "Noch keine vollstÃ¤ndige Wertung"}
+                      : "Noch keine vollständige Wertung"}
                   </p>
                 </div>
                 <strong className="text-2xl text-primary">
                   {best
                     ? best.comparisonScore.toFixed(sport.decimalPlaces)
-                    : "â€“"}{" "}
+                    : "–"}{" "}
                   /{" "}
                   {(sport.comparisonMaxPoints ?? sport.totalMaxPoints).toFixed(
                     sport.decimalPlaces,
@@ -168,7 +168,7 @@ export function ProfilePage() {
                 className="mt-4 inline-block text-sm font-bold underline"
                 to={`/sportart/${sport.slug}`}
               >
-                Verlauf Ã¶ffnen
+                Verlauf öffnen
               </Link>
             </article>
           );

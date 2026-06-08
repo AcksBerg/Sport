@@ -232,7 +232,7 @@ export function AdjustmentEditor({
                 )
               }
             >
-              Option hinzufÃ¼gen
+              Option hinzufügen
             </button>
             <button
               className="button-danger"
@@ -262,7 +262,7 @@ export function AdjustmentEditor({
           ])
         }
       >
-        Korrekturgruppe hinzufÃ¼gen
+        Korrekturgruppe hinzufügen
       </button>
     </div>
   );

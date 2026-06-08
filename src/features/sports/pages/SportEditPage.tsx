@@ -19,7 +19,7 @@ export function SportEditPage() {
   const [cutoffResult, setCutoffResult] = useState<AutomaticCutoffResult>();
   const sport = draft ?? stored;
   const navigate = useNavigate();
-  if (!sport) return <p>Lade Editor â€¦</p>;
+  if (!sport) return <p>Lade Editor …</p>;
   const activeSport = sport;
   const update = (change: Partial<Sport>) =>
     setDraft({ ...activeSport, ...change });
@@ -108,7 +108,7 @@ export function SportEditPage() {
     if (
       historyCount > 0 &&
       !confirm(
-        "FÃ¼r diese Sportart existiert ein Verlauf. Beim Entfernen der Disziplin muss der gesamte Verlauf dieser Sportart gelÃ¶scht werden. Fortfahren?",
+        "Für diese Sportart existiert ein Verlauf. Beim Entfernen der Disziplin muss der gesamte Verlauf dieser Sportart gelöscht werden. Fortfahren?",
       )
     )
       return;
@@ -120,7 +120,7 @@ export function SportEditPage() {
   }
   return (
     <>
-      <PageTitle intro="Ã„nderungen an Formeln berechnen bestehende Rohleistungen unmittelbar neu.">
+      <PageTitle intro="Änderungen an Formeln berechnen bestehende Rohleistungen unmittelbar neu.">
         Sportart bearbeiten
       </PageTitle>
       <div className="mb-4 flex flex-wrap justify-end gap-2">
@@ -148,7 +148,7 @@ export function SportEditPage() {
         <div className="notice mb-4">
           <strong>Automatische Cut-off-Ermittlung abgeschlossen.</strong>
           <p className="mt-1 text-sm">
-            Neu: {cutoffResult.created.length}, Ã¼berschrieben:{" "}
+            Neu: {cutoffResult.created.length}, überschrieben:{" "}
             {cutoffResult.overwritten.length}, beibehalten:{" "}
             {cutoffResult.preserved.length}, nicht bestimmbar:{" "}
             {cutoffResult.notDeterminable.length}.
@@ -168,10 +168,10 @@ export function SportEditPage() {
           <h2 className="text-xl font-black">Bestehende Cut-offs gefunden</h2>
           <p className="mt-2">
             Sollen vorhandene Cut-offs beibehalten oder durch eindeutig
-            bestimmbare automatische Cut-offs Ã¼berschrieben werden?
+            bestimmbare automatische Cut-offs überschrieben werden?
           </p>
           <p className="mt-2 text-sm text-secondary">
-            Nicht automatisch bestimmbare Cut-offs bleiben in beiden FÃ¤llen
+            Nicht automatisch bestimmbare Cut-offs bleiben in beiden Fällen
             erhalten.
           </p>
           <div className="mt-5 flex flex-wrap justify-end gap-2">
@@ -191,7 +191,7 @@ export function SportEditPage() {
               className="button-primary"
               onClick={() => applyAutomaticCutoffs("overwriteExisting")}
             >
-              Bestehende Ã¼berschreiben
+              Bestehende überschreiben
             </button>
           </div>
         </dialog>
@@ -278,7 +278,7 @@ export function SportEditPage() {
             }
           >
             <option value="floor">Abrunden</option>
-            <option value="round">KaufmÃ¤nnisch</option>
+            <option value="round">Kaufmännisch</option>
             <option value="ceil">Aufrunden</option>
           </select>
         </label>
@@ -303,7 +303,7 @@ export function SportEditPage() {
       <div className="mb-4 flex items-center justify-between">
         <h2 className="section-title m-0">Disziplinen und Formeln</h2>
         <button className="button-secondary" onClick={addDiscipline}>
-          Disziplin hinzufÃ¼gen
+          Disziplin hinzufügen
         </button>
       </div>
       <div className="space-y-5">
@@ -426,7 +426,7 @@ export function SportEditPage() {
                       }
                     >
                       <option value="below">Unterschreitet</option>
-                      <option value="above">Ãœberschreitet</option>
+                      <option value="above">Überschreitet</option>
                     </select>
                   </label>
                   <label>
@@ -500,7 +500,7 @@ export function SportEditPage() {
             <h3 className="mt-5 font-bold">
               {discipline.scoringMode === "table"
                 ? "Bewertungstabellen"
-                : "Formeln: aÂ·xÂ² + bÂ·x + c"}
+                : "Formeln: a·x² + b·x + c"}
             </h3>
             {discipline.scoringMode === "table" ? (
               <TableRulesEditor
@@ -531,7 +531,7 @@ export function SportEditPage() {
       </div>
       <div className="sticky bottom-4 mt-6 flex justify-end">
         <button className="button-primary shadow-lg" onClick={save}>
-          Ã„nderungen speichern
+          Änderungen speichern
         </button>
       </div>
     </>

@@ -60,7 +60,7 @@ export function AutomaticPointModifierEditor({
                 }
               >
                 <option value="all">Alle</option>
-                <option value="male">MÃ¤nnlich</option>
+                <option value="male">Männlich</option>
                 <option value="female">Weiblich</option>
               </select>
             </label>
@@ -105,7 +105,7 @@ export function AutomaticPointModifierEditor({
               />
             </label>
             <label>
-              HÃ¶chstalter
+              Höchstalter
               <input
                 type="number"
                 value={modifier.maxAge ?? ""}
@@ -122,8 +122,8 @@ export function AutomaticPointModifierEditor({
           </div>
           <p className="mt-2 text-sm text-secondary">
             {modifier.kind === "fixedPercentage"
-              ? `Bonus = Basispunkte Ã— ${modifier.factor}`
-              : `Bonus = Basispunkte Ã— max(0, Alter âˆ’ ${modifier.referenceAge ?? 35}) Ã— ${modifier.factor}`}
+              ? `Bonus = Basispunkte × ${modifier.factor}`
+              : `Bonus = Basispunkte × max(0, Alter − ${modifier.referenceAge ?? 35}) × ${modifier.factor}`}
           </p>
           <button
             className="mt-2 text-sm font-bold text-error underline"
@@ -150,7 +150,7 @@ export function AutomaticPointModifierEditor({
           ])
         }
       >
-        Automatischen Bonus hinzufÃ¼gen
+        Automatischen Bonus hinzufügen
       </button>
     </div>
   );

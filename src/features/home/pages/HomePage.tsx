@@ -18,8 +18,8 @@ export function HomePage() {
               Sportleistungen erfassen und direkt auswerten.
             </h1>
             <p className="mt-5 max-w-2xl text-lg">
-              Lege Sportarten und Bewertungsregeln an, dokumentiere vollstÃ¤ndige
-              DurchgÃ¤nge und behalte deine Entwicklung im Blick.
+              Lege Sportarten und Bewertungsregeln an, dokumentiere vollständige
+              Durchgänge und behalte deine Entwicklung im Blick.
             </p>
           </div>
           <div className="mt-7 flex flex-wrap gap-3">
@@ -27,7 +27,7 @@ export function HomePage() {
               {profileComplete ? "Profil anzeigen" : "Profil einrichten"}
             </Link>
             <Link className="button-secondary" to="/sportart">
-              Sportarten Ã¶ffnen
+              Sportarten öffnen
             </Link>
           </div>
         </div>
@@ -35,8 +35,8 @@ export function HomePage() {
       <section className="mt-6 grid gap-4 md:grid-cols-2">
         {[
           [
-            "Nur auf deinem GerÃ¤t",
-            "Profil, Definitionen und Rohleistungen werden ausschlieÃŸlich in der IndexedDB deines Browsers gespeichert.",
+            "Nur auf deinem Gerät",
+            "Profil, Definitionen und Rohleistungen werden ausschließlich in der IndexedDB deines Browsers gespeichert.",
           ],
           [
             "Immer aktuell",

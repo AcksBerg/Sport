@@ -16,7 +16,7 @@ export function SportPage() {
   const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [editingAttemptId, setEditingAttemptId] = useState<string>();
   const [attemptDate, setAttemptDate] = useState(localDateValue);
-  if (!sport) return <p>Lade Sportart â€¦</p>;
+  if (!sport) return <p>Lade Sportart …</p>;
   const activeSport = sport;
   const historyEntries =
     profile && attempts
@@ -31,7 +31,7 @@ export function SportPage() {
           }));
   async function save(status: Attempt["status"]) {
     if (!attemptDate)
-      return alert("Bitte ein Datum fÃ¼r den Durchgang auswÃ¤hlen.");
+      return alert("Bitte ein Datum für den Durchgang auswählen.");
     if (
       status === "complete" &&
       activeSport.disciplines.some((discipline) => {
@@ -47,7 +47,7 @@ export function SportPage() {
       })
     )
       return alert(
-        "FÃ¼r einen vollstÃ¤ndigen Durchgang werden alle Leistungen und erforderlichen Bonus-/Strafauswahlen benÃ¶tigt.",
+        "Für einen vollständigen Durchgang werden alle Leistungen und erforderlichen Bonus-/Strafauswahlen benötigt.",
       );
     await saveAttempt({
       id: editingAttemptId ?? createId(),
@@ -98,7 +98,7 @@ export function SportPage() {
         <PageTitle
           intro={
             sport.description ||
-            "Erfasse einen zusammenhÃ¤ngenden Durchgang und werte ihn anhand der aktuellen Regeln aus."
+            "Erfasse einen zusammenhängenden Durchgang und werte ihn anhand der aktuellen Regeln aus."
           }
         >
           {sport.name}
@@ -206,7 +206,7 @@ export function SportPage() {
             disabled={sport.disciplines.length === 0}
             onClick={() => save("complete")}
           >
-            VollstÃ¤ndig speichern
+            Vollständig speichern
           </button>
         </div>
       </section>
@@ -229,21 +229,21 @@ export function SportPage() {
                   {isBest && <span className="chip mb-2">Bester Versuch</span>}
                   <strong>{formatAttemptDate(attempt.date)}</strong>
                   <p className="text-sm text-secondary">
-                    {attempt.status === "draft" ? "Entwurf" : "VollstÃ¤ndig"}
+                    {attempt.status === "draft" ? "Entwurf" : "Vollständig"}
                   </p>
                 </div>
                 <div className="text-right">
                   <strong className="block text-xl text-primary">
                     {result?.total !== null && result?.total !== undefined
                       ? result.total.toFixed(sport.decimalPlaces)
-                      : "â€“"}{" "}
+                      : "–"}{" "}
                     / {sport.totalMaxPoints.toFixed(sport.decimalPlaces)}
                   </strong>
                   <span className="text-sm text-secondary">
                     Vergleich:{" "}
                     {comparisonScore !== null
                       ? comparisonScore.toFixed(sport.decimalPlaces)
-                      : "â€“"}{" "}
+                      : "–"}{" "}
                     /{" "}
                     {(
                       sport.comparisonMaxPoints ?? sport.totalMaxPoints
@@ -286,7 +286,7 @@ export function SportPage() {
                           score?.evaluatedValue ?? performance.value,
                           discipline.unit,
                         )}{" "}
-                        Â·{" "}
+                        ·{" "}
                         {score
                           ? `${score.points.toFixed(sport.decimalPlaces)} Pkt.`
                           : "unbewertet"}
@@ -323,7 +323,7 @@ export function SportPage() {
                 className="mt-4 text-sm font-bold text-error underline"
                 onClick={() => deleteAttempt(attempt.id)}
               >
-                Durchgang lÃ¶schen
+                Durchgang löschen
               </button>
               <button
                 className="button-secondary mt-4 ml-2"

@@ -62,7 +62,7 @@ export function FormulaChart({ discipline }: { discipline: Discipline }) {
       (ageBandIndexes.get(rule.ageBandId) ?? index) %
       genderColors[rule.gender].length;
     return {
-      label: `${genderLabel(rule.gender)} Â· ${discipline.ageBands.find((band) => band.id === rule.ageBandId)?.label}`,
+      label: `${genderLabel(rule.gender)} · ${discipline.ageBands.find((band) => band.id === rule.ageBandId)?.label}`,
       data: points,
       borderColor: genderColors[rule.gender][colorIndex],
       backgroundColor: genderColors[rule.gender][colorIndex],
@@ -150,7 +150,7 @@ export function FormulaChart({ discipline }: { discipline: Discipline }) {
           />
         </label>
         <button className="button-secondary" onClick={() => setExpanded(true)}>
-          Diagramm vergrÃ¶ÃŸern
+          Diagramm vergrößern
         </button>
       </div>
       {chart()}
@@ -168,7 +168,7 @@ export function FormulaChart({ discipline }: { discipline: Discipline }) {
             className="button-secondary"
             onClick={() => setExpanded(false)}
           >
-            SchlieÃŸen
+            Schließen
           </button>
         </div>
         {chart(true)}

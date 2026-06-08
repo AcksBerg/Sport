@@ -23,12 +23,12 @@ export function FormulaRulesEditor({
         >
           <div className="mb-3 flex items-center justify-between gap-2">
             <strong>
-              {genderLabel(rule.gender)} Â·{" "}
+              {genderLabel(rule.gender)} ·{" "}
               {
                 discipline.ageBands.find((band) => band.id === rule.ageBandId)
                   ?.label
               }
-              {" Â· "}x ={" "}
+              {" · "}x ={" "}
               {discipline.unit === "time"
                 ? "Sekunden"
                 : discipline.unit === "distance"
@@ -65,7 +65,7 @@ export function FormulaRulesEditor({
                 ]);
               }}
             >
-              Abschnitt hinzufÃ¼gen
+              Abschnitt hinzufügen
             </button>
           </div>
           <div className="space-y-2">
