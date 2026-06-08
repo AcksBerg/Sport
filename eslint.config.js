@@ -19,4 +19,15 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['src/features/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['@/infrastructure/database', '@/infrastructure/database/*'],
+          message: 'Features greifen über Repository-Hooks und Mutationen auf Daten zu.',
+        }],
+      }],
+    },
+  },
 ])
