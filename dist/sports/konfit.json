@@ -16,7 +16,7 @@
                   "ageBands":  [
                                    {
                                        "id":  "konfit-17-26",
-                                       "minAge":  17,
+                                       "minAge":  0,
                                        "maxAge":  26,
                                        "label":  "17-26"
                                    },
@@ -29,7 +29,7 @@
                                    {
                                        "id":  "konfit-40-plus",
                                        "minAge":  40,
-                                       "maxAge":  null,
+                                       "maxAge":  100,
                                        "label":  "40+"
                                    }
                                ],
@@ -1565,7 +1565,7 @@
                                           "ageBands":  [
                                                            {
                                                                "id":  "konfit-17-26",
-                                                               "minAge":  17,
+                                                               "minAge":  0,
                                                                "maxAge":  26,
                                                                "label":  "17-26"
                                                            },
@@ -1578,7 +1578,7 @@
                                                            {
                                                                "id":  "konfit-40-plus",
                                                                "minAge":  40,
-                                                               "maxAge":  null,
+                                                               "maxAge":  100,
                                                                "label":  "40+"
                                                            }
                                                        ],
@@ -3123,7 +3123,7 @@
                                           "ageBands":  [
                                                            {
                                                                "id":  "konfit-17-26",
-                                                               "minAge":  17,
+                                                               "minAge":  0,
                                                                "maxAge":  26,
                                                                "label":  "17-26"
                                                            },
@@ -3136,7 +3136,7 @@
                                                            {
                                                                "id":  "konfit-40-plus",
                                                                "minAge":  40,
-                                                               "maxAge":  null,
+                                                               "maxAge":  100,
                                                                "label":  "40+"
                                                            }
                                                        ],
@@ -4699,7 +4699,7 @@
                                           "ageBands":  [
                                                            {
                                                                "id":  "konfit-17-26",
-                                                               "minAge":  17,
+                                                               "minAge":  0,
                                                                "maxAge":  26,
                                                                "label":  "17-26"
                                                            },
@@ -4712,7 +4712,7 @@
                                                            {
                                                                "id":  "konfit-40-plus",
                                                                "minAge":  40,
-                                                               "maxAge":  null,
+                                                               "maxAge":  100,
                                                                "label":  "40+"
                                                            }
                                                        ],

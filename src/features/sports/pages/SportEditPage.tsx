@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { countSportAttempts, deleteSportAttempts, replaceSportWithHistory, useSport } from "@/infrastructure/repositories";
-import { createSportPackage, parseSportPackage, prepareSportReplacement } from "@/services/sportExchange";
-import { createId, slugify, type AutomaticCutoffMode, type AutomaticCutoffResult, type Discipline, type Gender, type Sport, type Unit } from "@/domain";
+import { parseSportPackage, prepareSportReplacement } from "@/services/sportExchange";
+import { createId, normalizeAgeBands, slugify, type AutomaticCutoffMode, type AutomaticCutoffResult, type Discipline, type Gender, type Sport, type Unit } from "@/domain";
 import { determineAutomaticSportCutoffs } from "@/domain/scoring";
 import { PageTitle, UnitValueInput } from "@/shared/components";
 import { AdjustmentEditor } from "../editor/AdjustmentEditor";
@@ -30,9 +30,20 @@ export function SportEditPage() {
       ),
     });
   async function save() {
-    await replaceSportWithHistory(activeSport.id, activeSport);
-    setDraft(undefined);
-    navigate(`/sportart/${activeSport.slug}`);
+    try {
+      const normalized = {
+        ...activeSport,
+        disciplines: activeSport.disciplines.map((discipline) => ({
+          ...discipline,
+          ageBands: normalizeAgeBands(discipline.ageBands),
+        })),
+      };
+      await replaceSportWithHistory(activeSport.id, normalized);
+      setDraft(undefined);
+      navigate(`/sportart/${activeSport.slug}`);
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Sportart konnte nicht gespeichert werden.");
+    }
   }
   function applyAutomaticCutoffs(mode: AutomaticCutoffMode) {
     const result = determineAutomaticSportCutoffs(activeSport, mode);
@@ -44,18 +55,6 @@ export function SportEditPage() {
     if (activeSport.disciplines.some((discipline) => discipline.cutoff))
       setCutoffPromptOpen(true);
     else applyAutomaticCutoffs("preserveExisting");
-  }
-  function exportCurrentSport() {
-    const blob = new Blob(
-      [JSON.stringify(createSportPackage(activeSport), null, 2)],
-      { type: "application/json" },
-    );
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `${activeSport.slug}.json`;
-    anchor.click();
-    URL.revokeObjectURL(url);
   }
   async function importIntoEditor(file: File) {
     try {
@@ -140,9 +139,6 @@ export function SportEditPage() {
             }}
           />
         </label>
-        <button className="button-secondary" onClick={exportCurrentSport}>
-          Sportart exportieren
-        </button>
       </div>
       {cutoffResult && (
         <div className="notice mb-4">

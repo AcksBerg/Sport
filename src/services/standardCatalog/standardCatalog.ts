@@ -53,7 +53,7 @@ export async function loadStandardCatalog(fetcher: typeof fetch = fetch): Promis
   const ids = new Set<string>();
   for (const entry of manifest.sports) {
     try {
-      const response = await fetcher(`${base}${encodeURIComponent(entry.file)}?v=${encodeURIComponent(entry.version)}`);
+      const response = await fetcher(`${base}${encodeURIComponent(entry.file)}?v=${encodeURIComponent(entry.version)}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const sport = structuredClone(parseSportPackage(await response.json()).sport);
       if (slugs.has(sport.slug) || ids.has(sport.id)) throw new Error("Doppelte Sport-ID oder doppelter Slug.");

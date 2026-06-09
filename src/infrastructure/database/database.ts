@@ -1,6 +1,6 @@
 import Dexie, { type EntityTable } from "dexie";
-import type { Attempt, Sport, StandardSportsSyncReport, UserProfile } from "@/domain";
-import { attachStandardSync, loadStandardCatalog, prepareStandardUpdate, sportFingerprint, standardIsLocallyUnchanged } from "@/services/standardCatalog";
+import { normalizeAgeBands, type Attempt, type Sport, type StandardCatalogState, type StandardSportStatus, type StandardSportsSyncReport, type UserProfile } from "@/domain";
+import { attachStandardSync, loadStandardCatalog, prepareStandardUpdate, sportFingerprint } from "@/services/standardCatalog";
 
 export const db = new Dexie("sportleistung") as Dexie & {
   profile: EntityTable<UserProfile, "id">;
@@ -9,9 +9,20 @@ export const db = new Dexie("sportleistung") as Dexie & {
 };
 
 let lastStandardSportsReport: StandardSportsSyncReport | undefined;
+type LoadedStandard = Awaited<ReturnType<typeof loadStandardCatalog>>["standards"][number];
+let lastLoadedStandards = new Map<string, LoadedStandard>();
+let lastStandardCatalogState: StandardCatalogState = {
+  loaded: false,
+  statuses: [],
+  report: { created: [], updated: [], preserved: [], errors: [] },
+};
 
 export function getLastStandardSportsReport() {
   return lastStandardSportsReport;
+}
+
+export function getStandardCatalogState() {
+  return lastStandardCatalogState;
 }
 
 db.version(1).stores({
@@ -179,16 +190,99 @@ db.version(9)
     });
   });
 
+db.version(10)
+  .stores({
+    profile: "id",
+    sports: "id, &slug, name",
+    attempts: "id, sportId, date, status",
+  })
+  .upgrade(async (transaction) => {
+    await transaction.table<Sport>("sports").toCollection().modify((sport) => {
+      sport.disciplines.forEach((discipline) => {
+        try {
+          discipline.ageBands = normalizeAgeBands(discipline.ageBands);
+        } catch {
+          // Invalid legacy definitions remain editable instead of blocking database startup.
+        }
+      });
+    });
+  });
+
+function createStandardStatuses(sports: Sport[]): StandardSportStatus[] {
+  const bySlug = new Map(sports.map((sport) => [sport.slug, sport]));
+  const statuses: StandardSportStatus[] = sports
+    .filter((sport) => !lastLoadedStandards.has(sport.slug))
+    .map((sport) => ({
+      sportId: sport.id,
+      slug: sport.slug,
+      name: sport.name,
+      isStandard: Boolean(sport.standard),
+      isOutdated: false,
+      isLocallyModified: Boolean(
+        sport.standardSync &&
+          sportFingerprint(sport) !== sport.standardSync.localFingerprint,
+      ),
+      hasConflict: false,
+    }));
+  for (const [slug, loaded] of lastLoadedStandards) {
+    const existing = bySlug.get(slug);
+    statuses.push({
+      sportId: existing?.id,
+      slug,
+      name: existing?.name ?? loaded.sport.name,
+      isStandard: Boolean(existing?.standard),
+      isOutdated: Boolean(
+        existing &&
+          existing.standardSync?.sourceFingerprint !== loaded.fingerprint,
+      ),
+      isLocallyModified: Boolean(
+        existing &&
+          (existing.standardSync
+            ? sportFingerprint(existing) !== existing.standardSync.localFingerprint
+            : existing.standard),
+      ),
+      hasConflict: Boolean(existing && !existing.standard),
+    });
+  }
+  return statuses;
+}
+
+async function publishCatalogState(report: StandardSportsSyncReport) {
+  lastStandardSportsReport = report;
+  lastStandardCatalogState = {
+    loaded: true,
+    statuses: createStandardStatuses(await db.sports.toArray()),
+    report,
+  };
+  if (typeof window !== "undefined")
+    window.dispatchEvent(
+      new CustomEvent("standard-sports-sync", {
+        detail: lastStandardCatalogState,
+      }),
+    );
+  return lastStandardCatalogState;
+}
+
 export async function restoreStandardSports(fetcher: typeof fetch = fetch): Promise<StandardSportsSyncReport> {
   const report: StandardSportsSyncReport = { created: [], updated: [], preserved: [], errors: [] };
   try {
     const loaded = await loadStandardCatalog(fetcher);
+    lastLoadedStandards = new Map(
+      loaded.standards.map((standard) => [standard.sport.slug, standard]),
+    );
     report.errors.push(...loaded.errors);
     for (const standard of loaded.standards) {
       const existing = await db.sports.where("slug").equals(standard.sport.slug).first();
       if (!existing) {
         await db.sports.put(attachStandardSync(standard.sport, standard));
         report.created.push(standard.sport.name);
+        continue;
+      }
+      if (!existing.standard) {
+        report.errors.push(
+          `${standard.sport.name}: Eine eigene Sportart verwendet bereits diesen Kurzname.`,
+        );
+        report.preserved.push(existing.name);
         continue;
       }
       if (!existing.standardSync) {
@@ -198,24 +292,42 @@ export async function restoreStandardSports(fetcher: typeof fetch = fetch): Prom
         report.preserved.push(existing.name);
         continue;
       }
-      if (!standardIsLocallyUnchanged(existing)) {
-        report.preserved.push(existing.name);
-        continue;
-      }
-      if (existing.standardSync.sourceFingerprint === standard.fingerprint) {
-        report.preserved.push(existing.name);
-        continue;
-      }
-      await replaceSportWithHistory(existing.id, prepareStandardUpdate(existing, standard));
-      report.updated.push(existing.name);
+      report.preserved.push(existing.name);
     }
   } catch (error) {
     report.errors.push(error instanceof Error ? error.message : "Standardkatalog konnte nicht geladen werden.");
   }
-  lastStandardSportsReport = report;
-  if (typeof window !== "undefined")
-    window.dispatchEvent(new CustomEvent("standard-sports-sync", { detail: report }));
+  await publishCatalogState(report);
   return report;
+}
+
+export async function updateStandardSport(slug: string) {
+  let loaded = lastLoadedStandards.get(slug);
+  if (!loaded) {
+    const catalog = await loadStandardCatalog();
+    lastLoadedStandards = new Map(
+      catalog.standards.map((standard) => [standard.sport.slug, standard]),
+    );
+    loaded = lastLoadedStandards.get(slug);
+  }
+  if (!loaded) throw new Error("Standard wurde im Katalog nicht gefunden.");
+  const existing = await db.sports.where("slug").equals(slug).first();
+  if (!existing) {
+    await db.sports.put(attachStandardSync(loaded.sport, loaded));
+  } else {
+    if (!existing.standard)
+      throw new Error("Eine eigene Sportart verwendet bereits diesen Kurzname.");
+    await replaceSportWithHistory(
+      existing.id,
+      prepareStandardUpdate(existing, loaded),
+    );
+  }
+  await publishCatalogState({
+    created: [],
+    updated: [loaded.sport.name],
+    preserved: [],
+    errors: [],
+  });
 }
 
 export async function deleteSport(id: string, withHistory = false) {
@@ -225,6 +337,7 @@ export async function deleteSport(id: string, withHistory = false) {
     if (withHistory) await db.attempts.where("sportId").equals(id).delete();
     await db.sports.delete(id);
   });
+  await publishCatalogState(lastStandardCatalogState.report);
   return true;
 }
 
@@ -244,4 +357,5 @@ export async function replaceSportWithHistory(existingId: string, replacement: S
     );
     await db.sports.put(replacement);
   });
+  await publishCatalogState(lastStandardCatalogState.report);
 }

@@ -1,4 +1,4 @@
-import { createId, slugify, type Discipline, type Sport, type SportExchangePackage, type SportExchangePackageV2 } from "@/domain";
+import { createId, normalizeAgeBands, slugify, type Discipline, type Sport, type SportExchangePackage, type SportExchangePackageV2 } from "@/domain";
 
 const normalize = (value: string) => slugify(value);
 
@@ -21,6 +21,7 @@ export function parseSportPackage(value: unknown): SportExchangePackageV2 {
     const bandIds = new Set(discipline.ageBands.map((band) => band.id));
     if ([...discipline.formulas, ...(discipline.tables ?? [])].some((rule) => !bandIds.has(rule.ageBandId)))
       throw new Error(`Ungültige Altersbereich-Referenz in ${discipline.name}.`);
+    discipline.ageBands = normalizeAgeBands(discipline.ageBands);
   });
   candidate.sport.disciplines.forEach((discipline) => {
     discipline.automaticPointModifiers ??= [];

@@ -1,6 +1,6 @@
 import "fake-indexeddb/auto";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { db, deleteSport, replaceSportWithHistory, restoreStandardSports } from "@/infrastructure/database";
+import { db, deleteSport, getStandardCatalogState, replaceSportWithHistory, restoreStandardSports, updateStandardSport } from "@/infrastructure/database";
 import { createSportPackage } from "@/services/sportExchange";
 import type { Attempt, Sport } from "@/domain";
 
@@ -15,13 +15,31 @@ describe("IndexedDB-Repository", () => {
   it("ergänzt, aktualisiert und schützt lokal bearbeitete Standards", async () => {
     expect((await restoreStandardSports(catalogFetch())).created).toEqual(["Teststandard"]);
     const first = (await db.sports.where("slug").equals("test").first())!;
-    expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }, "2"))).updated).toEqual(["Teststandard"]);
+    expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }, "2"))).preserved).toEqual(["Teststandard"]);
+    expect((await db.sports.get(first.id))?.description).toBe("");
     await db.sports.update(first.id, { name: "Mein Standard" });
     expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Noch neuer" }, "3"))).preserved).toEqual(["Mein Standard"]);
+    expect(getStandardCatalogState().statuses.find((status) => status.slug === "test")).toMatchObject({
+      isOutdated: true,
+      isLocallyModified: true,
+    });
   });
 
   it("startet bei fehlendem Katalog mit lokalen Daten weiter", async () => {
     expect((await restoreStandardSports((async () => new Response("", { status: 503 })) as typeof fetch)).errors[0]).toContain("503");
+  });
+
+  it("erkennt geänderten Kataloginhalt ohne Versionsänderung und aktualisiert ausdrücklich", async () => {
+    await restoreStandardSports(catalogFetch());
+    await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }));
+    expect(getStandardCatalogState().statuses.find((status) => status.slug === "test")).toMatchObject({
+      isOutdated: true,
+      isLocallyModified: false,
+    });
+    expect((await db.sports.where("slug").equals("test").first())?.description).toBe("");
+    await updateStandardSport("test");
+    expect((await db.sports.where("slug").equals("test").first())?.description).toBe("Neu");
+    expect(getStandardCatalogState().statuses.find((status) => status.slug === "test")?.isOutdated).toBe(false);
   });
 
   it("blockiert Löschen mit Historie und löscht nach Bestätigung kaskadierend", async () => {

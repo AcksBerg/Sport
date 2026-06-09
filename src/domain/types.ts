@@ -173,6 +173,22 @@ export interface StandardSportsSyncReport {
   errors: string[];
 }
 
+export interface StandardSportStatus {
+  sportId?: string;
+  slug: string;
+  name: string;
+  isStandard: boolean;
+  isOutdated: boolean;
+  isLocallyModified: boolean;
+  hasConflict: boolean;
+}
+
+export interface StandardCatalogState {
+  loaded: boolean;
+  statuses: StandardSportStatus[];
+  report: StandardSportsSyncReport;
+}
+
 export interface SportExchangePackageV1 {
   schemaVersion: 1;
   exportedAt: string;

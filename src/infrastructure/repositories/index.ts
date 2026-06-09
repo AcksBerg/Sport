@@ -1,8 +1,10 @@
 export {
   deleteSport,
+  getStandardCatalogState,
   getLastStandardSportsReport,
   replaceSportWithHistory,
   restoreStandardSports,
+  updateStandardSport,
 } from "../database";
 export { addSport } from "./sports/addSport";
 export { useSport } from "./sports/useSport";

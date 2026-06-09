@@ -5,11 +5,13 @@ import {
   applyPerformanceAdjustments,
   calculateComparisonScore,
   calculateUserProgress,
+  changeAgeBandBoundary,
   determineAutomaticSportCutoffs,
   evaluateSportAttempts,
   findAgeBand,
   getAge,
   getEvaluationAge,
+  normalizeAgeBands,
   removeAgeBand,
   roundScore,
   scoreAttempt,
@@ -418,5 +420,50 @@ describe("Altersbereiche", () => {
         maxAge,
       ]),
     ).toEqual([[0, 100]]);
+  });
+
+  it("schließt bestehende Lücken zugunsten des vorherigen Bereichs", () => {
+    expect(
+      normalizeAgeBands([
+        { id: "young", minAge: 0, maxAge: 26, label: "u26" },
+        { id: "middle", minAge: 27, maxAge: 30, label: "27-39" },
+        { id: "old", minAge: 40, maxAge: 100, label: "ü40" },
+      ]).map(({ minAge, maxAge }) => [minAge, maxAge]),
+    ).toEqual([
+      [0, 26],
+      [27, 39],
+      [40, 100],
+    ]);
+  });
+
+  it("koppelt geänderte Grenzen an den Nachbarbereich", () => {
+    expect(
+      changeAgeBandBoundary(
+        [
+          { id: "young", minAge: 0, maxAge: 30, label: "jung" },
+          { id: "old", minAge: 31, maxAge: 100, label: "alt" },
+        ],
+        "young",
+        "maxAge",
+        39,
+      ).map(({ minAge, maxAge }) => [minAge, maxAge]),
+    ).toEqual([
+      [0, 39],
+      [40, 100],
+    ]);
+  });
+
+  it("lehnt invertierte und doppelte Startgrenzen ab", () => {
+    expect(() =>
+      normalizeAgeBands([
+        { id: "invalid", minAge: 0, maxAge: -1, label: "ungültig" },
+      ]),
+    ).toThrow("invertiert");
+    expect(() =>
+      normalizeAgeBands([
+        { id: "first", minAge: 0, maxAge: 20, label: "eins" },
+        { id: "second", minAge: 0, maxAge: 100, label: "zwei" },
+      ]),
+    ).toThrow("demselben Alter");
   });
 });

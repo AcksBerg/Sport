@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { attemptDateValue, formatAttemptDate, localDateValue } from "@/shared/utils/dates";
-import { deleteAttempt, saveAttempt, useProfile, useSport, useSportAttempts } from "@/infrastructure/repositories";
+import { countSportAttempts, deleteAttempt, deleteSport, saveAttempt, useProfile, useSport, useSportAttempts } from "@/infrastructure/repositories";
 import { createId, type Attempt } from "@/domain";
 import { adjustmentsValid, evaluateSportAttempts } from "@/domain/scoring";
 import { PageTitle, UnitValueInput } from "@/shared/components";
 import { unitLabel } from "@/shared/labels";
 import { formatUnitValue } from "@/shared/utils/units";
+import { createSportPackage } from "@/services/sportExchange";
 export function SportPage() {
   const { slug } = useParams();
   const sport = useSport(slug);
   const attempts = useSportAttempts(sport?.id);
   const profile = useProfile();
+  const navigate = useNavigate();
   const [values, setValues] = useState<Record<string, number>>({});
   const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [editingAttemptId, setEditingAttemptId] = useState<string>();
@@ -92,6 +94,28 @@ export function SportPage() {
     setValues({});
     setSelections({});
   }
+  function exportSport() {
+    const blob = new Blob(
+      [JSON.stringify(createSportPackage(activeSport), null, 2)],
+      { type: "application/json" },
+    );
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${activeSport.slug}.json`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+  async function removeSport() {
+    const historyCount = await countSportAttempts(activeSport.id);
+    const message =
+      historyCount > 0
+        ? `Diese Sportart besitzt ${historyCount} Durchgänge. Sportart und gesamten Verlauf endgültig löschen?`
+        : "Sportart endgültig löschen?";
+    if (!confirm(message)) return;
+    if (await deleteSport(activeSport.id, historyCount > 0))
+      navigate("/sportart");
+  }
   return (
     <>
       <div className="mb-8 flex flex-wrap items-start justify-between gap-3">
@@ -103,9 +127,17 @@ export function SportPage() {
         >
           {sport.name}
         </PageTitle>
-        <Link className="button-secondary" to={`/sportart/${sport.slug}/edit`}>
-          Sportart bearbeiten
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link className="button-secondary" to={`/sportart/${sport.slug}/edit`}>
+            Sportart bearbeiten
+          </Link>
+          <button className="button-secondary" onClick={exportSport}>
+            Sportart exportieren
+          </button>
+          <button className="button-danger" onClick={() => void removeSport()}>
+            Sportart löschen
+          </button>
+        </div>
       </div>
       <section className="card mb-8">
         <h2 className="section-title">

@@ -1,4 +1,12 @@
-import { createId, type Discipline, type Gender } from "@/domain";
+import {
+  changeAgeBandBoundary,
+  normalizeAgeBands,
+  removeAgeBand,
+  splitAgeBand,
+  type Discipline,
+  type Gender,
+} from "@/domain";
+
 export function DisciplineAgeBandsEditor({
   discipline,
   onChange,
@@ -6,27 +14,60 @@ export function DisciplineAgeBandsEditor({
   discipline: Discipline;
   onChange: (discipline: Discipline) => void;
 }) {
-  const updateBands = (ageBands: Discipline["ageBands"]) =>
+  const bands = normalizeAgeBands(discipline.ageBands);
+
+  function updateBands(ageBands: Discipline["ageBands"]) {
     onChange({ ...discipline, ageBands });
-  const add = () => {
-    const band = {
-      id: createId(),
-      minAge: 0,
-      maxAge: 100,
-      label: "Neuer Bereich",
-    };
+  }
+
+  function changeBoundary(
+    id: string,
+    boundary: "minAge" | "maxAge",
+    value: number,
+  ) {
+    try {
+      updateBands(changeAgeBandBoundary(bands, id, boundary, value));
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Ungültige Altersgrenze.");
+    }
+  }
+
+  function split(id: string) {
+    const band = bands.find((item) => item.id === id);
+    if (!band) return;
+    const input = prompt(
+      `Neues Startalter zwischen ${(band.minAge ?? 0) + 1} und ${band.maxAge}:`,
+    );
+    if (input === null) return;
+    const splitAt = Number(input);
+    if (
+      !Number.isInteger(splitAt) ||
+      splitAt <= (band.minAge ?? 0) ||
+      splitAt > (band.maxAge ?? 100)
+    ) {
+      alert("Das Startalter liegt nicht innerhalb dieses Altersbereichs.");
+      return;
+    }
+    const nextBands = splitAgeBand(bands, splitAt);
+    if (nextBands.length === bands.length) {
+      alert("Das Startalter liegt nicht innerhalb dieses Altersbereichs.");
+      return;
+    }
+    const newBand = nextBands.find(
+      (item) => !bands.some((existing) => existing.id === item.id),
+    )!;
     onChange({
       ...discipline,
-      ageBands: [...discipline.ageBands, band],
+      ageBands: normalizeAgeBands(nextBands),
       formulas: [
         ...discipline.formulas,
         ...(["male", "female"] as Gender[]).map((gender) => ({
           gender,
-          ageBandId: band.id,
+          ageBandId: newBand.id,
           formulaValueUnit: "display" as const,
           segments: [
             {
-              id: createId(),
+              id: crypto.randomUUID(),
               from: null,
               to: null,
               kind: "linear" as const,
@@ -41,99 +82,84 @@ export function DisciplineAgeBandsEditor({
         ...(discipline.tables ?? []),
         ...(["male", "female"] as Gender[]).map((gender) => ({
           gender,
-          ageBandId: band.id,
+          ageBandId: newBand.id,
           rows: [],
         })),
       ],
     });
-  };
-  const remove = (id: string) =>
+  }
+
+  function remove(id: string) {
     onChange({
       ...discipline,
-      ageBands: discipline.ageBands.filter((band) => band.id !== id),
+      ageBands: normalizeAgeBands(removeAgeBand(bands, id)),
       formulas: discipline.formulas.filter((rule) => rule.ageBandId !== id),
       tables: discipline.tables?.filter((rule) => rule.ageBandId !== id),
     });
+  }
+
   return (
-    <>
-      <div className="mt-2 grid gap-2 md:grid-cols-3">
-        {discipline.ageBands.map((band) => (
-          <div className="rounded-lg bg-surface-container p-3" key={band.id}>
+    <div className="mt-2 grid gap-2 md:grid-cols-3">
+      {bands.map((band, index) => (
+        <div className="rounded-lg bg-surface-container p-3" key={band.id}>
+          <label>
+            Name
+            <input
+              value={band.label}
+              onChange={(event) =>
+                updateBands(
+                  bands.map((item) =>
+                    item.id === band.id
+                      ? { ...item, label: event.target.value }
+                      : item,
+                  ),
+                )
+              }
+            />
+          </label>
+          <div className="mt-2 grid grid-cols-2 gap-2">
             <label>
-              Name
+              Von
               <input
-                value={band.label}
-                onChange={(e) =>
-                  updateBands(
-                    discipline.ageBands.map((item) =>
-                      item.id === band.id
-                        ? { ...item, label: e.target.value }
-                        : item,
-                    ),
-                  )
+                disabled={index === 0}
+                min="0"
+                max="100"
+                type="number"
+                value={band.minAge ?? 0}
+                onChange={(event) =>
+                  changeBoundary(band.id, "minAge", Number(event.target.value))
                 }
               />
             </label>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <label>
-                Von
-                <input
-                  type="number"
-                  value={band.minAge ?? ""}
-                  onChange={(e) =>
-                    updateBands(
-                      discipline.ageBands.map((item) =>
-                        item.id === band.id
-                          ? {
-                              ...item,
-                              minAge:
-                                e.target.value === ""
-                                  ? null
-                                  : Number(e.target.value),
-                            }
-                          : item,
-                      ),
-                    )
-                  }
-                />
-              </label>
-              <label>
-                Bis
-                <input
-                  type="number"
-                  value={band.maxAge ?? ""}
-                  onChange={(e) =>
-                    updateBands(
-                      discipline.ageBands.map((item) =>
-                        item.id === band.id
-                          ? {
-                              ...item,
-                              maxAge:
-                                e.target.value === ""
-                                  ? null
-                                  : Number(e.target.value),
-                            }
-                          : item,
-                      ),
-                    )
-                  }
-                />
-              </label>
-            </div>
-            {discipline.ageBands.length > 1 && (
+            <label>
+              Bis
+              <input
+                disabled={index === bands.length - 1}
+                min="0"
+                max="100"
+                type="number"
+                value={band.maxAge ?? 100}
+                onChange={(event) =>
+                  changeBoundary(band.id, "maxAge", Number(event.target.value))
+                }
+              />
+            </label>
+          </div>
+          <div className="mt-2 flex gap-3 text-sm font-bold">
+            <button className="underline" onClick={() => split(band.id)}>
+              Teilen
+            </button>
+            {bands.length > 1 && (
               <button
-                className="mt-2 text-sm font-bold text-error underline"
+                className="text-error underline"
                 onClick={() => remove(band.id)}
               >
                 Entfernen
               </button>
             )}
           </div>
-        ))}
-      </div>
-      <button className="button-secondary mt-2" onClick={add}>
-        Altersbereich hinzufügen
-      </button>
-    </>
+        </div>
+      ))}
+    </div>
   );
 }
