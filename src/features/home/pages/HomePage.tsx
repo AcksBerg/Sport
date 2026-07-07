@@ -10,10 +10,14 @@ export function HomePage() {
   );
   return (
     <>
-      <section className="card grid overflow-hidden mb-2 bg-error-container text-on-error-container lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-8">
-        Die Bewertungsgrundlagen sind noch nicht abschließend festgelegt und
-        werden laufend angepasst. Alle Angaben sind ohne Gewähr. Letzte
-        Aktualisierung vom 07.07.2026.
+      <section className="grid overflow-hidden gap-4 mb-4  lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-4">
+        <div className="card bg-error-container text-on-error-container">
+          Die Bewertungsgrundlagen sind nicht abschließend festgelegt und werden
+          laufend angepasst. Alle Angaben sind ohne Gewähr.
+        </div>
+        <div className="card bg-primary-container text-on-primary-container">
+          Letzte Aktualisierung auf Basis Daten <strong>03.07.2026</strong>.
+        </div>
       </section>
       <section className="card grid overflow-hidden bg-primary-container text-on-primary-container lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-8">
         <div>
@@ -41,11 +45,11 @@ export function HomePage() {
         {[
           [
             "Nur auf deinem Gerät",
-            "Profil, Definitionen und Rohleistungen werden ausschließlich in der IndexedDB deines Browsers gespeichert.",
+            "Profil, Definitionen und Rohleistungen werden ausschließlich in deinem Browser gespeichert.",
           ],
           [
             "Immer aktuell",
-            "Punkte werden nicht gespeichert, sondern mit den aktuell konfigurierten Formeln neu berechnet.",
+            "Punkte werden nicht fest gespeichert, sondern mit der aktuell hinterlegten Formeln neu berechnet.",
           ],
         ].map(([title, text]) => (
           <article className="card" key={title}>
