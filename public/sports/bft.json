@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "exportedAt": "2026-06-07T20:14:42.157Z",
+  "exportedAt": "2026-07-07T19:46:31.639Z",
   "sport": {
     "id": "9d932828-fdf3-4a4e-a306-67695bec15aa",
     "slug": "bft",
@@ -29,11 +29,11 @@
         "formulas": [
           {
             "gender": "male",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
             "formulaValueUnit": "display",
             "segments": [
               {
-                "id": "a1d3f782-d52e-441d-be19-a96701a1142f",
+                "id": "9bf63549-42f9-4b49-b8e0-b42890d0c99a",
                 "from": null,
                 "to": null,
                 "kind": "linear",
@@ -45,11 +45,11 @@
           },
           {
             "gender": "female",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
             "formulaValueUnit": "display",
             "segments": [
               {
-                "id": "06412ebe-848a-4950-9831-b9e5587dbea8",
+                "id": "04d6ed48-90b9-47da-99dd-77b886e6bd52",
                 "from": null,
                 "to": null,
                 "kind": "linear",
@@ -62,15 +62,16 @@
         ],
         "automaticPointModifiers": [
           {
-            "id": "c26374a4-9758-4a03-88d3-4ba035c9b12d",
+            "id": "7761d530-9726-47f2-ac91-5cb3983952e7",
             "label": "Altersbonus",
             "kind": "agePercentagePerYear",
             "factor": 0.005,
             "gender": "all",
-            "referenceAge": 35
+            "referenceAge": 34,
+            "minAge": 35
           },
           {
-            "id": "2c905c3f-c5f0-4058-a3d9-83c04928d730",
+            "id": "ab2c8947-cd99-4824-aa08-a4e0b6faccd2",
             "label": "Geschlechtsbonus",
             "kind": "fixedPercentage",
             "factor": 0.15,
@@ -79,7 +80,7 @@
         ],
         "ageBands": [
           {
-            "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "id": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
             "minAge": 0,
             "maxAge": 100,
             "label": "0-100"
@@ -90,12 +91,12 @@
         "tables": [
           {
             "gender": "male",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
             "rows": []
           },
           {
             "gender": "female",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
             "rows": []
           }
         ],
@@ -110,11 +111,11 @@
         "formulas": [
           {
             "gender": "male",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "3f5e7cde-f2a0-4f95-8611-b23764da6126",
             "formulaValueUnit": "display",
             "segments": [
               {
-                "id": "13aa0afa-04d5-4b3c-81c6-91ccf4cff564",
+                "id": "aa440233-145f-4da5-a216-38a55aaaad36",
                 "from": null,
                 "to": null,
                 "kind": "linear",
@@ -126,11 +127,11 @@
           },
           {
             "gender": "female",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "3f5e7cde-f2a0-4f95-8611-b23764da6126",
             "formulaValueUnit": "display",
             "segments": [
               {
-                "id": "08163ad2-e5f4-45d4-8128-619006cedbf0",
+                "id": "73b58c71-93d9-4c61-96d4-916c5010abde",
                 "from": null,
                 "to": null,
                 "kind": "linear",
@@ -143,16 +144,16 @@
         ],
         "automaticPointModifiers": [
           {
-            "id": "d76bd6c5-66f0-43df-8c5b-2f0c21f29f1a",
+            "id": "528a3298-057f-4288-8403-bcd0ce94dfe1",
             "label": "Altersbonus",
             "kind": "agePercentagePerYear",
             "factor": 0.005,
             "gender": "all",
-            "referenceAge": 35,
+            "referenceAge": 34,
             "minAge": 35
           },
           {
-            "id": "1607cab6-eb53-4b28-a4bf-40956a4c33ec",
+            "id": "b46b4c55-8b1a-4027-b10a-f7e38aa64076",
             "label": "Geschlechterbonus",
             "kind": "fixedPercentage",
             "factor": 0.4,
@@ -161,7 +162,7 @@
         ],
         "ageBands": [
           {
-            "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "id": "3f5e7cde-f2a0-4f95-8611-b23764da6126",
             "minAge": 0,
             "maxAge": 100,
             "label": "0-100"
@@ -179,11 +180,11 @@
         "formulas": [
           {
             "gender": "male",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "bc7505e8-aba8-46dd-b17f-3c420626937c",
             "formulaValueUnit": "display",
             "segments": [
               {
-                "id": "356840d7-8fad-4a60-ba99-9d332f0c103b",
+                "id": "e10753ac-55ae-4013-907d-b24453ad9709",
                 "from": null,
                 "to": null,
                 "kind": "linear",
@@ -195,11 +196,11 @@
           },
           {
             "gender": "female",
-            "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "ageBandId": "bc7505e8-aba8-46dd-b17f-3c420626937c",
             "formulaValueUnit": "display",
             "segments": [
               {
-                "id": "a09e9116-7d0a-442c-a002-0eedc4e9966e",
+                "id": "c84c215e-6742-49bd-99be-d3ee6b31307f",
                 "from": null,
                 "to": null,
                 "kind": "linear",
@@ -212,16 +213,16 @@
         ],
         "automaticPointModifiers": [
           {
-            "id": "ead345ed-4c84-43e9-a3ac-7e51c8ae0176",
+            "id": "36092488-9ade-4e52-81bf-c7a78576ca1b",
             "label": "Altersbonus",
             "kind": "agePercentagePerYear",
             "factor": 0.005,
             "gender": "all",
-            "referenceAge": 35,
+            "referenceAge": 34,
             "minAge": 35
           },
           {
-            "id": "6b5206e4-4a8e-4cb9-9831-f2fddb35eb68",
+            "id": "cc497f03-c8d4-45df-a018-4ba32d0d8e3f",
             "label": "Geschlechterbonus",
             "kind": "fixedPercentage",
             "factor": 0.15,
@@ -230,7 +231,7 @@
         ],
         "ageBands": [
           {
-            "id": "9f11d621-3522-4225-bad8-0425ea1cc198",
+            "id": "bc7505e8-aba8-46dd-b17f-3c420626937c",
             "minAge": 0,
             "maxAge": 100,
             "label": "0-100"
@@ -253,6 +254,7 @@
         "b": 0.050143266476,
         "c": 27.485673352436
       }
-    ]
+    ],
+    "standard": true
   }
 }
