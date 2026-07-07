@@ -12,16 +12,18 @@ describe("IndexedDB-Repository", () => {
   beforeEach(async () => { await db.open(); await db.profile.clear(); await db.attempts.clear(); await db.sports.clear(); });
   afterEach(async () => { await db.profile.clear(); await db.attempts.clear(); await db.sports.clear(); });
 
-  it("ergänzt, aktualisiert und schützt lokal bearbeitete Standards", async () => {
+  it("ergänzt fehlende Standards und aktualisiert veraltete Standarddefinitionen", async () => {
     expect((await restoreStandardSports(catalogFetch())).created).toEqual(["Teststandard"]);
     const first = (await db.sports.where("slug").equals("test").first())!;
-    expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }, "2"))).preserved).toEqual(["Teststandard"]);
-    expect((await db.sports.get(first.id))?.description).toBe("");
+    expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }, "2"))).updated).toEqual(["Teststandard"]);
+    expect((await db.sports.get(first.id))?.description).toBe("Neu");
     await db.sports.update(first.id, { name: "Mein Standard" });
-    expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Noch neuer" }, "3"))).preserved).toEqual(["Mein Standard"]);
+    expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Noch neuer" }, "3"))).updated).toEqual(["Teststandard"]);
+    expect((await db.sports.get(first.id))?.description).toBe("Noch neuer");
+    expect((await db.sports.get(first.id))?.name).toBe("Teststandard");
     expect(getStandardCatalogState().statuses.find((status) => status.slug === "test")).toMatchObject({
-      isOutdated: true,
-      isLocallyModified: true,
+      isOutdated: false,
+      isLocallyModified: false,
     });
   });
 
@@ -33,10 +35,10 @@ describe("IndexedDB-Repository", () => {
     await restoreStandardSports(catalogFetch());
     await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }));
     expect(getStandardCatalogState().statuses.find((status) => status.slug === "test")).toMatchObject({
-      isOutdated: true,
+      isOutdated: false,
       isLocallyModified: false,
     });
-    expect((await db.sports.where("slug").equals("test").first())?.description).toBe("");
+    expect((await db.sports.where("slug").equals("test").first())?.description).toBe("Neu");
     await updateStandardSport("test");
     expect((await db.sports.where("slug").equals("test").first())?.description).toBe("Neu");
     expect(getStandardCatalogState().statuses.find((status) => status.slug === "test")?.isOutdated).toBe(false);

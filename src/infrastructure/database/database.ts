@@ -304,8 +304,22 @@ export async function restoreStandardSports(fetcher: typeof fetch = fetch): Prom
       if (!existing.standardSync) {
         if (sportFingerprint(existing) === standard.fingerprint) {
           await db.sports.put(attachStandardSync(existing, standard));
+          report.preserved.push(existing.name);
+        } else {
+          await replaceSportWithHistory(
+            existing.id,
+            prepareStandardUpdate(existing, standard),
+          );
+          report.updated.push(standard.sport.name);
         }
-        report.preserved.push(existing.name);
+        continue;
+      }
+      if (existing.standardSync.sourceFingerprint !== standard.fingerprint) {
+        await replaceSportWithHistory(
+          existing.id,
+          prepareStandardUpdate(existing, standard),
+        );
+        report.updated.push(standard.sport.name);
         continue;
       }
       report.preserved.push(existing.name);

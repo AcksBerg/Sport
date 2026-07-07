@@ -215,7 +215,7 @@ export function SportsPage() {
             className="button-secondary mt-3"
             onClick={() => void restoreStandardSports()}
           >
-            Fehlende Standards wiederherstellen
+            Standards wiederherstellen und aktualisieren
           </button>
         </div>
         <form
