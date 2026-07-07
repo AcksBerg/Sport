@@ -12,7 +12,8 @@ export function HomePage() {
     <>
       <section className="card grid overflow-hidden mb-2 bg-error-container text-on-error-container lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-8">
         Die Bewertungsgrundlagen sind noch nicht abschließend festgelegt und
-        werden laufend angepasst. Alle Angaben sind ohne Gewähr.
+        werden laufend angepasst. Alle Angaben sind ohne Gewähr. Letzte
+        Aktualisierung vom 07.07.2026.
       </section>
       <section className="card grid overflow-hidden bg-primary-container text-on-primary-container lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-8">
         <div>

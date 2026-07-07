@@ -15,6 +15,7 @@ export type AutomaticCutoffMode = "preserveExisting" | "overwriteExisting";
 export type FormulaValueUnit = "internal" | "display";
 export type AutomaticPointModifierKind = "fixedPercentage" | "agePercentagePerYear";
 export type ModifierGender = Gender | "all";
+export type MinimumViolationEffect = "statusOnly" | "zeroComparison";
 
 export interface UserProfile {
   id: "local";
@@ -129,6 +130,8 @@ export interface Discipline {
   name: string;
   unit: Unit;
   maxPoints: number;
+  referenceMaxPoints?: number;
+  capPoints?: boolean;
   minimumPoints?: number;
   cutoff?: CutoffRule;
   scoringMode?: ScoringMode;
@@ -146,6 +149,8 @@ export interface Sport {
   description: string;
   totalMaxPoints: number;
   comparisonMaxPoints?: number;
+  comparisonFormula?: FormulaSegment[];
+  minimumViolationEffect?: MinimumViolationEffect;
   minimumTotalPoints?: number;
   agePolicy?: AgePolicy;
   aggregation: Aggregation;
@@ -234,6 +239,7 @@ export interface AttemptScore {
   disciplineScores: DisciplineScore[];
   total: number | null;
   attemptCutoffTriggered: boolean;
+  disciplineMinimumFailed: boolean;
   passStatus: PassStatus | null;
   failedRequirements: string[];
 }

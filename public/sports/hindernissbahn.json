@@ -1,1255 +1,1284 @@
 {
-    "schemaVersion":  2,
-    "exportedAt":  "2026-06-07T18:21:24.694Z",
-    "sport":  {
-                  "id":  "ee9e7a9c-aa97-4167-984d-4ebb11beb94f",
-                  "slug":  "hindernissbahn",
-                  "name":  "Hindernissbahn",
-                  "description":  "",
-                  "totalMaxPoints":  25,
-                  "comparisonMaxPoints":  50,
-                  "agePolicy":  "attemptDate",
-                  "aggregation":  "sum",
-                  "roundingMode":  "round",
-                  "decimalPlaces":  2,
-                  "ageBands":  [
-                                   {
-                                       "id":  "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
-                                       "minAge":  0,
-                                       "maxAge":  100,
-                                       "label":  "0-100"
-                                   }
-                               ],
-                  "disciplines":  [
-                                      {
-                                          "id":  "de9d6470-55ab-4ff6-a8ec-35aebb9926f4",
-                                          "name":  "Hindernissbahn",
-                                          "unit":  "time",
-                                          "maxPoints":  25,
-                                          "formulas":  [
-                                                           {
-                                                               "gender":  "male",
-                                                               "ageBandId":  "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
-                                                               "segments":  [
-                                                                                {
-                                                                                    "id":  "67c8e2df-09fe-472b-ae70-dbd5677e7de0",
-                                                                                    "from":  null,
-                                                                                    "to":  null,
-                                                                                    "kind":  "linear",
-                                                                                    "a":  0,
-                                                                                    "b":  -277.8,
-                                                                                    "c":  45.778
-                                                                                }
-                                                                            ],
-                                                               "formulaValueUnit":  "display"
-                                                           },
-                                                           {
-                                                               "gender":  "female",
-                                                               "ageBandId":  "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
-                                                               "segments":  [
-                                                                                {
-                                                                                    "id":  "ba2a08fd-6ff4-4802-aa62-20fa7eb45923",
-                                                                                    "from":  null,
-                                                                                    "to":  null,
-                                                                                    "kind":  "linear",
-                                                                                    "a":  0,
-                                                                                    "b":  -209,
-                                                                                    "c":  44.8579
-                                                                                }
-                                                                            ],
-                                                               "formulaValueUnit":  "display"
-                                                           }
-                                                       ],
-                                          "ageBands":  [
-                                                           {
-                                                               "id":  "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
-                                                               "minAge":  0,
-                                                               "maxAge":  100,
-                                                               "label":  "0-100"
-                                                           }
-                                                       ],
-                                          "scoringMode":  "table",
-                                          "tables":  [
-                                                         {
-                                                             "gender":  "male",
-                                                             "ageBandId":  "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
-                                                             "rows":  [
-                                                                          {
-                                                                              "id":  "ed5b369a-97c8-4eb6-ab67-cf759d3b379e",
-                                                                              "from":  null,
-                                                                              "to":  75000,
-                                                                              "points":  25
-                                                                          },
-                                                                          {
-                                                                              "id":  "fe0f8676-5455-4371-ad34-94f218efbb0a",
-                                                                              "from":  75500,
-                                                                              "to":  75990,
-                                                                              "points":  24.86
-                                                                          },
-                                                                          {
-                                                                              "id":  "eedb2f88-b8e1-4349-a39e-8cf3e4327ccb",
-                                                                              "from":  76000,
-                                                                              "to":  76490,
-                                                                              "points":  24.72
-                                                                          },
-                                                                          {
-                                                                              "id":  "6797544f-5f31-4791-a8c2-596774d14aab",
-                                                                              "from":  76500,
-                                                                              "to":  76990,
-                                                                              "points":  24.58
-                                                                          },
-                                                                          {
-                                                                              "id":  "4866dbb0-8333-4240-9db0-bf6773d9f6cd",
-                                                                              "from":  77000,
-                                                                              "to":  77490,
-                                                                              "points":  24.44
-                                                                          },
-                                                                          {
-                                                                              "id":  "f45a9e6f-fcf3-4c2b-8f9b-be049de52d5d",
-                                                                              "from":  77500,
-                                                                              "to":  77990,
-                                                                              "points":  24.31
-                                                                          },
-                                                                          {
-                                                                              "id":  "92b4aae4-05fc-4ea4-bb6e-cfebcd2ad0cd",
-                                                                              "from":  78000,
-                                                                              "to":  78490,
-                                                                              "points":  24.17
-                                                                          },
-                                                                          {
-                                                                              "id":  "675cf146-b775-418e-8d24-df3005e547a5",
-                                                                              "from":  78500,
-                                                                              "to":  78990,
-                                                                              "points":  24.03
-                                                                          },
-                                                                          {
-                                                                              "id":  "adbf2ce8-1b5d-4921-943b-04632bbbc590",
-                                                                              "from":  79000,
-                                                                              "to":  79450,
-                                                                              "points":  23.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "6d8d4f7e-b40f-4c33-a6c1-7c44318233fe",
-                                                                              "from":  79460,
-                                                                              "to":  79990,
-                                                                              "points":  23.76
-                                                                          },
-                                                                          {
-                                                                              "id":  "c698e53e-cedf-4d34-9c0f-905880a99a90",
-                                                                              "from":  80000,
-                                                                              "to":  80490,
-                                                                              "points":  23.61
-                                                                          },
-                                                                          {
-                                                                              "id":  "4ae5a605-60e2-4d5a-afe2-48b6a706d269",
-                                                                              "from":  80500,
-                                                                              "to":  80990,
-                                                                              "points":  23.47
-                                                                          },
-                                                                          {
-                                                                              "id":  "368bf21f-d8b6-452c-ab0f-52736ece7992",
-                                                                              "from":  81000,
-                                                                              "to":  81310,
-                                                                              "points":  23.33
-                                                                          },
-                                                                          {
-                                                                              "id":  "2705aa43-9bcf-4f63-8e93-c2ba76f4867a",
-                                                                              "from":  81320,
-                                                                              "to":  81800,
-                                                                              "points":  23.24
-                                                                          },
-                                                                          {
-                                                                              "id":  "1957fe5c-4df6-4964-af68-371275e47889",
-                                                                              "from":  81810,
-                                                                              "to":  82490,
-                                                                              "points":  23.11
-                                                                          },
-                                                                          {
-                                                                              "id":  "d61eb173-f203-4ded-a4b7-23fbd54990ed",
-                                                                              "from":  82500,
-                                                                              "to":  82990,
-                                                                              "points":  22.92
-                                                                          },
-                                                                          {
-                                                                              "id":  "72d7efd3-f6f3-4202-919b-625eb62cd5a5",
-                                                                              "from":  83000,
-                                                                              "to":  83490,
-                                                                              "points":  22.78
-                                                                          },
-                                                                          {
-                                                                              "id":  "4113425a-8bf2-45d8-92a4-12520b0f67fb",
-                                                                              "from":  83500,
-                                                                              "to":  83990,
-                                                                              "points":  22.64
-                                                                          },
-                                                                          {
-                                                                              "id":  "3d0c9a8c-c8a0-437f-80aa-98e0578f7863",
-                                                                              "from":  84000,
-                                                                              "to":  84490,
-                                                                              "points":  22.5
-                                                                          },
-                                                                          {
-                                                                              "id":  "a0e4b30d-1ea5-4903-bc7e-0df1c0936ae5",
-                                                                              "from":  84500,
-                                                                              "to":  84990,
-                                                                              "points":  22.36
-                                                                          },
-                                                                          {
-                                                                              "id":  "9c2feaf8-1ff7-4bb3-b354-475de983196e",
-                                                                              "from":  85000,
-                                                                              "to":  85490,
-                                                                              "points":  22.22
-                                                                          },
-                                                                          {
-                                                                              "id":  "89840a64-a47a-40a5-8917-d6fe2042d966",
-                                                                              "from":  85500,
-                                                                              "to":  85990,
-                                                                              "points":  22.08
-                                                                          },
-                                                                          {
-                                                                              "id":  "94de91ac-9891-4a2a-bf0a-2f7e55b50561",
-                                                                              "from":  86000,
-                                                                              "to":  86490,
-                                                                              "points":  21.94
-                                                                          },
-                                                                          {
-                                                                              "id":  "7ee1ebfa-657e-440a-bf69-f65184e74c12",
-                                                                              "from":  86500,
-                                                                              "to":  86990,
-                                                                              "points":  21.81
-                                                                          },
-                                                                          {
-                                                                              "id":  "97c6eb6c-6647-4f8b-bc61-fa523d5f7696",
-                                                                              "from":  87000,
-                                                                              "to":  87490,
-                                                                              "points":  21.67
-                                                                          },
-                                                                          {
-                                                                              "id":  "d80a5f03-e576-4eb3-9267-bab0a1f23d0a",
-                                                                              "from":  87500,
-                                                                              "to":  87990,
-                                                                              "points":  21.53
-                                                                          },
-                                                                          {
-                                                                              "id":  "4116c6a2-5284-4d2c-b83b-d4b965da907b",
-                                                                              "from":  88000,
-                                                                              "to":  88470,
-                                                                              "points":  21.39
-                                                                          },
-                                                                          {
-                                                                              "id":  "f052b422-66ae-493f-a549-a62b52792a2d",
-                                                                              "from":  88480,
-                                                                              "to":  88990,
-                                                                              "points":  21.26
-                                                                          },
-                                                                          {
-                                                                              "id":  "ff027d59-7fd7-4ee8-8c04-322eba10eb15",
-                                                                              "from":  89000,
-                                                                              "to":  89490,
-                                                                              "points":  21.11
-                                                                          },
-                                                                          {
-                                                                              "id":  "54301afc-aad7-4a6c-9fd2-3771642f135b",
-                                                                              "from":  89500,
-                                                                              "to":  89990,
-                                                                              "points":  20.97
-                                                                          },
-                                                                          {
-                                                                              "id":  "86f73dcb-5225-46da-b2fe-62b76b919227",
-                                                                              "from":  90000,
-                                                                              "to":  90490,
-                                                                              "points":  20.83
-                                                                          },
-                                                                          {
-                                                                              "id":  "1a193522-87b7-49fd-9353-7c7a058a1e6e",
-                                                                              "from":  90500,
-                                                                              "to":  90990,
-                                                                              "points":  20.69
-                                                                          },
-                                                                          {
-                                                                              "id":  "7c7428da-cd08-496d-93f5-b4b97134b994",
-                                                                              "from":  91000,
-                                                                              "to":  91490,
-                                                                              "points":  20.56
-                                                                          },
-                                                                          {
-                                                                              "id":  "3e3d09d6-5a74-444f-9298-616af1756fb0",
-                                                                              "from":  91500,
-                                                                              "to":  91990,
-                                                                              "points":  20.42
-                                                                          },
-                                                                          {
-                                                                              "id":  "bd4eb7f6-7de2-40e5-9465-a023451e3075",
-                                                                              "from":  92000,
-                                                                              "to":  92490,
-                                                                              "points":  20.28
-                                                                          },
-                                                                          {
-                                                                              "id":  "c4090d5e-20ed-4722-9159-8c04fda61b63",
-                                                                              "from":  92500,
-                                                                              "to":  92990,
-                                                                              "points":  20.14
-                                                                          },
-                                                                          {
-                                                                              "id":  "43eebfbb-d303-4ce0-9fac-a235fed59875",
-                                                                              "from":  93000,
-                                                                              "to":  93490,
-                                                                              "points":  20
-                                                                          },
-                                                                          {
-                                                                              "id":  "bf76d0c1-207f-4b48-8bd6-c3b8d2a7e913",
-                                                                              "from":  93500,
-                                                                              "to":  93990,
-                                                                              "points":  19.86
-                                                                          },
-                                                                          {
-                                                                              "id":  "c18cd1e1-a7f5-4617-9cc0-676d3119792d",
-                                                                              "from":  94000,
-                                                                              "to":  94200,
-                                                                              "points":  19.72
-                                                                          },
-                                                                          {
-                                                                              "id":  "a4e1f964-53d0-41fb-881b-aff887123c4e",
-                                                                              "from":  94210,
-                                                                              "to":  94990,
-                                                                              "points":  19.66
-                                                                          },
-                                                                          {
-                                                                              "id":  "8c6249fd-3e50-481b-932b-29926c5da52c",
-                                                                              "from":  95000,
-                                                                              "to":  95490,
-                                                                              "points":  19.44
-                                                                          },
-                                                                          {
-                                                                              "id":  "67f92af9-0266-4c2d-b1f5-09029ef99a8a",
-                                                                              "from":  95500,
-                                                                              "to":  95990,
-                                                                              "points":  19.31
-                                                                          },
-                                                                          {
-                                                                              "id":  "4b10d3f0-c30c-489e-bc9f-0bebda939197",
-                                                                              "from":  96000,
-                                                                              "to":  96490,
-                                                                              "points":  19.17
-                                                                          },
-                                                                          {
-                                                                              "id":  "b198d73f-47ca-4157-b2e9-a76212f4e39b",
-                                                                              "from":  96500,
-                                                                              "to":  96990,
-                                                                              "points":  19.03
-                                                                          },
-                                                                          {
-                                                                              "id":  "a47cd893-343f-470f-91bc-4065794bdcfd",
-                                                                              "from":  97000,
-                                                                              "to":  97490,
-                                                                              "points":  18.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "b569dc88-d801-41fa-89af-a9f44e25b849",
-                                                                              "from":  97500,
-                                                                              "to":  97990,
-                                                                              "points":  18.75
-                                                                          },
-                                                                          {
-                                                                              "id":  "b3597137-ee18-4048-bcdc-236dfaa29e8c",
-                                                                              "from":  98000,
-                                                                              "to":  98490,
-                                                                              "points":  18.61
-                                                                          },
-                                                                          {
-                                                                              "id":  "823ccf6b-4425-4227-9a1a-dde95598da6a",
-                                                                              "from":  98500,
-                                                                              "to":  98990,
-                                                                              "points":  18.47
-                                                                          },
-                                                                          {
-                                                                              "id":  "9dda1c40-c121-44fa-a814-88173f3debfa",
-                                                                              "from":  99000,
-                                                                              "to":  99490,
-                                                                              "points":  18.33
-                                                                          },
-                                                                          {
-                                                                              "id":  "016d6ab8-3858-4b6d-9809-db8a18a492a4",
-                                                                              "from":  99500,
-                                                                              "to":  99990,
-                                                                              "points":  18.19
-                                                                          },
-                                                                          {
-                                                                              "id":  "e4991eb9-14b6-43cf-a1c6-d11e9efc8d15",
-                                                                              "from":  100000,
-                                                                              "to":  100490,
-                                                                              "points":  18.06
-                                                                          },
-                                                                          {
-                                                                              "id":  "6fdd3964-c545-4619-bb0b-8e9a04a1dcb5",
-                                                                              "from":  100500,
-                                                                              "to":  100990,
-                                                                              "points":  17.92
-                                                                          },
-                                                                          {
-                                                                              "id":  "66fbde35-a903-466e-a8a0-e74309ce91cb",
-                                                                              "from":  101000,
-                                                                              "to":  101490,
-                                                                              "points":  17.78
-                                                                          },
-                                                                          {
-                                                                              "id":  "493a3e86-1d03-4536-8d60-70d49926b2bb",
-                                                                              "from":  101500,
-                                                                              "to":  101990,
-                                                                              "points":  17.64
-                                                                          },
-                                                                          {
-                                                                              "id":  "acd76304-fc8f-40cb-a854-c2b0f941b701",
-                                                                              "from":  102000,
-                                                                              "to":  102490,
-                                                                              "points":  17.5
-                                                                          },
-                                                                          {
-                                                                              "id":  "06621c87-e134-4b18-a09a-f82854976454",
-                                                                              "from":  102500,
-                                                                              "to":  102990,
-                                                                              "points":  17.36
-                                                                          },
-                                                                          {
-                                                                              "id":  "ac924dad-078f-4a7f-ad29-1daab1775659",
-                                                                              "from":  103000,
-                                                                              "to":  103490,
-                                                                              "points":  17.22
-                                                                          },
-                                                                          {
-                                                                              "id":  "c274515b-46f9-40dc-97a7-e74ace148ec4",
-                                                                              "from":  103500,
-                                                                              "to":  103990,
-                                                                              "points":  17.08
-                                                                          },
-                                                                          {
-                                                                              "id":  "9fa16c40-ef5c-44b3-85b9-da3f09b7630d",
-                                                                              "from":  104000,
-                                                                              "to":  104490,
-                                                                              "points":  16.94
-                                                                          },
-                                                                          {
-                                                                              "id":  "f3673717-2f6a-40d9-b9d8-4a7382b35a6f",
-                                                                              "from":  104500,
-                                                                              "to":  104990,
-                                                                              "points":  16.81
-                                                                          },
-                                                                          {
-                                                                              "id":  "1c88bfa6-4533-4e0c-950b-082f19e89bb6",
-                                                                              "from":  105000,
-                                                                              "to":  105490,
-                                                                              "points":  16.67
-                                                                          },
-                                                                          {
-                                                                              "id":  "271c0fea-9a46-4b0f-ae80-48169654285a",
-                                                                              "from":  105500,
-                                                                              "to":  105990,
-                                                                              "points":  16.53
-                                                                          },
-                                                                          {
-                                                                              "id":  "3a9e9382-dc9b-4138-bc8f-dbf82f275450",
-                                                                              "from":  106000,
-                                                                              "to":  106490,
-                                                                              "points":  16.39
-                                                                          },
-                                                                          {
-                                                                              "id":  "1a6796a2-b0e0-486f-ac65-f55770b5c8a9",
-                                                                              "from":  106500,
-                                                                              "to":  107490,
-                                                                              "points":  16.25
-                                                                          },
-                                                                          {
-                                                                              "id":  "df6083b0-82cf-4284-aae0-c0029e85ea78",
-                                                                              "from":  107500,
-                                                                              "to":  113990,
-                                                                              "points":  16.17
-                                                                          },
-                                                                          {
-                                                                              "id":  "1843f001-0b64-49df-92be-bb8c3e9c5c57",
-                                                                              "from":  114000,
-                                                                              "to":  119990,
-                                                                              "points":  15.62
-                                                                          },
-                                                                          {
-                                                                              "id":  "db7f7c59-7389-4af6-a17c-db3be9798d84",
-                                                                              "from":  120000,
-                                                                              "to":  126490,
-                                                                              "points":  15.12
-                                                                          },
-                                                                          {
-                                                                              "id":  "2ba8e97e-d4c3-434b-9d9d-5f0a678fdf28",
-                                                                              "from":  126500,
-                                                                              "to":  133090,
-                                                                              "points":  14.57
-                                                                          },
-                                                                          {
-                                                                              "id":  "70cd760b-91fd-4ff7-b0f0-8424f944ae08",
-                                                                              "from":  133100,
-                                                                              "to":  139690,
-                                                                              "points":  14.02
-                                                                          },
-                                                                          {
-                                                                              "id":  "21d6acda-e0d5-47dc-be73-e40923accf39",
-                                                                              "from":  139700,
-                                                                              "to":  146290,
-                                                                              "points":  13.46
-                                                                          },
-                                                                          {
-                                                                              "id":  "22d5a7fb-b1c5-4bdb-ac8c-7f458578c001",
-                                                                              "from":  146300,
-                                                                              "to":  152890,
-                                                                              "points":  12.91
-                                                                          },
-                                                                          {
-                                                                              "id":  "0f39d487-12f0-40a5-bc06-af8428a4d8fa",
-                                                                              "from":  152900,
-                                                                              "to":  158390,
-                                                                              "points":  12.35
-                                                                          },
-                                                                          {
-                                                                              "id":  "aa9d4e3f-73e1-410d-a36c-512e5bf68885",
-                                                                              "from":  158400,
-                                                                              "to":  164990,
-                                                                              "points":  11.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "a734c9ed-f32a-46d2-93a3-0adc4ba5d3f4",
-                                                                              "from":  165000,
-                                                                              "to":  171590,
-                                                                              "points":  11.34
-                                                                          },
-                                                                          {
-                                                                              "id":  "69a4b030-f58d-488c-9eb5-761ab3d5746c",
-                                                                              "from":  171600,
-                                                                              "to":  178190,
-                                                                              "points":  10.78
-                                                                          },
-                                                                          {
-                                                                              "id":  "9d7ca62c-525b-4ad6-ba81-538f256ec274",
-                                                                              "from":  178200,
-                                                                              "to":  184790,
-                                                                              "points":  10.23
-                                                                          },
-                                                                          {
-                                                                              "id":  "38308419-6404-40e2-bd55-b30fa48033c7",
-                                                                              "from":  184800,
-                                                                              "to":  191390,
-                                                                              "points":  9.67
-                                                                          },
-                                                                          {
-                                                                              "id":  "ec9aeba7-9e05-4adb-9f50-8b20e13a7ea2",
-                                                                              "from":  191400,
-                                                                              "to":  196890,
-                                                                              "points":  9.12
-                                                                          },
-                                                                          {
-                                                                              "id":  "252965f2-9ff7-4749-868e-68b99063b547",
-                                                                              "from":  196900,
-                                                                              "to":  203490,
-                                                                              "points":  8.66
-                                                                          },
-                                                                          {
-                                                                              "id":  "6f872c88-e418-4134-baaf-d21d1e7dc952",
-                                                                              "from":  203500,
-                                                                              "to":  210090,
-                                                                              "points":  8.1
-                                                                          },
-                                                                          {
-                                                                              "id":  "88cd5df4-379b-4721-a450-24345e2bd67b",
-                                                                              "from":  210100,
-                                                                              "to":  216690,
-                                                                              "points":  7.55
-                                                                          },
-                                                                          {
-                                                                              "id":  "3744ee71-9737-4073-959b-8cfcffadf7ae",
-                                                                              "from":  216700,
-                                                                              "to":  223290,
-                                                                              "points":  7
-                                                                          },
-                                                                          {
-                                                                              "id":  "35a7c76a-2b6a-409b-b8be-97ba7ee7c353",
-                                                                              "from":  223300,
-                                                                              "to":  229890,
-                                                                              "points":  6.44
-                                                                          },
-                                                                          {
-                                                                              "id":  "c2e15595-54b0-4864-a9e5-51d839c610bc",
-                                                                              "from":  229900,
-                                                                              "to":  234290,
-                                                                              "points":  5.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "6feb5038-024f-4e82-9c86-a4394cc0144b",
-                                                                              "from":  234300,
-                                                                              "to":  235340,
-                                                                              "points":  5.52
-                                                                          },
-                                                                          {
-                                                                              "id":  "f26fcac0-6cc9-4efd-9560-5c75c824d9ef",
-                                                                              "from":  235350,
-                                                                              "to":  241990,
-                                                                              "points":  5.43
-                                                                          },
-                                                                          {
-                                                                              "id":  "2e81816e-12e2-4a4e-8a0b-99a582d9d494",
-                                                                              "from":  242000,
-                                                                              "to":  248590,
-                                                                              "points":  4.87
-                                                                          },
-                                                                          {
-                                                                              "id":  "c99559c4-74fa-46af-8ec2-0a08ab469c6a",
-                                                                              "from":  248600,
-                                                                              "to":  255190,
-                                                                              "points":  4.32
-                                                                          },
-                                                                          {
-                                                                              "id":  "7bd7edfb-468d-452e-bc76-5ca0f2d39830",
-                                                                              "from":  255200,
-                                                                              "to":  261790,
-                                                                              "points":  3.76
-                                                                          },
-                                                                          {
-                                                                              "id":  "eef24f47-b5f3-4fe0-96d5-215b4af94fb0",
-                                                                              "from":  261800,
-                                                                              "to":  268390,
-                                                                              "points":  3.21
-                                                                          },
-                                                                          {
-                                                                              "id":  "f16b2de7-af6e-4160-93ac-04ac9d20e417",
-                                                                              "from":  268400,
-                                                                              "to":  273890,
-                                                                              "points":  2.65
-                                                                          },
-                                                                          {
-                                                                              "id":  "3f8a0196-4db4-4c1d-a6ca-f6c4669c361d",
-                                                                              "from":  273900,
-                                                                              "to":  280490,
-                                                                              "points":  2.19
-                                                                          },
-                                                                          {
-                                                                              "id":  "db7fa35d-efc3-4fac-9bb3-9cbfb4523a0d",
-                                                                              "from":  280500,
-                                                                              "to":  287090,
-                                                                              "points":  1.64
-                                                                          },
-                                                                          {
-                                                                              "id":  "ca4ebaac-a20d-49fc-adb4-23ec0cb7baf8",
-                                                                              "from":  287100,
-                                                                              "to":  299990,
-                                                                              "points":  1.08
-                                                                          },
-                                                                          {
-                                                                              "id":  "b966b6c6-26a7-4520-a2a0-f48d62d83b58",
-                                                                              "from":  300000,
-                                                                              "to":  null,
-                                                                              "points":  0
-                                                                          }
-                                                                      ]
-                                                         },
-                                                         {
-                                                             "gender":  "female",
-                                                             "ageBandId":  "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
-                                                             "rows":  [
-                                                                          {
-                                                                              "id":  "f7181efb-6405-418f-bb88-0257ef424eb0",
-                                                                              "from":  null,
-                                                                              "to":  95640,
-                                                                              "points":  25
-                                                                          },
-                                                                          {
-                                                                              "id":  "007a5021-3426-410e-b9bf-6729b6dd2cf3",
-                                                                              "from":  95650,
-                                                                              "to":  96290,
-                                                                              "points":  24.86
-                                                                          },
-                                                                          {
-                                                                              "id":  "2808693e-a3ca-4f40-bce3-5df26886ff91",
-                                                                              "from":  96300,
-                                                                              "to":  96940,
-                                                                              "points":  24.72
-                                                                          },
-                                                                          {
-                                                                              "id":  "6948bd71-77df-484a-aa0d-fd7e9a6777c9",
-                                                                              "from":  96950,
-                                                                              "to":  97580,
-                                                                              "points":  24.58
-                                                                          },
-                                                                          {
-                                                                              "id":  "6758f810-5f23-4565-943b-6be734b79f18",
-                                                                              "from":  97590,
-                                                                              "to":  98230,
-                                                                              "points":  24.44
-                                                                          },
-                                                                          {
-                                                                              "id":  "70d1315d-07e2-4737-9be3-b8cf3bced0f5",
-                                                                              "from":  98240,
-                                                                              "to":  98880,
-                                                                              "points":  24.31
-                                                                          },
-                                                                          {
-                                                                              "id":  "8fc2acbe-98ec-4851-9c8a-bbfb5ad89323",
-                                                                              "from":  98890,
-                                                                              "to":  99530,
-                                                                              "points":  24.17
-                                                                          },
-                                                                          {
-                                                                              "id":  "e4d8f913-1c2f-48e0-b974-9e6b7271c4d9",
-                                                                              "from":  99540,
-                                                                              "to":  100180,
-                                                                              "points":  24.03
-                                                                          },
-                                                                          {
-                                                                              "id":  "0f48e6d9-b811-4111-b950-d98bb259ac91",
-                                                                              "from":  100190,
-                                                                              "to":  100890,
-                                                                              "points":  23.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "331cd936-9b0b-4079-ad88-632c5a527502",
-                                                                              "from":  100900,
-                                                                              "to":  101540,
-                                                                              "points":  23.76
-                                                                          },
-                                                                          {
-                                                                              "id":  "98492f18-82f8-4900-8484-d8c64aa2dad1",
-                                                                              "from":  101550,
-                                                                              "to":  102180,
-                                                                              "points":  23.61
-                                                                          },
-                                                                          {
-                                                                              "id":  "4a985d65-57f9-41cb-a620-69e4dc89e8d2",
-                                                                              "from":  102190,
-                                                                              "to":  102830,
-                                                                              "points":  23.47
-                                                                          },
-                                                                          {
-                                                                              "id":  "ef401330-aeb7-4a0c-bfbf-052562236813",
-                                                                              "from":  102840,
-                                                                              "to":  103480,
-                                                                              "points":  23.33
-                                                                          },
-                                                                          {
-                                                                              "id":  "9f430db8-0aa2-4c13-8965-657e8d3afa00",
-                                                                              "from":  103490,
-                                                                              "to":  104140,
-                                                                              "points":  23.24
-                                                                          },
-                                                                          {
-                                                                              "id":  "cb30813e-e3fb-471c-9d0b-0eeae7f0a08c",
-                                                                              "from":  104150,
-                                                                              "to":  104810,
-                                                                              "points":  23.11
-                                                                          },
-                                                                          {
-                                                                              "id":  "6374507d-0e2d-4ed4-aae2-fb6b54464f67",
-                                                                              "from":  104820,
-                                                                              "to":  105470,
-                                                                              "points":  22.92
-                                                                          },
-                                                                          {
-                                                                              "id":  "bcc78669-9e0e-43ed-8a68-ecc635622c97",
-                                                                              "from":  105480,
-                                                                              "to":  106130,
-                                                                              "points":  22.78
-                                                                          },
-                                                                          {
-                                                                              "id":  "f4c2a72d-1206-4c6a-89b6-7aa620d222bc",
-                                                                              "from":  106140,
-                                                                              "to":  106790,
-                                                                              "points":  22.64
-                                                                          },
-                                                                          {
-                                                                              "id":  "f6b5f454-2af8-4630-881f-f9533572eaa7",
-                                                                              "from":  106800,
-                                                                              "to":  107460,
-                                                                              "points":  22.5
-                                                                          },
-                                                                          {
-                                                                              "id":  "fcba35bd-7fc8-4d0d-af44-c1d8ad115c7d",
-                                                                              "from":  107470,
-                                                                              "to":  108120,
-                                                                              "points":  22.36
-                                                                          },
-                                                                          {
-                                                                              "id":  "ce44a6b0-8404-4a65-bc8b-da9a078f4526",
-                                                                              "from":  108130,
-                                                                              "to":  108780,
-                                                                              "points":  22.22
-                                                                          },
-                                                                          {
-                                                                              "id":  "27fb7bb0-bee2-4444-85e1-e912baf8041a",
-                                                                              "from":  108790,
-                                                                              "to":  109440,
-                                                                              "points":  22.08
-                                                                          },
-                                                                          {
-                                                                              "id":  "cec009a4-c7f0-49cb-a616-f5b52d810a75",
-                                                                              "from":  109450,
-                                                                              "to":  110100,
-                                                                              "points":  21.94
-                                                                          },
-                                                                          {
-                                                                              "id":  "f996c43a-e934-44f2-8660-6ddc853e9984",
-                                                                              "from":  110110,
-                                                                              "to":  110770,
-                                                                              "points":  21.81
-                                                                          },
-                                                                          {
-                                                                              "id":  "274c5abf-99c4-4328-be27-4f03b3fa5390",
-                                                                              "from":  110780,
-                                                                              "to":  111430,
-                                                                              "points":  21.67
-                                                                          },
-                                                                          {
-                                                                              "id":  "49c5599e-823d-4263-aabd-dfc6cedfe028",
-                                                                              "from":  111440,
-                                                                              "to":  112090,
-                                                                              "points":  21.53
-                                                                          },
-                                                                          {
-                                                                              "id":  "d512967c-0f67-49a8-9774-b2cf00efe8f5",
-                                                                              "from":  112100,
-                                                                              "to":  112950,
-                                                                              "points":  21.39
-                                                                          },
-                                                                          {
-                                                                              "id":  "716cb673-854a-4f67-9a9b-d10077350f73",
-                                                                              "from":  112960,
-                                                                              "to":  113610,
-                                                                              "points":  21.26
-                                                                          },
-                                                                          {
-                                                                              "id":  "2b6173d1-b6e7-4307-8cf5-e37117179ba3",
-                                                                              "from":  113620,
-                                                                              "to":  114280,
-                                                                              "points":  21.11
-                                                                          },
-                                                                          {
-                                                                              "id":  "ed01f969-c6bc-4bf3-bd84-2110759b1675",
-                                                                              "from":  114290,
-                                                                              "to":  114940,
-                                                                              "points":  20.97
-                                                                          },
-                                                                          {
-                                                                              "id":  "8bb0bf74-3e92-4fbd-891f-dc74d8290546",
-                                                                              "from":  114950,
-                                                                              "to":  115600,
-                                                                              "points":  20.83
-                                                                          },
-                                                                          {
-                                                                              "id":  "317efaae-3cfe-40b9-9b43-66d138601730",
-                                                                              "from":  115610,
-                                                                              "to":  116260,
-                                                                              "points":  20.69
-                                                                          },
-                                                                          {
-                                                                              "id":  "87b74527-7044-4f99-83c6-0513c71dc11d",
-                                                                              "from":  116270,
-                                                                              "to":  116930,
-                                                                              "points":  20.56
-                                                                          },
-                                                                          {
-                                                                              "id":  "ef243a98-5347-44be-af95-3dbf68b566b8",
-                                                                              "from":  116940,
-                                                                              "to":  117590,
-                                                                              "points":  20.42
-                                                                          },
-                                                                          {
-                                                                              "id":  "a812d975-0941-42f8-b78b-1538c37ec448",
-                                                                              "from":  117600,
-                                                                              "to":  118250,
-                                                                              "points":  20.28
-                                                                          },
-                                                                          {
-                                                                              "id":  "e27ee747-a4ae-46d5-9840-7eb1b2630f9d",
-                                                                              "from":  118260,
-                                                                              "to":  118910,
-                                                                              "points":  20.14
-                                                                          },
-                                                                          {
-                                                                              "id":  "b94f069f-771e-4609-a350-3422c43a3a21",
-                                                                              "from":  118920,
-                                                                              "to":  119570,
-                                                                              "points":  20
-                                                                          },
-                                                                          {
-                                                                              "id":  "9351e7cd-031b-4241-b528-5bcc10167349",
-                                                                              "from":  119580,
-                                                                              "to":  120240,
-                                                                              "points":  19.86
-                                                                          },
-                                                                          {
-                                                                              "id":  "f06f2545-d46b-4022-b401-50d15995a0f6",
-                                                                              "from":  120250,
-                                                                              "to":  120900,
-                                                                              "points":  19.72
-                                                                          },
-                                                                          {
-                                                                              "id":  "bd2f4638-eb29-491a-a700-b220d9c8d959",
-                                                                              "from":  120910,
-                                                                              "to":  121590,
-                                                                              "points":  19.66
-                                                                          },
-                                                                          {
-                                                                              "id":  "03001989-e72d-43c2-8c15-713287931e43",
-                                                                              "from":  121600,
-                                                                              "to":  122280,
-                                                                              "points":  19.44
-                                                                          },
-                                                                          {
-                                                                              "id":  "9f73f053-4a31-4b27-98cf-f9c4eb937455",
-                                                                              "from":  122290,
-                                                                              "to":  122970,
-                                                                              "points":  19.31
-                                                                          },
-                                                                          {
-                                                                              "id":  "a670cdfb-3d4f-43ee-bfca-e102d06d6fc6",
-                                                                              "from":  122980,
-                                                                              "to":  123650,
-                                                                              "points":  19.17
-                                                                          },
-                                                                          {
-                                                                              "id":  "91f63897-18ee-4275-8392-3e5271ebd2ad",
-                                                                              "from":  123660,
-                                                                              "to":  124340,
-                                                                              "points":  19.03
-                                                                          },
-                                                                          {
-                                                                              "id":  "ee178233-2f07-42f6-821f-fc3b7373ac09",
-                                                                              "from":  124350,
-                                                                              "to":  125030,
-                                                                              "points":  18.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "1a288f1a-0e3c-42d7-97ee-68b2b5675365",
-                                                                              "from":  125040,
-                                                                              "to":  125720,
-                                                                              "points":  18.75
-                                                                          },
-                                                                          {
-                                                                              "id":  "96e4099b-fe7f-4079-beaf-c43366f05ed7",
-                                                                              "from":  125730,
-                                                                              "to":  126410,
-                                                                              "points":  18.61
-                                                                          },
-                                                                          {
-                                                                              "id":  "7672950b-3303-4810-8ad7-b9b649c30a2c",
-                                                                              "from":  126420,
-                                                                              "to":  127100,
-                                                                              "points":  18.47
-                                                                          },
-                                                                          {
-                                                                              "id":  "740046e3-d779-4fe7-8deb-8c329cbd9b31",
-                                                                              "from":  127110,
-                                                                              "to":  127790,
-                                                                              "points":  18.33
-                                                                          },
-                                                                          {
-                                                                              "id":  "ef1df694-391a-498b-b3fc-83954c477ea5",
-                                                                              "from":  127800,
-                                                                              "to":  128480,
-                                                                              "points":  18.19
-                                                                          },
-                                                                          {
-                                                                              "id":  "743f97e6-6a60-462b-a9e9-6e943c2b6443",
-                                                                              "from":  128490,
-                                                                              "to":  129160,
-                                                                              "points":  18.06
-                                                                          },
-                                                                          {
-                                                                              "id":  "19d897dc-2b44-43ac-8457-5ce6feaf5e55",
-                                                                              "from":  129170,
-                                                                              "to":  129850,
-                                                                              "points":  17.92
-                                                                          },
-                                                                          {
-                                                                              "id":  "ebf9c7ed-abb1-4f10-90ac-754ffc883bd4",
-                                                                              "from":  129860,
-                                                                              "to":  130540,
-                                                                              "points":  17.78
-                                                                          },
-                                                                          {
-                                                                              "id":  "e372a5fa-c2ed-41a6-aefa-2454a631e178",
-                                                                              "from":  130550,
-                                                                              "to":  131230,
-                                                                              "points":  17.64
-                                                                          },
-                                                                          {
-                                                                              "id":  "c86d0fa8-7c39-4a21-95e4-48010448dd5c",
-                                                                              "from":  131240,
-                                                                              "to":  131920,
-                                                                              "points":  17.5
-                                                                          },
-                                                                          {
-                                                                              "id":  "de4600d2-0784-4d09-b9cb-f37cbce0f085",
-                                                                              "from":  131930,
-                                                                              "to":  132610,
-                                                                              "points":  17.36
-                                                                          },
-                                                                          {
-                                                                              "id":  "4c649b00-658c-4f72-a3b9-817e07c9a561",
-                                                                              "from":  132620,
-                                                                              "to":  133300,
-                                                                              "points":  17.22
-                                                                          },
-                                                                          {
-                                                                              "id":  "16817bab-1f82-4152-ab08-ebe71991ed23",
-                                                                              "from":  133310,
-                                                                              "to":  133990,
-                                                                              "points":  17.08
-                                                                          },
-                                                                          {
-                                                                              "id":  "ef3abb32-8ef0-4bf1-a14e-ef0ed1f84a1e",
-                                                                              "from":  134000,
-                                                                              "to":  134680,
-                                                                              "points":  16.94
-                                                                          },
-                                                                          {
-                                                                              "id":  "604efe7f-46ac-45cf-ad9a-66e5bc6e3e22",
-                                                                              "from":  134690,
-                                                                              "to":  135360,
-                                                                              "points":  16.81
-                                                                          },
-                                                                          {
-                                                                              "id":  "902d81e7-e375-4791-b6b1-a10b8a14ec33",
-                                                                              "from":  135370,
-                                                                              "to":  136050,
-                                                                              "points":  16.67
-                                                                          },
-                                                                          {
-                                                                              "id":  "0e0ebebc-5672-4907-af37-b7df299df923",
-                                                                              "from":  136060,
-                                                                              "to":  136740,
-                                                                              "points":  16.53
-                                                                          },
-                                                                          {
-                                                                              "id":  "afa45a22-77e4-4952-81be-480aac8a4bac",
-                                                                              "from":  136750,
-                                                                              "to":  137430,
-                                                                              "points":  16.39
-                                                                          },
-                                                                          {
-                                                                              "id":  "b0ce9862-e815-4e12-99d9-8de39268f261",
-                                                                              "from":  137440,
-                                                                              "to":  138780,
-                                                                              "points":  16.25
-                                                                          },
-                                                                          {
-                                                                              "id":  "5066ea7e-8c9c-4686-a420-f8403c78fc24",
-                                                                              "from":  138790,
-                                                                              "to":  147340,
-                                                                              "points":  16.17
-                                                                          },
-                                                                          {
-                                                                              "id":  "988fa6b8-c1f4-4f0a-8172-a7223440fd17",
-                                                                              "from":  147350,
-                                                                              "to":  155250,
-                                                                              "points":  15.62
-                                                                          },
-                                                                          {
-                                                                              "id":  "8374032d-2ddc-47d6-ac7d-b80c5f85876d",
-                                                                              "from":  155260,
-                                                                              "to":  163470,
-                                                                              "points":  15.12
-                                                                          },
-                                                                          {
-                                                                              "id":  "6843fc43-1f51-4053-8a3f-37c4f44b7940",
-                                                                              "from":  163480,
-                                                                              "to":  170520,
-                                                                              "points":  14.57
-                                                                          },
-                                                                          {
-                                                                              "id":  "b9b1a950-c83d-4366-a209-643636e11660",
-                                                                              "from":  170530,
-                                                                              "to":  177560,
-                                                                              "points":  14.02
-                                                                          },
-                                                                          {
-                                                                              "id":  "63393977-0998-4978-9749-12bf372acdab",
-                                                                              "from":  177570,
-                                                                              "to":  184610,
-                                                                              "points":  13.46
-                                                                          },
-                                                                          {
-                                                                              "id":  "82bc06a0-246e-4be6-b21c-9aa41556d53f",
-                                                                              "from":  184620,
-                                                                              "to":  191650,
-                                                                              "points":  12.91
-                                                                          },
-                                                                          {
-                                                                              "id":  "756d3b51-81d9-44a6-bcf8-ec7cbe4bb73f",
-                                                                              "from":  191660,
-                                                                              "to":  197530,
-                                                                              "points":  12.35
-                                                                          },
-                                                                          {
-                                                                              "id":  "be715810-901b-4776-ad87-245d710bddc6",
-                                                                              "from":  197540,
-                                                                              "to":  204570,
-                                                                              "points":  11.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "ffdfeb3f-9258-4b97-ae5d-85a71f353c4a",
-                                                                              "from":  204580,
-                                                                              "to":  211620,
-                                                                              "points":  11.34
-                                                                          },
-                                                                          {
-                                                                              "id":  "6eee55e1-d536-4c35-9a70-a2921028a7e7",
-                                                                              "from":  211630,
-                                                                              "to":  218660,
-                                                                              "points":  10.78
-                                                                          },
-                                                                          {
-                                                                              "id":  "b179f364-aad5-4b2b-92ff-13eaa1815449",
-                                                                              "from":  218670,
-                                                                              "to":  225710,
-                                                                              "points":  10.23
-                                                                          },
-                                                                          {
-                                                                              "id":  "fc5220ba-6e27-4175-85b3-c2de3c45a0fd",
-                                                                              "from":  225720,
-                                                                              "to":  232760,
-                                                                              "points":  9.67
-                                                                          },
-                                                                          {
-                                                                              "id":  "7c575c2b-5ae2-49b2-9592-dc0101a66280",
-                                                                              "from":  232770,
-                                                                              "to":  238630,
-                                                                              "points":  9.12
-                                                                          },
-                                                                          {
-                                                                              "id":  "8013727b-3f32-4ed2-a3dc-2045c4d9240f",
-                                                                              "from":  238640,
-                                                                              "to":  245680,
-                                                                              "points":  8.66
-                                                                          },
-                                                                          {
-                                                                              "id":  "318f10e2-9246-45c6-b0f6-7d0c50d8453b",
-                                                                              "from":  245690,
-                                                                              "to":  252720,
-                                                                              "points":  8.1
-                                                                          },
-                                                                          {
-                                                                              "id":  "c2ef791e-eaf2-45e0-b56e-99506441d39a",
-                                                                              "from":  252730,
-                                                                              "to":  259770,
-                                                                              "points":  7.55
-                                                                          },
-                                                                          {
-                                                                              "id":  "74c30ae1-9228-4a4d-8653-40bda60083b2",
-                                                                              "from":  259780,
-                                                                              "to":  266810,
-                                                                              "points":  7
-                                                                          },
-                                                                          {
-                                                                              "id":  "593a77c1-97d4-4479-a62b-a45660f7f59c",
-                                                                              "from":  266820,
-                                                                              "to":  273860,
-                                                                              "points":  6.44
-                                                                          },
-                                                                          {
-                                                                              "id":  "310612b1-a3f1-4c84-bc96-b08f13467c22",
-                                                                              "from":  273870,
-                                                                              "to":  278560,
-                                                                              "points":  5.89
-                                                                          },
-                                                                          {
-                                                                              "id":  "56fa2ad2-aa2e-48e3-8895-56290d27a44b",
-                                                                              "from":  278570,
-                                                                              "to":  279730,
-                                                                              "points":  5.52
-                                                                          },
-                                                                          {
-                                                                              "id":  "9edfcbb6-9158-4bb3-b234-c30ae5885c79",
-                                                                              "from":  279740,
-                                                                              "to":  286820,
-                                                                              "points":  5.43
-                                                                          },
-                                                                          {
-                                                                              "id":  "21561d5b-cb38-4cc3-8cf3-612f8525b2c3",
-                                                                              "from":  286830,
-                                                                              "to":  294000,
-                                                                              "points":  4.87
-                                                                          },
-                                                                          {
-                                                                              "id":  "e4655525-b052-4cda-a05a-75b229b65f01",
-                                                                              "from":  294010,
-                                                                              "to":  301180,
-                                                                              "points":  4.32
-                                                                          },
-                                                                          {
-                                                                              "id":  "393204d1-d794-4aa5-97bc-ba090a9c3660",
-                                                                              "from":  301190,
-                                                                              "to":  308360,
-                                                                              "points":  3.76
-                                                                          },
-                                                                          {
-                                                                              "id":  "4a7b7c4a-40c7-4ffa-9772-17f6dace0efd",
-                                                                              "from":  308370,
-                                                                              "to":  315540,
-                                                                              "points":  3.21
-                                                                          },
-                                                                          {
-                                                                              "id":  "5e4f10f0-b411-454c-b1e2-4dc81c29bae0",
-                                                                              "from":  315550,
-                                                                              "to":  321530,
-                                                                              "points":  2.65
-                                                                          },
-                                                                          {
-                                                                              "id":  "a0a69170-aa8c-4b5b-b77d-131480292e95",
-                                                                              "from":  321540,
-                                                                              "to":  328710,
-                                                                              "points":  2.19
-                                                                          },
-                                                                          {
-                                                                              "id":  "10a55cab-e87b-45c1-b096-958b2030c573",
-                                                                              "from":  328720,
-                                                                              "to":  335890,
-                                                                              "points":  1.64
-                                                                          },
-                                                                          {
-                                                                              "id":  "6462d7b4-dddf-4e0b-8841-88d655b79ff2",
-                                                                              "from":  335900,
-                                                                              "to":  350250,
-                                                                              "points":  1.08
-                                                                          },
-                                                                          {
-                                                                              "id":  "beee0e29-9011-479f-8a51-1eb81d5fec9a",
-                                                                              "from":  350260,
-                                                                              "to":  null,
-                                                                              "points":  0
-                                                                          }
-                                                                      ]
-                                                         }
-                                                     ],
-                                          "adjustmentGroups":  [
-                                                                   {
-                                                                       "id":  "4f4379fd-fba2-4441-a510-db637f3b47a3",
-                                                                       "label":  "Alle Hindernisse überwunden",
-                                                                       "required":  true,
-                                                                       "target":  "performance",
-                                                                       "options":  [
-                                                                                       {
-                                                                                           "id":  "2b1bc1b2-1020-4681-a7b6-68d771cc78d6",
-                                                                                           "label":  "Alle überwunden",
-                                                                                           "valueAdjustment":  10.79,
-                                                                                           "effect":  "minimumPoints"
-                                                                                       },
-                                                                                       {
-                                                                                           "id":  "1b520d2a-e167-4a1a-980e-7bcbdf7e095d",
-                                                                                           "label":  "NICHT alle überwunden",
-                                                                                           "valueAdjustment":  0,
-                                                                                           "effect":  "maximumPoints"
-                                                                                       }
-                                                                                   ]
-                                                                   }
-                                                               ],
-                                          "automaticPointModifiers":  [
-
-                                                                      ]
-                                      }
-                                  ],
-                  "minimumTotalPoints":  10
+  "schemaVersion": 2,
+  "exportedAt": "2026-07-07T17:57:07.581Z",
+  "sport": {
+    "id": "ee9e7a9c-aa97-4167-984d-4ebb11beb94f",
+    "slug": "hindernissbahn",
+    "name": "Hindernissbahn",
+    "description": "",
+    "totalMaxPoints": 50,
+    "comparisonMaxPoints": 50,
+    "agePolicy": "attemptDate",
+    "aggregation": "sum",
+    "roundingMode": "round",
+    "decimalPlaces": 2,
+    "ageBands": [
+      {
+        "id": "829e71a6-b40e-4502-b60e-0b6ae13e2c0b",
+        "minAge": 0,
+        "maxAge": 100,
+        "label": "0-100"
+      }
+    ],
+    "disciplines": [
+      {
+        "id": "de9d6470-55ab-4ff6-a8ec-35aebb9926f4",
+        "name": "Hindernissbahn",
+        "unit": "time",
+        "maxPoints": 50,
+        "formulas": [
+          {
+            "gender": "male",
+            "ageBandId": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "segments": [
+              {
+                "id": "2332264d-e811-4cc8-a3ba-a72a9c03aaaa",
+                "from": null,
+                "to": 120000,
+                "kind": "linear",
+                "a": 0,
+                "b": -0.3888888888888889,
+                "c": 79.16666666666667
+              },
+              {
+                "id": "a704f3bb-88bc-4205-ad7d-de01deb4a915",
+                "from": 120010,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": -0.18055555555555555,
+                "c": 54.16666666666667
               }
+            ],
+            "formulaValueUnit": "display"
+          },
+          {
+            "gender": "female",
+            "ageBandId": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "segments": [
+              {
+                "id": "5c4183ac-1213-4f64-b261-b716169c2a1e",
+                "from": null,
+                "to": 155000,
+                "kind": "linear",
+                "a": 0,
+                "b": -0.2916666666666667,
+                "c": 77.70833333333334
+              },
+              {
+                "id": "29ed933e-03a3-41cb-af1b-aeeb2d690816",
+                "from": 155010,
+                "to": null,
+                "kind": "linear",
+                "a": 0,
+                "b": -0.16666666666666666,
+                "c": 58.33333333333333
+              }
+            ],
+            "formulaValueUnit": "display"
+          }
+        ],
+        "ageBands": [
+          {
+            "id": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "minAge": 0,
+            "maxAge": 100,
+            "label": "0-100"
+          }
+        ],
+        "scoringMode": "formula",
+        "tables": [
+          {
+            "gender": "male",
+            "ageBandId": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "rows": [
+              {
+                "id": "b003a277-d158-4018-8d67-429848074a85",
+                "from": null,
+                "to": 75000,
+                "points": 25
+              },
+              {
+                "id": "18d6b403-c47a-47da-96a2-bef4a382f44b",
+                "from": 75500,
+                "to": 75990,
+                "points": 24.86
+              },
+              {
+                "id": "a83ea8e5-f696-49df-a295-18e62f86ff36",
+                "from": 76000,
+                "to": 76490,
+                "points": 24.72
+              },
+              {
+                "id": "69c23c8f-3f2d-4f5d-9f42-e4e0bf608983",
+                "from": 76500,
+                "to": 76990,
+                "points": 24.58
+              },
+              {
+                "id": "4624e731-ef35-472c-af3a-10049fcbf17c",
+                "from": 77000,
+                "to": 77490,
+                "points": 24.44
+              },
+              {
+                "id": "d80677e8-c56a-468a-98f6-797331377247",
+                "from": 77500,
+                "to": 77990,
+                "points": 24.31
+              },
+              {
+                "id": "93e71f39-e492-4a08-9ae3-4f9dff349a38",
+                "from": 78000,
+                "to": 78490,
+                "points": 24.17
+              },
+              {
+                "id": "70f24d2e-f7e2-4a9c-b810-86d38cf17b3f",
+                "from": 78500,
+                "to": 78990,
+                "points": 24.03
+              },
+              {
+                "id": "9e0440a3-1818-493a-814a-86229b5a10c5",
+                "from": 79000,
+                "to": 79450,
+                "points": 23.89
+              },
+              {
+                "id": "2726a8d1-ec33-48a7-912b-80f73d24480e",
+                "from": 79460,
+                "to": 79990,
+                "points": 23.76
+              },
+              {
+                "id": "170b01a9-73be-4171-bdb9-2084a79ba6a3",
+                "from": 80000,
+                "to": 80490,
+                "points": 23.61
+              },
+              {
+                "id": "3273f695-6118-42f5-8112-4ccafab1c98c",
+                "from": 80500,
+                "to": 80990,
+                "points": 23.47
+              },
+              {
+                "id": "cd16bd85-6a34-42ce-ba86-23d697fba038",
+                "from": 81000,
+                "to": 81310,
+                "points": 23.33
+              },
+              {
+                "id": "1e19b9ad-b07d-414b-8eab-d054929978d9",
+                "from": 81320,
+                "to": 81800,
+                "points": 23.24
+              },
+              {
+                "id": "84badd3d-ef99-4b87-af11-9ea5e10d9de1",
+                "from": 81810,
+                "to": 82490,
+                "points": 23.11
+              },
+              {
+                "id": "61e6a553-a142-4c82-a231-bc553a4f53fc",
+                "from": 82500,
+                "to": 82990,
+                "points": 22.92
+              },
+              {
+                "id": "d2f8155b-157c-45f6-a9f8-4f6ae821b693",
+                "from": 83000,
+                "to": 83490,
+                "points": 22.78
+              },
+              {
+                "id": "b754e19b-b3fd-4024-af70-2aae9a53d52f",
+                "from": 83500,
+                "to": 83990,
+                "points": 22.64
+              },
+              {
+                "id": "a6494e46-1752-43c9-bd33-d37a216522f7",
+                "from": 84000,
+                "to": 84490,
+                "points": 22.5
+              },
+              {
+                "id": "2b56ce5b-9399-455d-acaf-f331a3da43e4",
+                "from": 84500,
+                "to": 84990,
+                "points": 22.36
+              },
+              {
+                "id": "f77aacef-2b3c-476e-85b0-038117249e64",
+                "from": 85000,
+                "to": 85490,
+                "points": 22.22
+              },
+              {
+                "id": "308fadb1-c664-4d03-b2e3-610ae89af915",
+                "from": 85500,
+                "to": 85990,
+                "points": 22.08
+              },
+              {
+                "id": "cec24501-ce7b-4360-a747-71b3905b7bb0",
+                "from": 86000,
+                "to": 86490,
+                "points": 21.94
+              },
+              {
+                "id": "ff832f9d-990e-4717-9a86-4b127c01879a",
+                "from": 86500,
+                "to": 86990,
+                "points": 21.81
+              },
+              {
+                "id": "04b81bde-0e1b-4c0d-b8a7-7c618c1732fd",
+                "from": 87000,
+                "to": 87490,
+                "points": 21.67
+              },
+              {
+                "id": "25ef0343-2fb4-4d50-954d-4616bd4debca",
+                "from": 87500,
+                "to": 87990,
+                "points": 21.53
+              },
+              {
+                "id": "e0408101-c2f2-4a18-a895-0a1369500b0d",
+                "from": 88000,
+                "to": 88470,
+                "points": 21.39
+              },
+              {
+                "id": "b7d6005b-464a-4b20-8941-37cf4ae21343",
+                "from": 88480,
+                "to": 88990,
+                "points": 21.26
+              },
+              {
+                "id": "7fe7ed63-a18e-4b06-bbab-4b31a09a8c8a",
+                "from": 89000,
+                "to": 89490,
+                "points": 21.11
+              },
+              {
+                "id": "70e96988-f8db-4b63-a70c-d1aa3daa4ee1",
+                "from": 89500,
+                "to": 89990,
+                "points": 20.97
+              },
+              {
+                "id": "76a9741e-dc86-4d9f-ac04-f6604b5215af",
+                "from": 90000,
+                "to": 90490,
+                "points": 20.83
+              },
+              {
+                "id": "903c3c0e-de86-49ba-a489-b13954d25522",
+                "from": 90500,
+                "to": 90990,
+                "points": 20.69
+              },
+              {
+                "id": "9b82afcd-ae41-4d58-b03d-e6c3943f1c32",
+                "from": 91000,
+                "to": 91490,
+                "points": 20.56
+              },
+              {
+                "id": "4417c709-9baf-493a-bf39-194564e74756",
+                "from": 91500,
+                "to": 91990,
+                "points": 20.42
+              },
+              {
+                "id": "7bcb2e46-9ff9-439f-8c70-7689ac83a58b",
+                "from": 92000,
+                "to": 92490,
+                "points": 20.28
+              },
+              {
+                "id": "71204c89-c890-4aab-9906-01405572dbf1",
+                "from": 92500,
+                "to": 92990,
+                "points": 20.14
+              },
+              {
+                "id": "34ae518f-3c15-4fb2-8bb9-df1dfb6a4926",
+                "from": 93000,
+                "to": 93490,
+                "points": 20
+              },
+              {
+                "id": "4ecc1fac-7fed-4ff3-8105-4aea47a3368e",
+                "from": 93500,
+                "to": 93990,
+                "points": 19.86
+              },
+              {
+                "id": "e7dd579d-bd65-4330-a7c5-43422e42e86c",
+                "from": 94000,
+                "to": 94200,
+                "points": 19.72
+              },
+              {
+                "id": "8def33f5-6757-49c0-b48c-3ce5c6843f4c",
+                "from": 94210,
+                "to": 94990,
+                "points": 19.66
+              },
+              {
+                "id": "0b77f519-4f35-4037-a53c-7c7f464521a5",
+                "from": 95000,
+                "to": 95490,
+                "points": 19.44
+              },
+              {
+                "id": "c0ebbfe3-fdca-4224-a175-54782ca643b1",
+                "from": 95500,
+                "to": 95990,
+                "points": 19.31
+              },
+              {
+                "id": "9abba837-1a0c-436a-a4dc-bff752bb0645",
+                "from": 96000,
+                "to": 96490,
+                "points": 19.17
+              },
+              {
+                "id": "3d4b7071-32a6-4124-840d-dc728ec953cf",
+                "from": 96500,
+                "to": 96990,
+                "points": 19.03
+              },
+              {
+                "id": "4a5a56e0-8720-4c57-a3b9-c8903230bddf",
+                "from": 97000,
+                "to": 97490,
+                "points": 18.89
+              },
+              {
+                "id": "4ea8b063-9f45-4f87-8efe-6be3b1a723d0",
+                "from": 97500,
+                "to": 97990,
+                "points": 18.75
+              },
+              {
+                "id": "05c9eb4c-b6ed-4e9d-b883-dd6992166007",
+                "from": 98000,
+                "to": 98490,
+                "points": 18.61
+              },
+              {
+                "id": "5e84272f-d5df-4183-bf01-6edb00af03b7",
+                "from": 98500,
+                "to": 98990,
+                "points": 18.47
+              },
+              {
+                "id": "653c9bb8-c4c1-4f22-8415-e65efee2a014",
+                "from": 99000,
+                "to": 99490,
+                "points": 18.33
+              },
+              {
+                "id": "6b07bb54-df44-489d-aba4-5cacef581fad",
+                "from": 99500,
+                "to": 99990,
+                "points": 18.19
+              },
+              {
+                "id": "81ee42e6-c946-4794-a6b9-d241732edeaf",
+                "from": 100000,
+                "to": 100490,
+                "points": 18.06
+              },
+              {
+                "id": "f91e9a94-4c4c-4aac-9daa-c97421e0aaef",
+                "from": 100500,
+                "to": 100990,
+                "points": 17.92
+              },
+              {
+                "id": "1b20e36a-879e-48e6-9df2-b085cc1ff677",
+                "from": 101000,
+                "to": 101490,
+                "points": 17.78
+              },
+              {
+                "id": "8467c87b-6cf1-415e-9656-d6cdb5dbf2cc",
+                "from": 101500,
+                "to": 101990,
+                "points": 17.64
+              },
+              {
+                "id": "b2ca9937-85a1-4209-b7a2-6d620a922e8e",
+                "from": 102000,
+                "to": 102490,
+                "points": 17.5
+              },
+              {
+                "id": "089d2967-3286-4202-98f7-ffe98050d738",
+                "from": 102500,
+                "to": 102990,
+                "points": 17.36
+              },
+              {
+                "id": "c6dc58a6-9253-405a-9131-2e34f6a82834",
+                "from": 103000,
+                "to": 103490,
+                "points": 17.22
+              },
+              {
+                "id": "dbc3f365-b3f2-45c3-b9ec-724c8be3f015",
+                "from": 103500,
+                "to": 103990,
+                "points": 17.08
+              },
+              {
+                "id": "b9946ecf-e9cc-4041-8af8-dfa6cd1d2485",
+                "from": 104000,
+                "to": 104490,
+                "points": 16.94
+              },
+              {
+                "id": "85ed1088-5769-4776-a830-b15d69c5aed9",
+                "from": 104500,
+                "to": 104990,
+                "points": 16.81
+              },
+              {
+                "id": "73fe6295-5616-4f0f-b421-96120c353f28",
+                "from": 105000,
+                "to": 105490,
+                "points": 16.67
+              },
+              {
+                "id": "130d4ea3-11b3-4ea6-9d08-f26e33988c71",
+                "from": 105500,
+                "to": 105990,
+                "points": 16.53
+              },
+              {
+                "id": "2cc192f5-6418-479b-94dd-d7bf8398733a",
+                "from": 106000,
+                "to": 106490,
+                "points": 16.39
+              },
+              {
+                "id": "8254dac6-ae55-4c1c-9acd-046a9b1059f6",
+                "from": 106500,
+                "to": 107490,
+                "points": 16.25
+              },
+              {
+                "id": "0b2c056f-eacb-4c3e-b456-a3e46ce2f251",
+                "from": 107500,
+                "to": 113990,
+                "points": 16.17
+              },
+              {
+                "id": "35a2116e-002d-4fd6-b903-4a21b24b97c5",
+                "from": 114000,
+                "to": 119990,
+                "points": 15.62
+              },
+              {
+                "id": "41057fcf-bb92-4268-8350-117bbd7218d4",
+                "from": 120000,
+                "to": 126490,
+                "points": 15.12
+              },
+              {
+                "id": "3f56d407-7765-4dfb-8ea6-c318988af42a",
+                "from": 126500,
+                "to": 133090,
+                "points": 14.57
+              },
+              {
+                "id": "76d950d8-b6a1-42ff-a248-b071bbd75794",
+                "from": 133100,
+                "to": 139690,
+                "points": 14.02
+              },
+              {
+                "id": "ec8e8bca-5017-47ec-baaa-3fe9e5c655f6",
+                "from": 139700,
+                "to": 146290,
+                "points": 13.46
+              },
+              {
+                "id": "c4b9e69d-d2f9-4d28-9389-b9ae1f32e891",
+                "from": 146300,
+                "to": 152890,
+                "points": 12.91
+              },
+              {
+                "id": "1edbe03c-2115-4abc-914f-014550f165a0",
+                "from": 152900,
+                "to": 158390,
+                "points": 12.35
+              },
+              {
+                "id": "d739001d-eb12-4a1b-88bb-82c0ba711cbf",
+                "from": 158400,
+                "to": 164990,
+                "points": 11.89
+              },
+              {
+                "id": "d5abeb32-5b23-462f-ba9a-9f680b391763",
+                "from": 165000,
+                "to": 171590,
+                "points": 11.34
+              },
+              {
+                "id": "d59ed0d5-93ea-4df1-9edb-c944a7c2b9bc",
+                "from": 171600,
+                "to": 178190,
+                "points": 10.78
+              },
+              {
+                "id": "a1c39981-3746-43df-9943-ba8f0f371420",
+                "from": 178200,
+                "to": 184790,
+                "points": 10.23
+              },
+              {
+                "id": "ec67c181-ef5c-4e30-b2e2-bee8f0adf665",
+                "from": 184800,
+                "to": 191390,
+                "points": 9.67
+              },
+              {
+                "id": "cdcfc435-1e6e-40e8-ba8d-2627f46c2ac9",
+                "from": 191400,
+                "to": 196890,
+                "points": 9.12
+              },
+              {
+                "id": "36df4ba1-edbc-4e32-b9b9-2742230ef493",
+                "from": 196900,
+                "to": 203490,
+                "points": 8.66
+              },
+              {
+                "id": "659b3942-1487-476a-8a0f-ded8de13c5cc",
+                "from": 203500,
+                "to": 210090,
+                "points": 8.1
+              },
+              {
+                "id": "0ec1134b-8b9d-411f-a077-b25b1e18e184",
+                "from": 210100,
+                "to": 216690,
+                "points": 7.55
+              },
+              {
+                "id": "6282da28-0845-47ee-a524-70ac5c902ce1",
+                "from": 216700,
+                "to": 223290,
+                "points": 7
+              },
+              {
+                "id": "11ae57b1-69ca-4319-b992-4699d90cddc1",
+                "from": 223300,
+                "to": 229890,
+                "points": 6.44
+              },
+              {
+                "id": "dd3c52c0-45c1-4b23-a56b-80d746b06c3b",
+                "from": 229900,
+                "to": 234290,
+                "points": 5.89
+              },
+              {
+                "id": "290338cf-8575-4675-bcba-ef4dce542d6c",
+                "from": 234300,
+                "to": 235340,
+                "points": 5.52
+              },
+              {
+                "id": "f6116238-1ca1-4c8f-9d5b-3d53a017c2a9",
+                "from": 235350,
+                "to": 241990,
+                "points": 5.43
+              },
+              {
+                "id": "f0c49e89-3aee-4c24-9cb5-b86537dc6463",
+                "from": 242000,
+                "to": 248590,
+                "points": 4.87
+              },
+              {
+                "id": "799cc6fd-9f27-4c7e-aaff-92458f8ad766",
+                "from": 248600,
+                "to": 255190,
+                "points": 4.32
+              },
+              {
+                "id": "40f55415-6be8-4829-9618-ec56fa4a8398",
+                "from": 255200,
+                "to": 261790,
+                "points": 3.76
+              },
+              {
+                "id": "58ee859c-473a-4024-a367-58f2f81c442b",
+                "from": 261800,
+                "to": 268390,
+                "points": 3.21
+              },
+              {
+                "id": "c0fca24e-2403-4b70-a1b5-0bf63ccb50eb",
+                "from": 268400,
+                "to": 273890,
+                "points": 2.65
+              },
+              {
+                "id": "9a8fcbf7-3b81-4599-a609-a5e27e7caf49",
+                "from": 273900,
+                "to": 280490,
+                "points": 2.19
+              },
+              {
+                "id": "58e89181-3a87-4a13-b5bf-1774aac69e4b",
+                "from": 280500,
+                "to": 287090,
+                "points": 1.64
+              },
+              {
+                "id": "ff63b081-20f8-496e-9d76-64ed225123a7",
+                "from": 287100,
+                "to": 299990,
+                "points": 1.08
+              },
+              {
+                "id": "ee75f67a-2f21-468a-bdcf-5d50dfe5b724",
+                "from": 300000,
+                "to": null,
+                "points": 0
+              }
+            ]
+          },
+          {
+            "gender": "female",
+            "ageBandId": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "rows": [
+              {
+                "id": "d390c65f-1d32-4619-a78a-f7b4ff89aedb",
+                "from": null,
+                "to": 95640,
+                "points": 25
+              },
+              {
+                "id": "98529c44-755d-482a-9aba-ae111a3a3ab4",
+                "from": 95650,
+                "to": 96290,
+                "points": 24.86
+              },
+              {
+                "id": "ed19be3e-d7ad-4c78-b568-c7fd291e50f1",
+                "from": 96300,
+                "to": 96940,
+                "points": 24.72
+              },
+              {
+                "id": "3853141b-996a-421d-b194-215b1fd28bde",
+                "from": 96950,
+                "to": 97580,
+                "points": 24.58
+              },
+              {
+                "id": "18b47497-4623-4066-8029-a184fce8eb9d",
+                "from": 97590,
+                "to": 98230,
+                "points": 24.44
+              },
+              {
+                "id": "95e7bd04-22d7-4a38-892f-5416cbfc52b6",
+                "from": 98240,
+                "to": 98880,
+                "points": 24.31
+              },
+              {
+                "id": "9d996edc-3d62-4ec7-96d1-e3719677b929",
+                "from": 98890,
+                "to": 99530,
+                "points": 24.17
+              },
+              {
+                "id": "bc36c385-de89-4418-9582-a8cb1c95351b",
+                "from": 99540,
+                "to": 100180,
+                "points": 24.03
+              },
+              {
+                "id": "e51cfe8b-8b73-4e3b-b0e8-0404311e1150",
+                "from": 100190,
+                "to": 100890,
+                "points": 23.89
+              },
+              {
+                "id": "44bae9b4-4f54-46dc-861c-99f1d27931c9",
+                "from": 100900,
+                "to": 101540,
+                "points": 23.76
+              },
+              {
+                "id": "609eff50-bc77-49ef-871a-c4fe025bade5",
+                "from": 101550,
+                "to": 102180,
+                "points": 23.61
+              },
+              {
+                "id": "2174b40a-e490-4b39-815e-b731c9d843b3",
+                "from": 102190,
+                "to": 102830,
+                "points": 23.47
+              },
+              {
+                "id": "39d6a376-dfad-46b5-b49e-1b3693208477",
+                "from": 102840,
+                "to": 103480,
+                "points": 23.33
+              },
+              {
+                "id": "cdb275f6-da19-4f10-9fea-4fcb2bf16e3b",
+                "from": 103490,
+                "to": 104140,
+                "points": 23.24
+              },
+              {
+                "id": "d67a89d8-d674-4bb4-9c35-e7b4f19d3d14",
+                "from": 104150,
+                "to": 104810,
+                "points": 23.11
+              },
+              {
+                "id": "5ecc65cb-5181-48f9-939c-e47714c40f12",
+                "from": 104820,
+                "to": 105470,
+                "points": 22.92
+              },
+              {
+                "id": "a4a9a678-4969-4ed5-862f-5a6a763631ea",
+                "from": 105480,
+                "to": 106130,
+                "points": 22.78
+              },
+              {
+                "id": "852151be-0eac-42b1-a9a1-56823237827c",
+                "from": 106140,
+                "to": 106790,
+                "points": 22.64
+              },
+              {
+                "id": "547d4254-4193-4bbf-9578-35c73be62b49",
+                "from": 106800,
+                "to": 107460,
+                "points": 22.5
+              },
+              {
+                "id": "5c4fa1a5-3189-4f35-a130-d34ae78a0c71",
+                "from": 107470,
+                "to": 108120,
+                "points": 22.36
+              },
+              {
+                "id": "990a7cad-097a-41df-aa67-f6d820372aba",
+                "from": 108130,
+                "to": 108780,
+                "points": 22.22
+              },
+              {
+                "id": "f951a9a1-cff3-4d33-b2a0-2de5b48b8876",
+                "from": 108790,
+                "to": 109440,
+                "points": 22.08
+              },
+              {
+                "id": "d4d54f3a-d91a-4a95-bf77-3bd6d7a01478",
+                "from": 109450,
+                "to": 110100,
+                "points": 21.94
+              },
+              {
+                "id": "9742d178-d2c3-48a2-9af7-96bfe1cade9c",
+                "from": 110110,
+                "to": 110770,
+                "points": 21.81
+              },
+              {
+                "id": "f831e4a5-3032-465e-8ece-bb149118e018",
+                "from": 110780,
+                "to": 111430,
+                "points": 21.67
+              },
+              {
+                "id": "1d60bffe-44d2-4cd9-9600-5e9cd5440189",
+                "from": 111440,
+                "to": 112090,
+                "points": 21.53
+              },
+              {
+                "id": "0ee45818-2ab1-445e-8cfd-5ece4ec72814",
+                "from": 112100,
+                "to": 112950,
+                "points": 21.39
+              },
+              {
+                "id": "3834c271-e6ee-4b23-a6d5-557c2bbb662b",
+                "from": 112960,
+                "to": 113610,
+                "points": 21.26
+              },
+              {
+                "id": "a7363017-47f7-4b88-997e-d1e9b231de5e",
+                "from": 113620,
+                "to": 114280,
+                "points": 21.11
+              },
+              {
+                "id": "39d2573e-a0bc-4a88-9fd9-def8ad15e40e",
+                "from": 114290,
+                "to": 114940,
+                "points": 20.97
+              },
+              {
+                "id": "98c1735a-7441-45a0-8a21-e72f787454f5",
+                "from": 114950,
+                "to": 115600,
+                "points": 20.83
+              },
+              {
+                "id": "1ebf2faf-9d60-4816-8767-5c978d53a492",
+                "from": 115610,
+                "to": 116260,
+                "points": 20.69
+              },
+              {
+                "id": "dcf4045b-7ddc-45e2-8232-3e2072c3e210",
+                "from": 116270,
+                "to": 116930,
+                "points": 20.56
+              },
+              {
+                "id": "feb4fc38-9b74-4c0f-ae24-00beb5b96210",
+                "from": 116940,
+                "to": 117590,
+                "points": 20.42
+              },
+              {
+                "id": "52b68cca-8593-4511-b520-3e5f0602a546",
+                "from": 117600,
+                "to": 118250,
+                "points": 20.28
+              },
+              {
+                "id": "dc5c3abe-df69-4ce0-a83a-62deb2c26810",
+                "from": 118260,
+                "to": 118910,
+                "points": 20.14
+              },
+              {
+                "id": "05755f65-ff44-4b7c-bf2d-4dd85ec90966",
+                "from": 118920,
+                "to": 119570,
+                "points": 20
+              },
+              {
+                "id": "9f0c858f-3738-46f4-8cc1-e47b75d4bd2e",
+                "from": 119580,
+                "to": 120240,
+                "points": 19.86
+              },
+              {
+                "id": "5a064725-f9ec-4c2d-8e3e-54df71f8afaf",
+                "from": 120250,
+                "to": 120900,
+                "points": 19.72
+              },
+              {
+                "id": "b559348a-fb63-4bd4-8699-8bdb934dfd0a",
+                "from": 120910,
+                "to": 121590,
+                "points": 19.66
+              },
+              {
+                "id": "22a98984-b267-4c38-a483-cfd7b4f54b80",
+                "from": 121600,
+                "to": 122280,
+                "points": 19.44
+              },
+              {
+                "id": "1c2b5c33-251a-447c-bb97-f98071e981c9",
+                "from": 122290,
+                "to": 122970,
+                "points": 19.31
+              },
+              {
+                "id": "1ac17048-5ebd-4e60-b996-bec9a6c279f6",
+                "from": 122980,
+                "to": 123650,
+                "points": 19.17
+              },
+              {
+                "id": "b0d10bbc-7e69-4e3b-befe-5ed409250d93",
+                "from": 123660,
+                "to": 124340,
+                "points": 19.03
+              },
+              {
+                "id": "5da3ee04-5629-447b-aebe-3b3b99a70c49",
+                "from": 124350,
+                "to": 125030,
+                "points": 18.89
+              },
+              {
+                "id": "ace49477-d102-4170-a509-5ba300ee4ea0",
+                "from": 125040,
+                "to": 125720,
+                "points": 18.75
+              },
+              {
+                "id": "0f95eda1-29ed-44b7-8642-f2e0409782a9",
+                "from": 125730,
+                "to": 126410,
+                "points": 18.61
+              },
+              {
+                "id": "c184cee2-c50e-46c2-ac03-008d1beb31dc",
+                "from": 126420,
+                "to": 127100,
+                "points": 18.47
+              },
+              {
+                "id": "2c27ef65-c48c-406f-9a19-b5cd2af092b0",
+                "from": 127110,
+                "to": 127790,
+                "points": 18.33
+              },
+              {
+                "id": "189c663a-210a-40a9-9622-5e640a664bcc",
+                "from": 127800,
+                "to": 128480,
+                "points": 18.19
+              },
+              {
+                "id": "4b649b94-136d-4657-8383-3c83ee02ddcb",
+                "from": 128490,
+                "to": 129160,
+                "points": 18.06
+              },
+              {
+                "id": "9a6557c1-7e29-474a-af6e-75fbd565a83f",
+                "from": 129170,
+                "to": 129850,
+                "points": 17.92
+              },
+              {
+                "id": "e2af694a-0a0d-4536-bf43-c46447ad3427",
+                "from": 129860,
+                "to": 130540,
+                "points": 17.78
+              },
+              {
+                "id": "88e6690e-07e8-460c-833b-c8fc8bb725d0",
+                "from": 130550,
+                "to": 131230,
+                "points": 17.64
+              },
+              {
+                "id": "676ccf10-601c-4dca-8dc9-a4733284b993",
+                "from": 131240,
+                "to": 131920,
+                "points": 17.5
+              },
+              {
+                "id": "a918d142-3054-49a9-ab90-19d2d48c99de",
+                "from": 131930,
+                "to": 132610,
+                "points": 17.36
+              },
+              {
+                "id": "95c66f7e-55d3-4393-9c43-ec0ff2505150",
+                "from": 132620,
+                "to": 133300,
+                "points": 17.22
+              },
+              {
+                "id": "658ae109-b87e-4233-ab5c-8a698569c37f",
+                "from": 133310,
+                "to": 133990,
+                "points": 17.08
+              },
+              {
+                "id": "0ff12db7-03bb-4bd4-a93c-9a838162f6d0",
+                "from": 134000,
+                "to": 134680,
+                "points": 16.94
+              },
+              {
+                "id": "50b1f821-aaad-42dd-ad24-be6a55a97d7a",
+                "from": 134690,
+                "to": 135360,
+                "points": 16.81
+              },
+              {
+                "id": "93180a66-43b6-4161-bbc5-a8b47f8d5ba0",
+                "from": 135370,
+                "to": 136050,
+                "points": 16.67
+              },
+              {
+                "id": "f30e16a9-f6eb-43de-9317-7365422a6c50",
+                "from": 136060,
+                "to": 136740,
+                "points": 16.53
+              },
+              {
+                "id": "8191fe7b-b5b4-4094-8116-f40ca12f20e1",
+                "from": 136750,
+                "to": 137430,
+                "points": 16.39
+              },
+              {
+                "id": "c617f42d-e2d3-46d4-be9b-3e8a680537e2",
+                "from": 137440,
+                "to": 138780,
+                "points": 16.25
+              },
+              {
+                "id": "618d64e1-989c-4faf-adbb-b9483fad746b",
+                "from": 138790,
+                "to": 147340,
+                "points": 16.17
+              },
+              {
+                "id": "b6927db4-5cad-4ff2-a2b3-a85ddaa60296",
+                "from": 147350,
+                "to": 155250,
+                "points": 15.62
+              },
+              {
+                "id": "85904722-3ae7-4ced-9b53-8a8020ff2997",
+                "from": 155260,
+                "to": 163470,
+                "points": 15.12
+              },
+              {
+                "id": "93dfc203-ee5e-4b5b-9e82-52ae48169922",
+                "from": 163480,
+                "to": 170520,
+                "points": 14.57
+              },
+              {
+                "id": "f0182881-2c77-4f35-8dda-e62574aca2ff",
+                "from": 170530,
+                "to": 177560,
+                "points": 14.02
+              },
+              {
+                "id": "7f892b98-baec-4ef1-8b00-08ed8c40979c",
+                "from": 177570,
+                "to": 184610,
+                "points": 13.46
+              },
+              {
+                "id": "71569c89-f964-4b68-a13b-172bd4afe938",
+                "from": 184620,
+                "to": 191650,
+                "points": 12.91
+              },
+              {
+                "id": "381689b2-0fc2-4415-a7bd-38e0e712cbc0",
+                "from": 191660,
+                "to": 197530,
+                "points": 12.35
+              },
+              {
+                "id": "9607225b-02f1-46b0-9130-d20c838e1392",
+                "from": 197540,
+                "to": 204570,
+                "points": 11.89
+              },
+              {
+                "id": "0bb57b40-f78c-4df1-bbcf-708506839af7",
+                "from": 204580,
+                "to": 211620,
+                "points": 11.34
+              },
+              {
+                "id": "b4f83d44-82d3-4c1e-84e2-7ab2b9eafd23",
+                "from": 211630,
+                "to": 218660,
+                "points": 10.78
+              },
+              {
+                "id": "c2b98e36-2abe-4b77-ad11-36eb1102bd6f",
+                "from": 218670,
+                "to": 225710,
+                "points": 10.23
+              },
+              {
+                "id": "66724d15-1139-434e-be3a-7678a2f9e7ab",
+                "from": 225720,
+                "to": 232760,
+                "points": 9.67
+              },
+              {
+                "id": "41b278a3-f8a0-4f21-bf73-5cbacd91f160",
+                "from": 232770,
+                "to": 238630,
+                "points": 9.12
+              },
+              {
+                "id": "9b6dc668-b3d2-49fb-b2f5-e1a9a19c470d",
+                "from": 238640,
+                "to": 245680,
+                "points": 8.66
+              },
+              {
+                "id": "cfceca4d-bf29-4e3e-88cf-5e28a4989f1f",
+                "from": 245690,
+                "to": 252720,
+                "points": 8.1
+              },
+              {
+                "id": "76c2793d-eef0-4aba-9315-32010b801478",
+                "from": 252730,
+                "to": 259770,
+                "points": 7.55
+              },
+              {
+                "id": "fcd8608f-a4be-465e-8089-b115b5ae9277",
+                "from": 259780,
+                "to": 266810,
+                "points": 7
+              },
+              {
+                "id": "14faa2a3-a496-46be-b945-9ba2c45346e6",
+                "from": 266820,
+                "to": 273860,
+                "points": 6.44
+              },
+              {
+                "id": "dac11ac2-09f6-490e-ad9c-60f8e3024a1b",
+                "from": 273870,
+                "to": 278560,
+                "points": 5.89
+              },
+              {
+                "id": "aa1b8027-f90f-4490-bab9-4ce136938c52",
+                "from": 278570,
+                "to": 279730,
+                "points": 5.52
+              },
+              {
+                "id": "6e95019f-934b-480b-9ec1-0d0515796ba5",
+                "from": 279740,
+                "to": 286820,
+                "points": 5.43
+              },
+              {
+                "id": "07b957ec-8b19-4643-bd1e-e47a1acb2713",
+                "from": 286830,
+                "to": 294000,
+                "points": 4.87
+              },
+              {
+                "id": "d9e5b058-fdfa-4ea1-9e63-c20da7f3b3b1",
+                "from": 294010,
+                "to": 301180,
+                "points": 4.32
+              },
+              {
+                "id": "f3459114-8396-4180-84f2-76c7ae0a1e54",
+                "from": 301190,
+                "to": 308360,
+                "points": 3.76
+              },
+              {
+                "id": "df630102-42cc-40dd-9df6-597218fe3bec",
+                "from": 308370,
+                "to": 315540,
+                "points": 3.21
+              },
+              {
+                "id": "2450bbf8-4285-4a19-8342-276d4d8bb997",
+                "from": 315550,
+                "to": 321530,
+                "points": 2.65
+              },
+              {
+                "id": "f382919c-bf27-46d3-8ece-438b8b1b4264",
+                "from": 321540,
+                "to": 328710,
+                "points": 2.19
+              },
+              {
+                "id": "fc7e71e4-4c0d-4535-b152-a3030644e53b",
+                "from": 328720,
+                "to": 335890,
+                "points": 1.64
+              },
+              {
+                "id": "f4291c63-6d04-4037-a4a7-396eb472a8a7",
+                "from": 335900,
+                "to": 350250,
+                "points": 1.08
+              },
+              {
+                "id": "4e2618c9-cab5-4867-9a07-8c8f0f55e904",
+                "from": 350260,
+                "to": null,
+                "points": 0
+              }
+            ]
+          }
+        ],
+        "adjustmentGroups": [
+          {
+            "id": "4f4379fd-fba2-4441-a510-db637f3b47a3",
+            "label": "Alle Hindernisse überwunden",
+            "required": true,
+            "target": "performance",
+            "options": [
+              {
+                "id": "2b1bc1b2-1020-4681-a7b6-68d771cc78d6",
+                "label": "Alle überwunden",
+                "valueAdjustment": 21.59,
+                "effect": "minimumPoints"
+              },
+              {
+                "id": "1b520d2a-e167-4a1a-980e-7bcbdf7e095d",
+                "label": "NICHT alle überwunden",
+                "valueAdjustment": 0,
+                "effect": "maximumPoints"
+              }
+            ]
+          }
+        ],
+        "automaticPointModifiers": [
+          {
+            "id": "cd0c91e9-2402-41be-ba26-b11fde448bab",
+            "label": "Altersbonus",
+            "kind": "agePercentagePerYear",
+            "factor": 0.005,
+            "gender": "all",
+            "referenceAge": 35
+          }
+        ],
+        "capPoints": true,
+        "referenceMaxPoints": 50
+      }
+    ],
+    "minimumTotalPoints": 0,
+    "minimumViolationEffect": "statusOnly",
+    "standard": true
+  }
 }

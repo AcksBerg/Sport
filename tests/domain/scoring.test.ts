@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { Attempt, Discipline, Sport } from "@/domain";
 import {
@@ -19,7 +20,11 @@ import {
   scoreDisciplineResult,
   suggestAutomaticPointCutoff,
   splitAgeBand,
+  createLinearFormulaSegments,
 } from "@/domain/scoring";
+
+const loadBftStandard = () =>
+  JSON.parse(readFileSync("public/sports/bft.json", "utf8")).sport as Sport;
 
 const discipline: Discipline = {
   id: "d",
@@ -77,6 +82,27 @@ describe("Bewertung", () => {
   it("wertet lineare und quadratische Abschnitte aus und deckelt Punkte", () => {
     expect(scoreDiscipline(discipline, 5, "male", "all")).toBe(10);
     expect(scoreDiscipline(discipline, 12, "male", "all")).toBe(100);
+  });
+
+  it("erzeugt lineare Bereichsformeln aus Stützpunkten mit erster Grenze gewinnt", () => {
+    const segments = createLinearFormulaSegments([
+      { value: 1_440_000, points: 50 },
+      { value: 1_927_000, points: 32.5 },
+      { value: 2_400_000, points: 0 },
+    ], "time");
+    expect(segments).toHaveLength(2);
+    expect(segments[0]).toMatchObject({ a: 0, from: null, to: 1_927_000 });
+    expect(segments[1].from).toBe(1_927_010);
+    const generated: Discipline = {
+      ...discipline,
+      unit: "time",
+      maxPoints: 50,
+      formulas: [{ gender: "male", ageBandId: "all", formulaValueUnit: "display", segments }],
+    };
+    expect(scoreDiscipline(generated, 1_440_000, "male", "all")).toBeCloseTo(50);
+    expect(scoreDiscipline(generated, 1_927_000, "male", "all")).toBeCloseTo(32.5);
+    expect(scoreDiscipline(generated, 2_400_000, "male", "all")).toBeCloseTo(0);
+    expect(scoreDiscipline(generated, 1_000_000, "male", "all")).toBe(50);
   });
 
   it("unterstützt alle Rundungsarten", () => {
@@ -140,6 +166,35 @@ describe("Bewertung", () => {
     ).toBe(100);
   });
 
+  it("nutzt beim Prozentmittel den Referenznenner und deckelt die Rohgesamtwertung", () => {
+    const referenceSport: Sport = {
+      ...sport,
+      totalMaxPoints: 449,
+      aggregation: "percentageAverage",
+      disciplines: [
+        {
+          ...discipline,
+          maxPoints: 449,
+          referenceMaxPoints: 449,
+          capPoints: false,
+          formulas: [{
+            gender: "male",
+            ageBandId: "all",
+            segments: [{ id: "over", from: null, to: null, kind: "linear", a: 0, b: 500, c: 0 }],
+          }],
+        },
+      ],
+    };
+    expect(
+      scoreAttempt(
+        referenceSport,
+        { ...attempt, performances: [{ disciplineId: "d", value: 2 }] },
+        "male",
+        30,
+      ).total,
+    ).toBe(449);
+  });
+
   it("berechnet eine getrennte Vergleichswertung", () => {
     expect(
       calculateComparisonScore(
@@ -147,6 +202,89 @@ describe("Bewertung", () => {
         240,
       ),
     ).toBe(40);
+  });
+
+  it("kann Disziplinpunkte optional ungekappelt berechnen", () => {
+    const uncapped: Discipline = {
+      ...discipline,
+      capPoints: false,
+      formulas: [{
+        gender: "male",
+        ageBandId: "all",
+        segments: [{ id: "linear", from: null, to: null, kind: "linear", a: 0, b: 20, c: 0 }],
+      }],
+    };
+    expect(scoreDiscipline({ ...uncapped, capPoints: true }, 10, "male", "all")).toBe(100);
+    expect(scoreDiscipline(uncapped, 10, "male", "all")).toBe(200);
+  });
+
+  it("berechnet stückweise Vergleichsformeln aus Rohgesamtpunkten", () => {
+    const comparisonSport: Sport = {
+      ...sport,
+      totalMaxPoints: 449,
+      comparisonMaxPoints: 50,
+      decimalPlaces: 2,
+      comparisonFormula: [{
+        id: "bft",
+        from: 100,
+        to: null,
+        kind: "linear",
+        a: 0,
+        b: 17.5 / 349,
+        c: 50 - 449 * (17.5 / 349),
+      }],
+    };
+    expect(calculateComparisonScore(comparisonSport, 449)).toBe(50);
+    expect(calculateComparisonScore(comparisonSport, 100)).toBe(32.5);
+    expect(calculateComparisonScore(comparisonSport, 99)).toBe(0);
+  });
+
+  it("bildet den BFT-Standard mit ungekappelten Disziplinen und Vergleichsformel ab", () => {
+    const bft = loadBftStandard();
+    expect(bft.disciplines.every((item) => item.capPoints === false)).toBe(true);
+    const result = scoreAttempt(
+      bft,
+      {
+        id: "bft-max",
+        sportId: bft.id,
+        date: "2026-06-07",
+        status: "complete",
+        performances: [
+          { disciplineId: bft.disciplines[0].id, value: 30_000 },
+          { disciplineId: bft.disciplines[1].id, value: 100_000 },
+          { disciplineId: bft.disciplines[2].id, value: 100_000 },
+        ],
+      },
+      "male",
+      30,
+    );
+    expect(result.disciplineScores.every((score) => score.points > 449)).toBe(true);
+    expect(result.total).toBe(449);
+    expect(calculateComparisonScore(bft, result.total!, result)).toBe(50);
+  });
+
+  it("setzt BFT-Vergleichspunkte bei unterschrittener Disziplinmindestleistung auf 0", () => {
+    const bft = loadBftStandard();
+    const result = scoreAttempt(
+      bft,
+      {
+        id: "bft-failed",
+        sportId: bft.id,
+        date: "2026-06-07",
+        status: "complete",
+        performances: [
+          { disciplineId: bft.disciplines[0].id, value: 61_000 },
+          { disciplineId: bft.disciplines[1].id, value: 5_000 },
+          { disciplineId: bft.disciplines[2].id, value: 390_000 },
+        ],
+      },
+      "male",
+      30,
+    );
+    expect(result.passStatus).toBe("failed");
+    expect(result.disciplineMinimumFailed).toBe(true);
+    expect(calculateComparisonScore(bft, 100, result)).toBe(0);
+    expect(calculateComparisonScore(bft, 100, { disciplineMinimumFailed: false })).toBe(32.5);
   });
 
   it("wertet direkte Zeitformeln in Sekunden aus", () => {

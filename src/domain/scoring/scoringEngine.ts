@@ -71,6 +71,12 @@ export function scoreDiscipline(
   gender: Gender,
   ageBandId: string,
 ) {
+  const finalizePoints = (raw: number) => {
+    const positive = Math.max(0, raw);
+    return discipline.capPoints === false
+      ? positive
+      : Math.min(discipline.maxPoints, positive);
+  };
   if (discipline.scoringMode === "table") {
     const table = discipline.tables?.find(
       (rule) => rule.gender === gender && rule.ageBandId === ageBandId,
@@ -81,7 +87,9 @@ export function scoreDiscipline(
         (row.from === null || value >= Math.min(row.from, row.to ?? row.from)) &&
         (row.to === null || value <= Math.max(row.from ?? row.to, row.to)),
     );
-    return matches.length === 0 ? 0 : Math.max(...matches.map((row) => row.points));
+    return finalizePoints(
+      matches.length === 0 ? 0 : Math.max(...matches.map((row) => row.points)),
+    );
   }
   const rule = discipline.formulas.find(
     (formula) => formula.gender === gender && formula.ageBandId === ageBandId,
@@ -101,13 +109,35 @@ export function scoreDiscipline(
     segment.a * formulaValue * formulaValue +
     segment.b * formulaValue +
     segment.c;
-  return Math.min(discipline.maxPoints, Math.max(0, raw));
+  return finalizePoints(raw);
 }
 
-export function calculateComparisonScore(sport: Sport, rawTotal: number) {
+function evaluateComparisonFormula(sport: Sport, rawTotal: number) {
+  const segment = sport.comparisonFormula?.find(
+    (candidate) =>
+      (candidate.from === null || rawTotal >= candidate.from) &&
+      (candidate.to === null || rawTotal <= candidate.to),
+  );
+  if (!segment) return 0;
+  return segment.a * rawTotal * rawTotal + segment.b * rawTotal + segment.c;
+}
+
+export function calculateComparisonScore(
+  sport: Sport,
+  rawTotal: number,
+  attemptScore?: Pick<AttemptScore, "disciplineMinimumFailed">,
+) {
+  const comparisonMax = sport.comparisonMaxPoints ?? sport.totalMaxPoints;
+  if (
+    sport.minimumViolationEffect === "zeroComparison" &&
+    attemptScore?.disciplineMinimumFailed
+  )
+    return 0;
+  const rawComparison = sport.comparisonFormula?.length
+    ? evaluateComparisonFormula(sport, rawTotal)
+    : (rawTotal / sport.totalMaxPoints) * comparisonMax;
   return roundScore(
-    (rawTotal / sport.totalMaxPoints) *
-      (sport.comparisonMaxPoints ?? sport.totalMaxPoints),
+    Math.min(comparisonMax, Math.max(0, rawComparison)),
     sport.roundingMode,
     sport.decimalPlaces,
   );
@@ -131,7 +161,7 @@ export function evaluateSportAttempts(
         attempt,
         result,
         comparisonScore:
-          result.total === null ? null : calculateComparisonScore(sport, result.total),
+          result.total === null ? null : calculateComparisonScore(sport, result.total, result),
       };
     });
   const best = evaluated
@@ -214,15 +244,21 @@ export function applyPointAdjustments(discipline: Discipline, performance: Attem
   const minimum = Math.max(0, ...selectedOptions(discipline, performance)
     .filter(({ group, option }) => optionEffect(group, option) === "minimumPoints")
     .map(({ option }) => option.valueAdjustment));
-  const maximum = Math.min(discipline.maxPoints, ...selectedOptions(discipline, performance)
+  const configuredMaximum = selectedOptions(discipline, performance)
     .filter(({ group, option }) => optionEffect(group, option) === "maximumPoints")
-    .map(({ option }) => option.valueAdjustment));
+    .map(({ option }) => option.valueAdjustment);
+  const maximum = configuredMaximum.length
+    ? Math.min(...configuredMaximum)
+    : Number.POSITIVE_INFINITY;
   const limited = Math.min(maximum, Math.max(minimum, points + adjustment));
+  const capped = discipline.capPoints === false
+    ? Math.max(0, limited)
+    : Math.min(discipline.maxPoints, Math.max(0, limited));
   return {
     adjustment,
     minimum,
     maximum,
-    points: Math.min(discipline.maxPoints, Math.max(0, limited)),
+    points: capped,
   };
 }
 
@@ -431,11 +467,19 @@ export function scoreAttempt(
       disciplineScores,
       total: null,
       attemptCutoffTriggered,
+      disciplineMinimumFailed: false,
       passStatus: "notEvaluable",
       failedRequirements: ["Nicht alle Disziplinen konnten bewertet werden"],
     };
   if (!complete)
-    return { disciplineScores, total: null, attemptCutoffTriggered, passStatus: null, failedRequirements: [] };
+    return {
+      disciplineScores,
+      total: null,
+      attemptCutoffTriggered,
+      disciplineMinimumFailed: false,
+      passStatus: null,
+      failedRequirements: [],
+    };
 
   const rawTotal =
     sport.aggregation === "sum"
@@ -444,7 +488,7 @@ export function scoreAttempt(
           const discipline = sport.disciplines.find(
             (item) => item.id === score.disciplineId,
           )!;
-          return sum + score.points / discipline.maxPoints;
+          return sum + score.points / (discipline.referenceMaxPoints ?? discipline.maxPoints);
         }, 0) /
           disciplineScores.length) *
         sport.totalMaxPoints;
@@ -454,6 +498,7 @@ export function scoreAttempt(
         sport.totalMaxPoints,
         roundScore(rawTotal, sport.roundingMode, sport.decimalPlaces),
       );
+  const disciplineMinimumFailed = disciplineScores.some((score) => !score.minimumMet);
   const failedRequirements = [
     ...(sport.minimumTotalPoints !== undefined && total < sport.minimumTotalPoints
       ? [`Gesamtminimum ${sport.minimumTotalPoints} Punkte`]
@@ -469,6 +514,7 @@ export function scoreAttempt(
     disciplineScores,
     total,
     attemptCutoffTriggered,
+    disciplineMinimumFailed,
     passStatus: failedRequirements.length === 0 ? "passed" : "failed",
     failedRequirements,
   };

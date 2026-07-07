@@ -1,5 +1,7 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import type { Sport } from "@/domain";
+import { scoreDiscipline } from "@/domain/scoring";
 import { cloneImportedSport, createSportPackage, parseSportPackage, prepareSportReplacement } from "@/services/sportExchange";
 
 const sport: Sport = {
@@ -66,5 +68,22 @@ describe("Sportart-Austausch", () => {
       segments: [{ b: -1000 }],
     });
     expect(parsed.sport.disciplines[0].automaticPointModifiers?.[0].factor).toBe(0.005);
+  });
+
+  it("enthält die neue Waffenlauf-Bereichsmatrix", () => {
+    const parsed = parseSportPackage(JSON.parse(readFileSync("public/sports/waffenlauf.json", "utf8")));
+    const discipline = parsed.sport.disciplines[0];
+    const young = discipline.ageBands.find((band) => band.minAge === 0)?.id;
+    const middle = discipline.ageBands.find((band) => band.minAge === 27)?.id;
+    expect(parsed.sport.totalMaxPoints).toBe(50);
+    expect(parsed.sport.comparisonMaxPoints).toBe(50);
+    expect(discipline.maxPoints).toBe(50);
+    expect(discipline.scoringMode).toBe("formula");
+    expect(scoreDiscipline(discipline, 1_440_000, "male", young!)).toBeCloseTo(50);
+    expect(scoreDiscipline(discipline, 1_927_000, "male", young!)).toBeCloseTo(32.5);
+    expect(scoreDiscipline(discipline, 2_400_000, "male", young!)).toBeCloseTo(0);
+    expect(scoreDiscipline(discipline, 1_620_000, "female", middle!)).toBeCloseTo(50);
+    expect(scoreDiscipline(discipline, 2_316_000, "female", middle!)).toBeCloseTo(32.5);
+    expect(scoreDiscipline(discipline, 2_580_000, "female", middle!)).toBeCloseTo(0);
   });
 });

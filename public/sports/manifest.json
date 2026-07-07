@@ -10,11 +10,11 @@
     },
     {
       "file": "waffenlauf.json",
-      "version": "4"
+      "version": "5"
     },
     {
       "file": "bft.json",
-      "version": "2"
+      "version": "3"
     }
   ]
 }

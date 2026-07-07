@@ -98,7 +98,9 @@
             "ageBandId": "9f11d621-3522-4225-bad8-0425ea1cc198",
             "rows": []
           }
-        ]
+        ],
+        "referenceMaxPoints": 449,
+        "capPoints": false
       },
       {
         "id": "b4ebf8f7-c3bf-4798-9648-0fce0116993e",
@@ -165,7 +167,9 @@
             "label": "0-100"
           }
         ],
-        "minimumPoints": 100
+        "minimumPoints": 100,
+        "referenceMaxPoints": 449,
+        "capPoints": false
       },
       {
         "id": "f3934179-0eb0-4adf-9a9b-50b30de2cf4a",
@@ -232,9 +236,23 @@
             "label": "0-100"
           }
         ],
-        "minimumPoints": 100
+        "minimumPoints": 100,
+        "referenceMaxPoints": 449,
+        "capPoints": false
       }
     ],
-    "minimumTotalPoints": 100
+    "minimumTotalPoints": 100,
+    "minimumViolationEffect": "zeroComparison",
+    "comparisonFormula": [
+      {
+        "id": "bft-comparison-100-449",
+        "from": 100,
+        "to": null,
+        "kind": "linear",
+        "a": 0,
+        "b": 0.050143266476,
+        "c": 27.485673352436
+      }
+    ]
   }
 }

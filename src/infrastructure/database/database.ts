@@ -208,6 +208,22 @@ db.version(10)
     });
   });
 
+db.version(11)
+  .stores({
+    profile: "id",
+    sports: "id, &slug, name",
+    attempts: "id, sportId, date, status",
+  })
+  .upgrade(async (transaction) => {
+    await transaction.table<Sport>("sports").toCollection().modify((sport) => {
+      sport.minimumViolationEffect ??= "statusOnly";
+      sport.disciplines.forEach((discipline) => {
+        discipline.capPoints ??= true;
+        discipline.referenceMaxPoints ??= discipline.maxPoints;
+      });
+    });
+  });
+
 function createStandardStatuses(sports: Sport[]): StandardSportStatus[] {
   const bySlug = new Map(sports.map((sport) => [sport.slug, sport]));
   const statuses: StandardSportStatus[] = sports
