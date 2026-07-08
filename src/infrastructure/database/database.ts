@@ -264,11 +264,16 @@ function createStandardStatuses(sports: Sport[]): StandardSportStatus[] {
 }
 
 async function publishCatalogState(report: StandardSportsSyncReport) {
+  const latestExportedAt = [...lastLoadedStandards.values()]
+    .map((standard) => standard.sport.sourceExportedAt)
+    .filter((value): value is string => Boolean(value))
+    .sort((left, right) => right.localeCompare(left))[0];
   lastStandardSportsReport = report;
   lastStandardCatalogState = {
     loaded: true,
     statuses: createStandardStatuses(await db.sports.toArray()),
     report,
+    latestExportedAt,
   };
   if (typeof window !== "undefined")
     window.dispatchEvent(
@@ -321,6 +326,12 @@ export async function restoreStandardSports(fetcher: typeof fetch = fetch): Prom
         );
         report.updated.push(standard.sport.name);
         continue;
+      }
+      if (existing.sourceExportedAt !== standard.sport.sourceExportedAt) {
+        await db.sports.put({
+          ...existing,
+          sourceExportedAt: standard.sport.sourceExportedAt,
+        });
       }
       report.preserved.push(existing.name);
     }

@@ -88,18 +88,6 @@
         ],
         "minimumPoints": 100,
         "scoringMode": "formula",
-        "tables": [
-          {
-            "gender": "male",
-            "ageBandId": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
-            "rows": []
-          },
-          {
-            "gender": "female",
-            "ageBandId": "4a0229e6-acfc-4ca5-a68d-11e8b51f580b",
-            "rows": []
-          }
-        ],
         "referenceMaxPoints": 449,
         "capPoints": false
       },

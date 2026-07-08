@@ -15,6 +15,8 @@ describe("IndexedDB-Repository", () => {
   it("ergänzt fehlende Standards und aktualisiert veraltete Standarddefinitionen", async () => {
     expect((await restoreStandardSports(catalogFetch())).created).toEqual(["Teststandard"]);
     const first = (await db.sports.where("slug").equals("test").first())!;
+    expect(first.sourceExportedAt).toBeTruthy();
+    expect(getStandardCatalogState().latestExportedAt).toBe(first.sourceExportedAt);
     expect((await restoreStandardSports(catalogFetch({ ...standard, description: "Neu" }, "2"))).updated).toEqual(["Teststandard"]);
     expect((await db.sports.get(first.id))?.description).toBe("Neu");
     await db.sports.update(first.id, { name: "Mein Standard" });

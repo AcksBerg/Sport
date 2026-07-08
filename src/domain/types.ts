@@ -159,6 +159,7 @@ export interface Sport {
   /** Legacy/template age bands; scoring uses discipline.ageBands. */
   ageBands: AgeBand[];
   disciplines: Discipline[];
+  sourceExportedAt?: string;
   standard?: boolean;
   standardSync?: {
     version: string;
@@ -192,6 +193,7 @@ export interface StandardCatalogState {
   loaded: boolean;
   statuses: StandardSportStatus[];
   report: StandardSportsSyncReport;
+  latestExportedAt?: string;
 }
 
 export interface SportExchangePackageV1 {

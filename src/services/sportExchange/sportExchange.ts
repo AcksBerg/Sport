@@ -10,10 +10,32 @@ import {
 
 const normalize = (value: string) => slugify(value);
 
-export function createSportPackage(sport: Sport): SportExchangePackageV2 {
+export function cleanSportForExport(sport: Sport): Sport {
   const exported = structuredClone(sport);
   delete exported.standardSync;
-  return { schemaVersion: 2, exportedAt: new Date().toISOString(), sport: exported };
+  delete exported.sourceExportedAt;
+  if (!exported.comparisonFormula?.length) delete exported.comparisonFormula;
+  exported.disciplines = exported.disciplines.map((discipline) => {
+    const cleaned = { ...discipline };
+    if ((cleaned.scoringMode ?? "formula") === "table") {
+      cleaned.formulas = [];
+      if (!cleaned.tables?.length) delete cleaned.tables;
+    } else {
+      delete cleaned.tables;
+    }
+    if (!cleaned.adjustmentGroups?.length) delete cleaned.adjustmentGroups;
+    if (!cleaned.automaticPointModifiers?.length) delete cleaned.automaticPointModifiers;
+    return cleaned;
+  });
+  return exported;
+}
+
+export function createSportPackage(sport: Sport): SportExchangePackageV2 {
+  return {
+    schemaVersion: 2,
+    exportedAt: new Date().toISOString(),
+    sport: cleanSportForExport(sport),
+  };
 }
 
 export function parseSportPackage(value: unknown): SportExchangePackageV2 {
@@ -39,8 +61,11 @@ export function parseSportPackage(value: unknown): SportExchangePackageV2 {
     !Array.isArray(candidate.sport.comparisonFormula)
   )
     throw new Error("Das Sportpaket enthält eine ungültige Vergleichsformel.");
+  candidate.sport.sourceExportedAt = candidate.exportedAt || candidate.sport.sourceExportedAt;
 
   candidate.sport.disciplines.forEach((discipline) => {
+    discipline.formulas ??= [];
+    discipline.tables ??= [];
     if (
       !["time", "distance", "repetitions"].includes(discipline.unit) ||
       !Array.isArray(discipline.ageBands)
@@ -52,7 +77,7 @@ export function parseSportPackage(value: unknown): SportExchangePackageV2 {
       throw new Error(`Ungültige Punktwerte in ${discipline.name ?? "unbekannt"}.`);
     const bandIds = new Set(discipline.ageBands.map((band) => band.id));
     if (
-      [...discipline.formulas, ...(discipline.tables ?? [])].some(
+      [...discipline.formulas, ...discipline.tables].some(
         (rule) => !bandIds.has(rule.ageBandId),
       )
     )
@@ -79,6 +104,8 @@ export function parseSportPackage(value: unknown): SportExchangePackageV2 {
 
 function cloneDiscipline(source: Discipline, retained?: Discipline): Discipline {
   const discipline = structuredClone(source);
+  discipline.formulas ??= [];
+  discipline.tables ??= [];
   const bandIds = new Map(discipline.ageBands.map((band) => [band.id, createId()]));
   discipline.id = retained?.id ?? createId();
   discipline.ageBands = discipline.ageBands.map((band) => ({

@@ -1,22 +1,43 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useProfile } from "@/infrastructure/repositories";
+import {
+  getStandardCatalogState,
+  useProfile,
+} from "@/infrastructure/repositories";
+import type { StandardCatalogState } from "@/domain";
+import { formatDataDate } from "@/shared/utils/dates";
 export function HomePage() {
   const profile = useProfile();
+  const [catalogState, setCatalogState] = useState(getStandardCatalogState);
+  const dataDate = formatDataDate(catalogState.latestExportedAt);
   const profileComplete = Boolean(
     profile?.birthDate &&
     profile?.gender &&
     Number.isFinite(profile?.targetPoints) &&
     profile!.targetPoints > 0,
   );
+  useEffect(() => {
+    const update = (event: Event) =>
+      setCatalogState((event as CustomEvent<StandardCatalogState>).detail);
+    window.addEventListener("standard-sports-sync", update);
+    return () => window.removeEventListener("standard-sports-sync", update);
+  }, []);
   return (
     <>
       <section className="grid overflow-hidden gap-4 mb-4  lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-4">
-        <div className="card bg-error-container text-on-error-container">
+        <div className="card bg-error-container text-on-error-container h-full place-content-center">
           Die Bewertungsgrundlagen sind nicht abschließend festgelegt und werden
           laufend angepasst. Alle Angaben sind ohne Gewähr.
         </div>
         <div className="card bg-primary-container text-on-primary-container">
-          Letzte Aktualisierung auf Basis Daten <strong>03.07.2026</strong>.
+          {dataDate ? (
+            <>
+              Letzte Aktualisierung am <strong>{dataDate}</strong>. Auf Basis
+              der Daten vom <strong>03.07.2026</strong>.
+            </>
+          ) : (
+            "Stand der lokalen Datenbasis nicht verfügbar."
+          )}
         </div>
       </section>
       <section className="card grid overflow-hidden bg-primary-container text-on-primary-container lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center lg:gap-8">

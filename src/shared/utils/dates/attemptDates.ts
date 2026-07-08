@@ -14,3 +14,14 @@ export function formatAttemptDate(value: string) {
     year: "numeric",
   });
 }
+
+export function formatDataDate(value?: string) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString("de-DE", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}

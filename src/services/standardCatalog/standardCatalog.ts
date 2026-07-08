@@ -1,5 +1,5 @@
 import type { Sport, StandardSportsManifest } from "@/domain";
-import { parseSportPackage, prepareSportReplacement } from "@/services/sportExchange";
+import { cleanSportForExport, parseSportPackage, prepareSportReplacement } from "@/services/sportExchange";
 
 export interface LoadedStandard {
   sport: Sport;
@@ -12,6 +12,7 @@ function stable(value: unknown): string {
   if (value && typeof value === "object") {
     return `{${Object.entries(value as Record<string, unknown>)
       .filter(([key]) => key !== "standard" && key !== "standardSync")
+      .filter(([key]) => key !== "sourceExportedAt")
       .sort(([left], [right]) => left.localeCompare(right))
       .map(([key, item]) => `${JSON.stringify(key)}:${stable(item)}`)
       .join(",")}}`;
@@ -21,7 +22,7 @@ function stable(value: unknown): string {
 
 export function sportFingerprint(sport: Sport) {
   let hash = 2166136261;
-  for (const character of stable(sport)) {
+  for (const character of stable(cleanSportForExport(sport))) {
     hash ^= character.charCodeAt(0);
     hash = Math.imul(hash, 16777619);
   }
@@ -55,7 +56,9 @@ export async function loadStandardCatalog(fetcher: typeof fetch = fetch): Promis
     try {
       const response = await fetcher(`${base}${encodeURIComponent(entry.file)}?v=${encodeURIComponent(entry.version)}`, { cache: "no-store" });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const sport = structuredClone(parseSportPackage(await response.json()).sport);
+      const packageData = await response.json();
+      const parsed = parseSportPackage(packageData);
+      const sport = structuredClone(parsed.sport);
       if (slugs.has(sport.slug) || ids.has(sport.id)) throw new Error("Doppelte Sport-ID oder doppelter Slug.");
       slugs.add(sport.slug);
       ids.add(sport.id);
@@ -80,6 +83,7 @@ export function prepareStandardUpdate(existing: Sport, loaded: LoadedStandard) {
 export function attachStandardSync(sport: Sport, loaded: LoadedStandard) {
   const result = structuredClone(sport);
   result.standard = true;
+  result.sourceExportedAt = loaded.sport.sourceExportedAt;
   const localFingerprint = sportFingerprint(result);
   result.standardSync = { version: loaded.version, sourceFingerprint: loaded.fingerprint, localFingerprint };
   return result;

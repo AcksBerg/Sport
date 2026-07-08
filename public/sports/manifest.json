@@ -2,19 +2,19 @@
   "sports": [
     {
       "file": "hindernissbahn.json",
-      "version": "3"
-    },
-    {
-      "file": "konfit.json",
       "version": "4"
     },
     {
-      "file": "waffenlauf.json",
+      "file": "konfit.json",
       "version": "5"
     },
     {
+      "file": "waffenlauf.json",
+      "version": "6"
+    },
+    {
       "file": "bft.json",
-      "version": "3"
+      "version": "4"
     }
   ]
 }

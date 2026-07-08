@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { attemptDateValue, formatAttemptDate, localDateValue } from "@/shared/utils/dates";
+import { attemptDateValue, formatAttemptDate, formatDataDate, localDateValue } from "@/shared/utils/dates";
 import { countSportAttempts, deleteAttempt, deleteSport, saveAttempt, useProfile, useSport, useSportAttempts } from "@/infrastructure/repositories";
 import { createId, type Attempt } from "@/domain";
 import { adjustmentsValid, evaluateSportAttempts } from "@/domain/scoring";
@@ -20,6 +20,7 @@ export function SportPage() {
   const [attemptDate, setAttemptDate] = useState(localDateValue);
   if (!sport) return <p>Lade Sportart …</p>;
   const activeSport = sport;
+  const dataDate = formatDataDate(activeSport.sourceExportedAt);
   const historyEntries =
     profile && attempts
       ? evaluateSportAttempts(profile, activeSport, attempts)
@@ -127,6 +128,12 @@ export function SportPage() {
         >
           {sport.name}
         </PageTitle>
+        {dataDate && (
+          <div className="card bg-surface-container px-4 py-3 text-right text-sm">
+            <p className="text-secondary">Datenstand</p>
+            <p className="font-black">{dataDate}</p>
+          </div>
+        )}
         <div className="flex flex-wrap gap-2">
           <Link className="button-secondary" to={`/sportart/${sport.slug}/edit`}>
             Sportart bearbeiten
