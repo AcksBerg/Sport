@@ -33,7 +33,7 @@ export function HomePage() {
           {dataDate ? (
             <>
               Letzte Aktualisierung am <strong>{dataDate}</strong>. Auf Basis
-              der Daten vom <strong>03.07.2026</strong>.
+              der Daten vom <strong>09.07.2026</strong>.
             </>
           ) : (
             "Stand der lokalen Datenbasis nicht verfügbar."

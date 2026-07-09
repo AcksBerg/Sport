@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "exportedAt": "2026-07-07T17:57:07.581Z",
+  "exportedAt": "2026-07-09T18:09:52.202Z",
   "sport": {
     "id": "ee9e7a9c-aa97-4167-984d-4ebb11beb94f",
     "slug": "hindernissbahn",
@@ -29,10 +29,10 @@
         "formulas": [
           {
             "gender": "male",
-            "ageBandId": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "ageBandId": "d9b97b5e-023b-4ff9-b55d-3a95e683348c",
             "segments": [
               {
-                "id": "2332264d-e811-4cc8-a3ba-a72a9c03aaaa",
+                "id": "e3d08090-1eb2-4405-aed6-1c38ae097db5",
                 "from": null,
                 "to": 120000,
                 "kind": "linear",
@@ -41,7 +41,7 @@
                 "c": 79.16666666666667
               },
               {
-                "id": "a704f3bb-88bc-4205-ad7d-de01deb4a915",
+                "id": "33c74f2f-f63a-4758-97a5-d1d9539b40b8",
                 "from": 120010,
                 "to": null,
                 "kind": "linear",
@@ -54,25 +54,25 @@
           },
           {
             "gender": "female",
-            "ageBandId": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "ageBandId": "d9b97b5e-023b-4ff9-b55d-3a95e683348c",
             "segments": [
               {
-                "id": "5c4183ac-1213-4f64-b261-b716169c2a1e",
+                "id": "79cbf0f5-56fb-46fb-842a-319e56840a79",
                 "from": null,
                 "to": 155000,
                 "kind": "linear",
                 "a": 0,
-                "b": -0.2916666666666667,
-                "c": 77.70833333333334
+                "b": -0.22727272727272727,
+                "c": 67.72727272727272
               },
               {
-                "id": "29ed933e-03a3-41cb-af1b-aeeb2d690816",
+                "id": "81d430da-23d1-4f53-807b-cba3135ac9dd",
                 "from": 155010,
                 "to": null,
                 "kind": "linear",
                 "a": 0,
-                "b": -0.16666666666666666,
-                "c": 58.33333333333333
+                "b": -0.18571428571428572,
+                "c": 61.28571428571429
               }
             ],
             "formulaValueUnit": "display"
@@ -80,7 +80,7 @@
         ],
         "ageBands": [
           {
-            "id": "b4da23b4-3ebc-471b-8576-34a4ac166e7d",
+            "id": "d9b97b5e-023b-4ff9-b55d-3a95e683348c",
             "minAge": 0,
             "maxAge": 100,
             "label": "0-100"
@@ -111,7 +111,7 @@
         ],
         "automaticPointModifiers": [
           {
-            "id": "cd0c91e9-2402-41be-ba26-b11fde448bab",
+            "id": "237c149c-59d9-40db-9489-45b0eebae659",
             "label": "Altersbonus",
             "kind": "agePercentagePerYear",
             "factor": 0.005,
