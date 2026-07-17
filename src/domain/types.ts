@@ -254,18 +254,38 @@ export interface BestSportAttempt {
   passStatus: PassStatus | null;
 }
 
+export interface PassingGap {
+  kind: "total" | "discipline" | "missingDiscipline";
+  label: string;
+  missingPoints: number;
+  disciplineId?: string;
+}
+
+export interface ProjectedDraftSportAttempt extends BestSportAttempt {
+  additionalComparisonScore: number;
+  passingGaps: PassingGap[];
+}
+
 export interface EvaluatedSportAttempt {
   attempt: Attempt;
   result: AttemptScore;
   comparisonScore: number | null;
+  projectedResult?: AttemptScore;
+  projectedComparisonScore: number | null;
+  passingGaps: PassingGap[];
   isBest: boolean;
+  isBestProjectedDraft: boolean;
 }
 
 export interface UserProgress {
   bestBySport: BestSportAttempt[];
+  projectedDraftsBySport: ProjectedDraftSportAttempt[];
   achievedPoints: number;
+  draftComparisonPoints: number;
+  projectedTotalPoints: number;
   targetPoints: number;
   remainingPoints: number;
   excessPoints: number;
   percentage: number;
+  projectedPercentage: number;
 }

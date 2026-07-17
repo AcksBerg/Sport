@@ -11,6 +11,8 @@ import type {
   Discipline,
   EvaluatedSportAttempt,
   Gender,
+  PassingGap,
+  ProjectedDraftSportAttempt,
   RoundingMode,
   Sport,
   UserProfile,
@@ -148,20 +150,185 @@ export function evaluateSportAttempts(
   sport: Sport,
   attempts: Attempt[],
 ): EvaluatedSportAttempt[] {
+  return evaluateSportAttemptsWithDrafts(profile, sport, attempts);
+}
+
+function attemptCanBeProjected(sport: Sport, attempt: Attempt, gender: Gender, age: number) {
+  if (attempt.status !== "draft") return false;
+  return sport.disciplines.some((discipline) => {
+    const performance = attempt.performances.find(
+      (candidate) => candidate.disciplineId === discipline.id,
+    );
+    if (!performance || !adjustmentsValid(discipline, performance)) return false;
+    const ageBand = findAgeBand(discipline.ageBands, age);
+    return ageBand
+      ? scoreDisciplineResult(discipline, performance, gender, ageBand.id, age) !== null
+      : false;
+  });
+}
+
+function scoreDraftAttemptProjection(
+  sport: Sport,
+  attempt: Attempt,
+  gender: Gender,
+  age: number,
+): AttemptScore {
+  let attemptCutoffTriggered = false;
+  const disciplineScores = sport.disciplines.flatMap((discipline) => {
+    const performance = attempt.performances.find(
+      (candidate) => candidate.disciplineId === discipline.id,
+    );
+    if (!performance || !adjustmentsValid(discipline, performance)) return [];
+    const ageBand = findAgeBand(discipline.ageBands, age);
+    if (!ageBand) return [];
+    const result = scoreDisciplineResult(discipline, performance, gender, ageBand.id, age);
+    if (!result) return [];
+    const triggered = result.cutoffTriggered;
+    if (triggered && discipline.cutoff?.effect === "attempt")
+      attemptCutoffTriggered = true;
+    return [
+      {
+        disciplineId: discipline.id,
+        rawPoints: result.basePoints,
+        points: result.points,
+        cutoffTriggered: triggered,
+        evaluatedValue: result.evaluatedValue,
+        minimumMet: result.points >= (discipline.minimumPoints ?? 0),
+        basePoints: result.basePoints,
+        pointAdjustment: result.pointAdjustment,
+        automaticBonusPoints: result.automaticBonusPoints,
+        automaticBonuses: result.automaticBonuses,
+      },
+    ];
+  });
+
+  const rawTotal =
+    sport.aggregation === "sum"
+      ? disciplineScores.reduce((sum, score) => sum + score.points, 0)
+      : (sport.disciplines.reduce((sum, discipline) => {
+          const score = disciplineScores.find(
+            (item) => item.disciplineId === discipline.id,
+          );
+          return sum + (score?.points ?? 0) /
+            (discipline.referenceMaxPoints ?? discipline.maxPoints);
+        }, 0) /
+          Math.max(sport.disciplines.length, 1)) *
+        sport.totalMaxPoints;
+  const total = attemptCutoffTriggered
+    ? 0
+    : Math.min(
+        sport.totalMaxPoints,
+        roundScore(rawTotal, sport.roundingMode, sport.decimalPlaces),
+      );
+  const scoredDisciplineIds = new Set(
+    disciplineScores.map((score) => score.disciplineId),
+  );
+  const missingDisciplines = sport.disciplines.filter(
+    (discipline) => !scoredDisciplineIds.has(discipline.id),
+  );
+  const disciplineMinimumFailed =
+    disciplineScores.some((score) => !score.minimumMet) ||
+    missingDisciplines.some((discipline) => (discipline.minimumPoints ?? 0) > 0);
+  const failedRequirements = [
+    ...(sport.minimumTotalPoints !== undefined && total < sport.minimumTotalPoints
+      ? [`Gesamtminimum ${sport.minimumTotalPoints} Punkte`]
+      : []),
+    ...disciplineScores
+      .filter((score) => !score.minimumMet)
+      .map((score) => {
+        const discipline = sport.disciplines.find((item) => item.id === score.disciplineId)!;
+        return `${discipline.name}: mindestens ${discipline.minimumPoints} Punkte`;
+      }),
+    ...missingDisciplines.map((discipline) => `${discipline.name}: Leistung fehlt`),
+  ];
+  return {
+    disciplineScores,
+    total,
+    attemptCutoffTriggered,
+    disciplineMinimumFailed,
+    passStatus: failedRequirements.length === 0 ? "passed" : "failed",
+    failedRequirements,
+  };
+}
+
+export function calculatePassingGaps(
+  sport: Sport,
+  attemptScore: AttemptScore,
+): PassingGap[] {
+  if (attemptScore.total === null) return [];
+  const gaps: PassingGap[] = [];
+  if (
+    sport.minimumTotalPoints !== undefined &&
+    attemptScore.total < sport.minimumTotalPoints
+  )
+    gaps.push({
+      kind: "total",
+      label: "Gesamtpunkte",
+      missingPoints: sport.minimumTotalPoints - attemptScore.total,
+    });
+  attemptScore.disciplineScores.forEach((score) => {
+    const discipline = sport.disciplines.find(
+      (candidate) => candidate.id === score.disciplineId,
+    );
+    const minimum = discipline?.minimumPoints ?? 0;
+    if (discipline && score.points < minimum)
+      gaps.push({
+        kind: "discipline",
+        label: discipline.name,
+        missingPoints: minimum - score.points,
+        disciplineId: discipline.id,
+      });
+  });
+  const scoredDisciplineIds = new Set(
+    attemptScore.disciplineScores.map((score) => score.disciplineId),
+  );
+  sport.disciplines
+    .filter((discipline) => !scoredDisciplineIds.has(discipline.id))
+    .forEach((discipline) => {
+      gaps.push({
+        kind: "missingDiscipline",
+        label: discipline.name,
+        missingPoints: discipline.minimumPoints ?? 0,
+        disciplineId: discipline.id,
+      });
+    });
+  return gaps;
+}
+
+export function evaluateSportAttemptsWithDrafts(
+  profile: UserProfile,
+  sport: Sport,
+  attempts: Attempt[],
+): EvaluatedSportAttempt[] {
   const evaluated = attempts
     .filter((attempt) => attempt.sportId === sport.id)
     .map((attempt) => {
+      const age = getEvaluationAge(
+        profile.birthDate,
+        new Date(attempt.date),
+        sport.agePolicy,
+      );
       const result = scoreAttempt(
         sport,
         attempt,
         profile.gender,
-        getEvaluationAge(profile.birthDate, new Date(attempt.date), sport.agePolicy),
+        age,
       );
+      const projectedResult = attemptCanBeProjected(sport, attempt, profile.gender, age)
+        ? scoreDraftAttemptProjection(sport, attempt, profile.gender, age)
+        : undefined;
+      const projectedComparisonScore =
+        projectedResult?.total === null || projectedResult === undefined
+          ? null
+          : calculateComparisonScore(sport, projectedResult.total);
       return {
         attempt,
         result,
         comparisonScore:
           result.total === null ? null : calculateComparisonScore(sport, result.total, result),
+        projectedResult,
+        projectedComparisonScore,
+        passingGaps: calculatePassingGaps(sport, projectedResult ?? result),
       };
     });
   const best = evaluated
@@ -171,8 +338,19 @@ export function evaluateSportAttempts(
         right.comparisonScore! - left.comparisonScore! ||
         right.attempt.date.localeCompare(left.attempt.date),
     )[0];
+  const bestProjectedDraft = evaluated
+    .filter((item) => item.projectedComparisonScore !== null)
+    .sort(
+      (left, right) =>
+        right.projectedComparisonScore! - left.projectedComparisonScore! ||
+        right.attempt.date.localeCompare(left.attempt.date),
+    )[0];
   return evaluated
-    .map((item) => ({ ...item, isBest: item.attempt.id === best?.attempt.id }))
+    .map((item) => ({
+      ...item,
+      isBest: item.attempt.id === best?.attempt.id,
+      isBestProjectedDraft: item.attempt.id === bestProjectedDraft?.attempt.id,
+    }))
     .sort(
       (left, right) =>
         Number(right.isBest) - Number(left.isBest) ||
@@ -185,11 +363,19 @@ export function calculateUserProgress(
   sports: Sport[],
   attempts: Attempt[],
 ): UserProgress {
+  return calculateUserProgressWithDrafts(profile, sports, attempts);
+}
+
+export function calculateUserProgressWithDrafts(
+  profile: UserProfile,
+  sports: Sport[],
+  attempts: Attempt[],
+): UserProgress {
   if (!Number.isFinite(profile.targetPoints) || profile.targetPoints <= 0)
     throw new Error("Die Zielpunktzahl muss größer als 0 sein.");
 
   const bestBySport = sports.flatMap((sport) => {
-    const best = evaluateSportAttempts(profile, sport, attempts).find((item) => item.isBest);
+    const best = evaluateSportAttemptsWithDrafts(profile, sport, attempts).find((item) => item.isBest);
     return best && best.result.total !== null && best.comparisonScore !== null
       ? [{
           sportId: sport.id,
@@ -203,6 +389,39 @@ export function calculateUserProgress(
   const achievedPoints = Number(
     bestBySport.reduce((sum, best) => sum + best.comparisonScore, 0).toFixed(10),
   );
+  const projectedDraftsBySport = sports.flatMap((sport) => {
+    const evaluated = evaluateSportAttemptsWithDrafts(profile, sport, attempts);
+    const draft = evaluated.find((item) => item.isBestProjectedDraft);
+    const complete = bestBySport.find((item) => item.sportId === sport.id);
+    const additionalComparisonScore = Number(
+      Math.max(
+        0,
+        (draft?.projectedComparisonScore ?? 0) - (complete?.comparisonScore ?? 0),
+      ).toFixed(10),
+    );
+    return draft?.projectedResult?.total !== null &&
+      draft?.projectedResult !== undefined &&
+      draft.projectedComparisonScore !== null &&
+      additionalComparisonScore > 0
+      ? [({
+          sportId: sport.id,
+          attempt: draft.attempt,
+          rawTotal: draft.projectedResult.total,
+          comparisonScore: draft.projectedComparisonScore,
+          passStatus: draft.projectedResult.passStatus,
+          additionalComparisonScore,
+          passingGaps: draft.passingGaps,
+        } satisfies ProjectedDraftSportAttempt)]
+      : [];
+  });
+  const draftComparisonPoints = Number(
+    projectedDraftsBySport
+      .reduce((sum, draft) => sum + draft.additionalComparisonScore, 0)
+      .toFixed(10),
+  );
+  const projectedTotalPoints = Number(
+    (achievedPoints + draftComparisonPoints).toFixed(10),
+  );
   const remainingPoints = Number(
     Math.max(0, profile.targetPoints - achievedPoints).toFixed(10),
   );
@@ -211,11 +430,15 @@ export function calculateUserProgress(
   );
   return {
     bestBySport,
+    projectedDraftsBySport,
     achievedPoints,
+    draftComparisonPoints,
+    projectedTotalPoints,
     targetPoints: profile.targetPoints,
     remainingPoints,
     excessPoints,
     percentage: (achievedPoints / profile.targetPoints) * 100,
+    projectedPercentage: (projectedTotalPoints / profile.targetPoints) * 100,
   };
 }
 

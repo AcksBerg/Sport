@@ -4,6 +4,7 @@ import { saveProfile, useAllAttempts, useProfile, useSports } from "@/infrastruc
 import type { Gender } from "@/domain";
 import { calculateUserProgress } from "@/domain/scoring";
 import { PageTitle } from "@/shared/components";
+
 export function ProfilePage() {
   const profile = useProfile();
   const sports = useSports();
@@ -19,6 +20,12 @@ export function ProfilePage() {
     profile && sports && attempts
       ? calculateUserProgress(profile, sports, attempts)
       : undefined;
+  const officialProgressWidth = Math.min(100, progress?.percentage ?? 0);
+  const draftProgressWidth = Math.max(
+    0,
+    Math.min(100, progress?.projectedPercentage ?? 0) - officialProgressWidth,
+  );
+  const combinedProgressWidth = officialProgressWidth + draftProgressWidth;
 
   async function save(event: FormEvent) {
     event.preventDefault();
@@ -96,6 +103,11 @@ export function ProfilePage() {
               <strong className="text-2xl text-primary">
                 {progress.achievedPoints.toFixed(2)}
               </strong>
+              {progress.draftComparisonPoints > 0 && (
+                <strong className="ml-2 text-xl text-error">
+                  (+{progress.draftComparisonPoints.toFixed(2)})
+                </strong>
+              )}
             </div>
             <div>
               <p className="text-sm text-secondary">Zielpunktzahl</p>
@@ -121,14 +133,35 @@ export function ProfilePage() {
           <div className="mt-5 flex items-center gap-3">
             <div className="h-3 flex-1 overflow-hidden rounded-full bg-surface-container-high">
               <div
-                className="h-full rounded-full bg-primary"
-                style={{ width: `${Math.min(100, progress.percentage)}%` }}
-              />
+                className="flex h-full"
+                style={{ width: `${combinedProgressWidth}%` }}
+              >
+                <div
+                  className="h-full bg-primary"
+                  style={{
+                    width: `${officialProgressWidth / Math.max(combinedProgressWidth, 1) * 100}%`,
+                  }}
+                />
+                {draftProgressWidth > 0 && (
+                  <div
+                    className="h-full bg-error"
+                    style={{
+                      width: `${draftProgressWidth / combinedProgressWidth * 100}%`,
+                    }}
+                  />
+                )}
+              </div>
             </div>
             <span className="text-sm font-bold">
               {progress.percentage.toFixed(1)} %
             </span>
           </div>
+          {progress.draftComparisonPoints > 0 && (
+            <p className="mt-2 text-sm text-error">
+              Mit Entwürfen: {progress.projectedTotalPoints.toFixed(2)} /{" "}
+              {progress.targetPoints.toFixed(2)}
+            </p>
+          )}
         </section>
       )}
       <h2 className="section-title">Beste vollständige Durchgänge</h2>
@@ -141,6 +174,9 @@ export function ProfilePage() {
       <div className="grid gap-4 md:grid-cols-2">
         {sports?.map((sport) => {
           const best = progress?.bestBySport.find(
+            (candidate) => candidate.sportId === sport.id,
+          );
+          const draft = progress?.projectedDraftsBySport.find(
             (candidate) => candidate.sportId === sport.id,
           );
           return (
@@ -157,7 +193,12 @@ export function ProfilePage() {
                 <strong className="text-2xl text-primary">
                   {best
                     ? best.comparisonScore.toFixed(sport.decimalPlaces)
-                    : "–"}{" "}
+                    : "0"}{" "}
+                  {draft && (
+                    <span className="text-xl text-error">
+                      (+{draft.additionalComparisonScore.toFixed(sport.decimalPlaces)} Entwurf)
+                    </span>
+                  )}{" "}
                   /{" "}
                   {(sport.comparisonMaxPoints ?? sport.totalMaxPoints).toFixed(
                     sport.decimalPlaces,

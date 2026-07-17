@@ -3,8 +3,19 @@ import { extname, join, relative } from "node:path";
 
 const root = process.cwd();
 const roots = ["src", "public", "tests"];
-const textExtensions = new Set([".css", ".html", ".json", ".md", ".mjs", ".svg", ".ts", ".tsx"]);
-const mojibake = /Ã|Â|â€¦|â€“|âˆ’|�/u;
+const textExtensions = new Set([
+  ".css",
+  ".html",
+  ".json",
+  ".md",
+  ".mjs",
+  ".svg",
+  ".ts",
+  ".tsx",
+]);
+const brokenQuestionMarkWords =
+  /(?:[Ff]\?r|l\?schen|ausw\?hlen|ben\?tigt|Durchg\?nge|endg\?ltig|zusammenh\?ngend|vollst\?ndig|Vollst\?ndig|erf\?llt|k\?nnen|ung\?ltig|h\?chste|n\?chste)/u;
+const mojibake = /Ã.|Â.|â€¦|â€“|âˆ’|�/u;
 const errors = [];
 
 async function filesBelow(directory) {
@@ -23,7 +34,7 @@ for (const directory of roots) {
   for (const file of await filesBelow(join(root, directory))) {
     if (!textExtensions.has(extname(file))) continue;
     const content = await readFile(file, "utf8");
-    if (mojibake.test(content))
+    if (mojibake.test(content) || brokenQuestionMarkWords.test(content))
       errors.push(`Möglicher Kodierungsfehler: ${relative(root, file)}`);
   }
 }

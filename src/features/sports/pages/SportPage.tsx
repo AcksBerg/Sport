@@ -1,9 +1,25 @@
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { attemptDateValue, formatAttemptDate, formatDataDate, localDateValue } from "@/shared/utils/dates";
-import { countSportAttempts, deleteAttempt, deleteSport, saveAttempt, useProfile, useSport, useSportAttempts } from "@/infrastructure/repositories";
+import {
+  attemptDateValue,
+  formatAttemptDate,
+  formatDataDate,
+  localDateValue,
+} from "@/shared/utils/dates";
+import {
+  countSportAttempts,
+  deleteAttempt,
+  deleteSport,
+  saveAttempt,
+  useProfile,
+  useSport,
+  useSportAttempts,
+} from "@/infrastructure/repositories";
 import { createId, type Attempt } from "@/domain";
-import { adjustmentsValid, evaluateSportAttempts } from "@/domain/scoring";
+import {
+  adjustmentsValid,
+  evaluateSportAttemptsWithDrafts,
+} from "@/domain/scoring";
 import { PageTitle, UnitValueInput } from "@/shared/components";
 import { unitLabel } from "@/shared/labels";
 import { formatUnitValue } from "@/shared/utils/units";
@@ -23,15 +39,36 @@ export function SportPage() {
   const dataDate = formatDataDate(activeSport.sourceExportedAt);
   const historyEntries =
     profile && attempts
-      ? evaluateSportAttempts(profile, activeSport, attempts)
+      ? evaluateSportAttemptsWithDrafts(profile, activeSport, attempts)
       : [...(attempts ?? [])]
           .sort((left, right) => right.date.localeCompare(left.date))
           .map((attempt) => ({
             attempt,
             result: null,
             comparisonScore: null,
+            projectedResult: undefined,
+            projectedComparisonScore: null,
+            passingGaps: [],
             isBest: false,
+            isBestProjectedDraft: false,
           }));
+  const currentAttempt: Attempt = {
+    id: editingAttemptId ?? "preview",
+    sportId: activeSport.id,
+    date: attemptDate || localDateValue(),
+    status: "draft",
+    performances: Object.entries(values).map(([disciplineId, value]) => ({
+      disciplineId,
+      value,
+      selectedAdjustmentOptionIds: selections[disciplineId] ?? [],
+    })),
+  };
+  const liveProjection =
+    profile && currentAttempt.performances.length > 0
+      ? evaluateSportAttemptsWithDrafts(profile, activeSport, [
+          currentAttempt,
+        ])[0]
+      : undefined;
   async function save(status: Attempt["status"]) {
     if (!attemptDate)
       return alert("Bitte ein Datum für den Durchgang auswählen.");
@@ -135,7 +172,10 @@ export function SportPage() {
           </div>
         )}
         <div className="flex flex-wrap gap-2">
-          <Link className="button-secondary" to={`/sportart/${sport.slug}/edit`}>
+          <Link
+            className="button-secondary"
+            to={`/sportart/${sport.slug}/edit`}
+          >
             Sportart bearbeiten
           </Link>
           <button className="button-secondary" onClick={exportSport}>
@@ -248,6 +288,38 @@ export function SportPage() {
             Vollständig speichern
           </button>
         </div>
+        {liveProjection && (
+          <div className="notice mt-4">
+            {liveProjection.projectedResult?.total !== null &&
+            liveProjection.projectedResult !== undefined ? (
+              <>
+                <p className="font-bold">
+                  Prognose:{" "}
+                  {liveProjection.projectedResult.total.toFixed(
+                    sport.decimalPlaces,
+                  )}{" "}
+                  / {sport.totalMaxPoints.toFixed(sport.decimalPlaces)} Punkte
+                </p>
+                {liveProjection.passingGaps.length === 0 ? (
+                  <p className="text-sm text-secondary">
+                    Bestehensanforderungen erfüllt.
+                  </p>
+                ) : (
+                  liveProjection.passingGaps.map((gap) => (
+                    <p
+                      className="text-sm text-error"
+                      key={`${gap.kind}-${gap.label}`}
+                    >
+                      {formatPassingGap(gap, sport.decimalPlaces)}
+                    </p>
+                  ))
+                )}
+              </>
+            ) : (
+              <p className="text-sm text-error">Noch nicht bewertbar.</p>
+            )}
+          </div>
+        )}
       </section>
       <h2 className="section-title">Verlauf</h2>
       {!profile && (
@@ -257,123 +329,176 @@ export function SportPage() {
         </p>
       )}
       <div className="space-y-3">
-        {historyEntries.map(({ attempt, result, comparisonScore, isBest }) => {
-          return (
-            <article
-              className={`card ${isBest ? "border-primary bg-primary-container" : ""}`}
-              key={attempt.id}
-            >
-              <div className="flex flex-wrap justify-between gap-3">
-                <div>
-                  {isBest && <span className="chip mb-2">Bester Versuch</span>}
-                  <strong>{formatAttemptDate(attempt.date)}</strong>
-                  <p className="text-sm text-secondary">
-                    {attempt.status === "draft" ? "Entwurf" : "Vollständig"}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <strong className="block text-xl text-primary">
-                    {result?.total !== null && result?.total !== undefined
-                      ? result.total.toFixed(sport.decimalPlaces)
-                      : "–"}{" "}
-                    / {sport.totalMaxPoints.toFixed(sport.decimalPlaces)}
-                  </strong>
-                  <span className="text-sm text-secondary">
-                    Vergleich:{" "}
-                    {comparisonScore !== null
-                      ? comparisonScore.toFixed(sport.decimalPlaces)
-                      : "–"}{" "}
-                    /{" "}
-                    {(
-                      sport.comparisonMaxPoints ?? sport.totalMaxPoints
-                    ).toFixed(sport.decimalPlaces)}
-                  </span>
-                </div>
-              </div>
-              {result?.passStatus && (
-                <p
-                  className={`mt-2 font-bold ${result.passStatus === "passed" ? "text-secondary" : "text-error"}`}
-                >
-                  {result.passStatus === "passed"
-                    ? "Bestanden"
-                    : result.passStatus === "failed"
-                      ? "Nicht bestanden"
-                      : "Nicht bewertbar"}
-                </p>
-              )}
-              {result?.failedRequirements.map((requirement) => (
-                <p className="text-sm text-error" key={requirement}>
-                  {requirement}
-                </p>
-              ))}
-              <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                {attempt.performances.map((performance) => {
-                  const discipline = sport.disciplines.find(
-                    (item) => item.id === performance.disciplineId,
-                  );
-                  const score = result?.disciplineScores.find(
-                    (item) => item.disciplineId === performance.disciplineId,
-                  );
-                  return discipline ? (
-                    <div
-                      className="rounded-lg bg-surface-container p-3 text-sm"
-                      key={performance.disciplineId}
+        {historyEntries.map(
+          ({
+            attempt,
+            result,
+            comparisonScore,
+            projectedResult,
+            projectedComparisonScore,
+            passingGaps,
+            isBest,
+          }) => {
+            const displayResult = projectedResult ?? result;
+            const displayComparisonScore =
+              projectedComparisonScore ?? comparisonScore;
+            const isDraft = attempt.status === "draft";
+            return (
+              <article
+                className={`card ${isBest ? "border-primary bg-primary-container" : ""} ${isDraft ? "border-error" : ""}`}
+                key={attempt.id}
+              >
+                <div className="flex flex-wrap justify-between gap-3">
+                  <div>
+                    {isBest && (
+                      <span className="chip mb-2">Bester Versuch</span>
+                    )}
+                    {isDraft && (
+                      <span className="chip mb-2 text-error">Entwurf</span>
+                    )}
+                    <strong>{formatAttemptDate(attempt.date)}</strong>
+                    <p className="text-sm text-secondary">
+                      {isDraft
+                        ? projectedResult
+                          ? "Entwurf · Prognose"
+                          : "Entwurf · noch nicht bewertbar"
+                        : "Vollständig"}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <strong
+                      className={`block text-xl ${isDraft ? "text-error" : "text-primary"}`}
                     >
-                      <strong>{discipline.name}</strong>
-                      <p>
-                        {formatUnitValue(
-                          score?.evaluatedValue ?? performance.value,
-                          discipline.unit,
-                        )}{" "}
-                        ·{" "}
-                        {score
-                          ? `${score.points.toFixed(sport.decimalPlaces)} Pkt.`
-                          : "unbewertet"}
+                      {displayResult?.total !== null &&
+                      displayResult?.total !== undefined
+                        ? displayResult.total.toFixed(sport.decimalPlaces)
+                        : "?"}{" "}
+                      / {sport.totalMaxPoints.toFixed(sport.decimalPlaces)}
+                    </strong>
+                    <span className="text-sm text-secondary">
+                      Vergleich:{" "}
+                      {displayComparisonScore !== null
+                        ? displayComparisonScore.toFixed(sport.decimalPlaces)
+                        : "?"}{" "}
+                      /{" "}
+                      {(
+                        sport.comparisonMaxPoints ?? sport.totalMaxPoints
+                      ).toFixed(sport.decimalPlaces)}
+                    </span>
+                  </div>
+                </div>
+                {displayResult?.passStatus && (
+                  <p
+                    className={`mt-2 font-bold ${displayResult.passStatus === "passed" ? "text-secondary" : "text-error"}`}
+                  >
+                    {displayResult.passStatus === "passed"
+                      ? "Bestanden"
+                      : displayResult.passStatus === "failed"
+                        ? "Nicht bestanden"
+                        : "Nicht bewertbar"}
+                  </p>
+                )}
+                {displayResult?.failedRequirements.map((requirement) => (
+                  <p className="text-sm text-error" key={requirement}>
+                    {requirement}
+                  </p>
+                ))}
+                {displayResult?.total !== null &&
+                  displayResult !== undefined &&
+                  (passingGaps.length === 0 ? (
+                    <p className="text-sm text-secondary">
+                      Bestehensanforderungen erfüllt.
+                    </p>
+                  ) : (
+                    passingGaps.map((gap) => (
+                      <p
+                        className="text-sm text-error"
+                        key={`${attempt.id}-${gap.kind}-${gap.label}`}
+                      >
+                        {formatPassingGap(gap, sport.decimalPlaces)}
                       </p>
-                      {score && (
-                        <div className="mt-1 text-xs text-secondary">
-                          <p>
-                            Basis:{" "}
-                            {score.basePoints.toFixed(sport.decimalPlaces)} Pkt.
-                          </p>
-                          {score.automaticBonuses.map((bonus) => (
-                            <p key={bonus.modifierId}>
-                              {bonus.label}: +
-                              {bonus.points.toFixed(sport.decimalPlaces)} Pkt.
-                            </p>
-                          ))}
-                          {score.pointAdjustment !== 0 && (
+                    ))
+                  ))}
+                <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                  {attempt.performances.map((performance) => {
+                    const discipline = sport.disciplines.find(
+                      (item) => item.id === performance.disciplineId,
+                    );
+                    const score = displayResult?.disciplineScores.find(
+                      (item) => item.disciplineId === performance.disciplineId,
+                    );
+                    return discipline ? (
+                      <div
+                        className="rounded-lg bg-surface-container p-3 text-sm"
+                        key={performance.disciplineId}
+                      >
+                        <strong>{discipline.name}</strong>
+                        <p>
+                          {formatUnitValue(
+                            score?.evaluatedValue ?? performance.value,
+                            discipline.unit,
+                          )}{" "}
+                          -{" "}
+                          {score
+                            ? `${score.points.toFixed(sport.decimalPlaces)} Pkt.`
+                            : "unbewertet"}
+                        </p>
+                        {score && (
+                          <div className="mt-1 text-xs text-secondary">
                             <p>
-                              Manuelle Korrektur:{" "}
-                              {score.pointAdjustment > 0 ? "+" : ""}
-                              {score.pointAdjustment.toFixed(
-                                sport.decimalPlaces,
-                              )}{" "}
+                              Basis:{" "}
+                              {score.basePoints.toFixed(sport.decimalPlaces)}{" "}
                               Pkt.
                             </p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ) : null;
-                })}
-              </div>
-              <button
-                className="mt-4 text-sm font-bold text-error underline"
-                onClick={() => deleteAttempt(attempt.id)}
-              >
-                Durchgang löschen
-              </button>
-              <button
-                className="button-secondary mt-4 ml-2"
-                onClick={() => editAttempt(attempt)}
-              >
-                Bearbeiten
-              </button>
-            </article>
-          );
-        })}
+                            {score.automaticBonuses.map((bonus) => (
+                              <p key={bonus.modifierId}>
+                                {bonus.label}: +
+                                {bonus.points.toFixed(sport.decimalPlaces)} Pkt.
+                              </p>
+                            ))}
+                            {score.pointAdjustment !== 0 && (
+                              <p>
+                                Manuelle Korrektur:{" "}
+                                {score.pointAdjustment > 0 ? "+" : ""}
+                                {score.pointAdjustment.toFixed(
+                                  sport.decimalPlaces,
+                                )}{" "}
+                                Pkt.
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+                <button
+                  className="mt-4 text-sm font-bold text-error underline"
+                  onClick={() => deleteAttempt(attempt.id)}
+                >
+                  Durchgang löschen
+                </button>
+                <button
+                  className="button-secondary mt-4 ml-2"
+                  onClick={() => editAttempt(attempt)}
+                >
+                  Bearbeiten
+                </button>
+              </article>
+            );
+          },
+        )}
       </div>
     </>
   );
+}
+
+function formatPassingGap(
+  gap: { kind: string; label: string; missingPoints: number },
+  decimalPlaces: number,
+) {
+  if (gap.kind === "total")
+    return `Noch ${gap.missingPoints.toFixed(decimalPlaces)} Gesamtpunkte bis Bestehen`;
+  if (gap.kind === "missingDiscipline") return `${gap.label}: Leistung fehlt`;
+  return `${gap.label}: noch ${gap.missingPoints.toFixed(decimalPlaces)} Punkte`;
 }

@@ -5,10 +5,12 @@ import {
   adjustmentsValid,
   applyPerformanceAdjustments,
   calculateComparisonScore,
+  calculatePassingGaps,
   calculateUserProgress,
   changeAgeBandBoundary,
   determineAutomaticSportCutoffs,
   evaluateSportAttempts,
+  evaluateSportAttemptsWithDrafts,
   findAgeBand,
   getAge,
   getEvaluationAge,
@@ -367,9 +369,79 @@ describe("Bewertung", () => {
       passStatus: "failed",
     });
     expect(progress.achievedPoints).toBe(38);
+    expect(progress.draftComparisonPoints).toBe(12);
+    expect(progress.projectedTotalPoints).toBe(50);
+    expect(progress.projectedDraftsBySport[0]).toMatchObject({
+      attempt: { id: "draft" },
+      comparisonScore: 50,
+      additionalComparisonScore: 12,
+    });
     expect(progress.remainingPoints).toBe(22);
     expect(progress.excessPoints).toBe(0);
     expect(progress.percentage).toBeCloseTo(63.333);
+  });
+
+  it("nimmt teilbewertete BFT-Entwürfe als rote Prognose auf", () => {
+    const bft = loadBftStandard();
+    const draft: Attempt = {
+      id: "bft-draft",
+      sportId: bft.id,
+      date: "2026-06-07",
+      status: "draft",
+      performances: [
+        { disciplineId: bft.disciplines[0].id, value: 30_000 },
+        { disciplineId: bft.disciplines[1].id, value: 100_000 },
+      ],
+    };
+    const profile = {
+      id: "local" as const,
+      birthDate: "1990-01-01",
+      gender: "male" as const,
+      targetPoints: 130,
+    };
+    const evaluated = evaluateSportAttemptsWithDrafts(profile, bft, [draft])[0];
+    expect(evaluated.projectedComparisonScore).toBeGreaterThan(0);
+    expect(evaluated.projectedResult?.disciplineScores).toHaveLength(2);
+    expect(evaluated.passingGaps).toContainEqual({
+      kind: "missingDiscipline",
+      label: bft.disciplines[2].name,
+      missingPoints: bft.disciplines[2].minimumPoints,
+      disciplineId: bft.disciplines[2].id,
+    });
+    const progress = calculateUserProgress(profile, [bft], [draft]);
+    expect(progress.achievedPoints).toBe(0);
+    expect(progress.draftComparisonPoints).toBe(evaluated.projectedComparisonScore);
+  });
+
+  it("zählt fehlende Entwurfsdisziplinen beim Prozentmittel konservativ als 0", () => {
+    const averageSport: Sport = {
+      ...sport,
+      totalMaxPoints: 300,
+      comparisonMaxPoints: 30,
+      aggregation: "percentageAverage",
+      decimalPlaces: 2,
+      disciplines: [
+        { ...discipline, maxPoints: 100 },
+        { ...discipline, id: "d2", name: "Zweite Disziplin", maxPoints: 100 },
+        { ...discipline, id: "d3", name: "Dritte Disziplin", maxPoints: 100 },
+      ],
+    };
+    const profile = {
+      id: "local" as const,
+      birthDate: "1990-01-01",
+      gender: "male" as const,
+      targetPoints: 100,
+    };
+    const evaluated = evaluateSportAttemptsWithDrafts(profile, averageSport, [
+      {
+        ...attempt,
+        status: "draft",
+        performances: [{ disciplineId: "d", value: 10 }],
+      },
+    ])[0];
+    expect(evaluated.projectedResult?.total).toBe(20);
+    expect(evaluated.projectedComparisonScore).toBe(2);
+    expect(evaluated.passingGaps.filter((gap) => gap.kind === "missingDiscipline")).toHaveLength(2);
   });
 
   it("stellt den besten Verlaufseintrag zuerst und sortiert den Rest nach Datum", () => {
@@ -483,6 +555,10 @@ describe("Bewertung", () => {
     expect(result.total).toBe(14);
     expect(result.passStatus).toBe("failed");
     expect(result.failedRequirements.length).toBe(2);
+    expect(calculatePassingGaps(passSport, result)).toEqual([
+      { kind: "total", label: "Gesamtpunkte", missingPoints: 226 },
+      { kind: "discipline", label: "Test", missingPoints: 46, disciplineId: "d" },
+    ]);
   });
   it("ermittelt Cut-offs sportweit mit Beibehalten und Überschreiben", () => {
     const existing = { ...discipline, id: "existing", name: "Bestehend", cutoff: { kind: "points" as const, comparison: "below" as const, threshold: 20, effect: "discipline" as const, origin: "manual" as const } };
